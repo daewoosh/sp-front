@@ -4,6 +4,26 @@ import express from 'express';
 import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
 import bootstrap from './src/main.server';
+import 'localstorage-polyfill';
+
+global['localStorage'] = localStorage;
+
+global['requestAnimationFrame'] = function (callback: FrameRequestCallback): number {
+  let lastTime = 0;
+  const currTime = new Date().getTime();
+  const timeToCall = Math.max(0, 16 - (currTime - lastTime));
+  const id = setTimeout(function () {
+      callback(currTime + timeToCall);
+    },
+    timeToCall);
+  lastTime = currTime + timeToCall;
+  return id as unknown as number;
+};
+
+
+global['cancelAnimationFrame'] = function (id) {
+  clearTimeout(id);
+};
 
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
