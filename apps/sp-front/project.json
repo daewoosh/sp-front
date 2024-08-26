@@ -33,9 +33,10 @@
           "node_modules/@taiga-ui/core/styles/taiga-ui-theme.less",
           "node_modules/@taiga-ui/core/styles/taiga-ui-fonts.less",
           "node_modules/@taiga-ui/styles/taiga-ui-global.less",
+          "node_modules/@videogular/ngx-videogular/fonts/videogular.css",
           "apps/sp-front/src/styles.scss"
         ],
-        "scripts": [],
+        "scripts": [ "node_modules/hls.js/dist/hls.min.js"],
         "server": "apps/sp-front/src/main.server.ts",
         "prerender": false,
         "ssr": {
