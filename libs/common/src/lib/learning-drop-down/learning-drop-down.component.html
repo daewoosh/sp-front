@@ -1,47 +1,47 @@
-<!--<span (tuiActiveZoneChange)="onLearningActiveZone($event)">-->
-<!--    <button-->
-<!--      class="flex items-end py-2 rounded  md:p-0 w-fit nav-link text-base"-->
-<!--      type="button"-->
-<!--      [ngClass]="{'active':isActiveRoute('/booster') || isActiveRoute('/beginner')|| isActiveRoute('/advanced')}"-->
-<!--      [tuiDropdown]="learningDropdownContent"-->
-<!--      [tuiDropdownManual]="learningOpen"-->
-<!--      (tuiObscured)="onLearningObscured($event)"-->
-<!--      (click)="onLearningClick()"-->
-<!--    >-->
-<!--        Продукты-->
-<!--                  <svg class="ml-1 w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"-->
-<!--                       xmlns="http://www.w3.org/2000/svg">-->
-<!--                    <path fill-rule="evenodd"-->
-<!--                          d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"-->
-<!--                          clip-rule="evenodd"></path>-->
-<!--                  </svg>-->
-<!--    </button>-->
-<!--    <ng-template #learningDropdownContent>-->
-<!--                   <div-->
-<!--                     class="z-10 text-white font-normal bg-black-sp p-6 rounded divide-y divide-gray-100 shadow">-->
-<!--            <ul class="py-1 text-sm text-gray-700 dark:text-gray-400">-->
-<!--               <li class="mb-4">-->
-<!--                <a [href]="navService.getUrlWithUtm('/beginner')" class="nav-link text-base">Осознанное-->
-<!--                  начало</a>-->
-<!--              </li>-->
-<!--              <li class="mb-4">-->
-<!--                <a [href]="navService.getUrlWithUtm('/advanced')" class="nav-link text-base">Продвинутый-->
-<!--                  курс</a>-->
-<!--              </li>-->
-<!--              <li  class="mb-4">-->
-<!--                <a [href]="navService.getUrlWithUtm('/booster')" class="nav-link text-base">БУСТЕР</a>-->
+<span (tuiActiveZoneChange)="onLearningActiveZone($event)">
+    <button
+      class="flex items-end py-2 rounded  md:p-0 w-fit nav-link text-base"
+      type="button"
+      [ngClass]="{'active':isActiveRoute('/booster') || isActiveRoute('/beginner')|| isActiveRoute('/advanced')}"
+      [tuiDropdown]="learningDropdownContent"
+      [tuiDropdownManual]="learningOpen"
+      (tuiObscured)="onLearningObscured($event)"
+      (click)="onLearningClick()"
+    >
+        Продукты
+                  <svg class="ml-1 w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+                       xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                          d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                          clip-rule="evenodd"></path>
+                  </svg>
+    </button>
+    <ng-template #learningDropdownContent>
+                   <div
+                     class="z-10 text-white font-normal bg-black-sp p-6 rounded divide-y divide-gray-100 shadow">
+            <ul class="py-1 text-sm text-gray-700 dark:text-gray-400">
+               <li class="mb-4">
+                <a [href]="navService.getUrlWithUtm('/beginner')" class="nav-link text-base">Осознанное
+                  начало</a>
+              </li>
+              <li class="mb-4">
+                <a [href]="navService.getUrlWithUtm('/advanced')" class="nav-link text-base">Продвинутый
+                  курс</a>
+              </li>
+              <li  class="mb-4">
+                <a [href]="navService.getUrlWithUtm('/booster')" class="nav-link text-base">БУСТЕР</a>
 
-<!--              </li>-->
-<!--               <li class="mb-4">-->
-<!--                <a [href]="navService.getUrlWithUtm('/analysis')" class="nav-link text-base">Разбор базы</a>-->
+              </li>
+               <li class="mb-4">
+                <a [href]="navService.getUrlWithUtm('/analysis')" class="nav-link text-base">Разбор базы</a>
 
-<!--              </li>-->
+              </li>
 
-<!--               <li>-->
-<!--                <a [href]="navService.getUrlWithUtm('/ultimate-course')" class="nav-link text-base">Only Покер</a>-->
+               <li>
+                <a [href]="navService.getUrlWithUtm('/ultimate-course')" class="nav-link text-base">Only Покер</a>
 
-<!--              </li>-->
-<!--            </ul>-->
-<!--          </div>-->
-<!--    </ng-template>-->
-<!--</span>-->
+              </li>
+            </ul>
+          </div>
+    </ng-template>
+</span>

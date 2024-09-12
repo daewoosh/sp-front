@@ -2,11 +2,13 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavigationService } from "@sp/core";
 import { Router } from "@angular/router";
+import { TuiActiveZone, TuiObscured } from "@taiga-ui/cdk";
+import { TuiDropdownDirective, TuiDropdownManual } from "@taiga-ui/core";
 
 @Component({
   selector: 'sp-learning-drop-down',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TuiActiveZone, TuiDropdownDirective, TuiDropdownManual, TuiObscured],
   templateUrl: './learning-drop-down.component.html',
   styleUrl: './learning-drop-down.component.scss',
 })
