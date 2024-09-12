@@ -12,6 +12,8 @@ To start the development server run `nx serve sp-front`. Open your browser and n
 
 ## Generate code
 
+nx g @nx/angular:library --directory=libs/features/main-page --importPath=@sp/main-page main-page
+
 If you happen to use Nx plugins, you can leverage code generators that might come with it.
 
 Run `nx list` to get a list of available plugins and whether they have generators. Then run `nx list <plugin-name>` to see what generators are available.

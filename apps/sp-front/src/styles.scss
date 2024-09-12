@@ -2,4 +2,102 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'Golos';
+  src: url('/assets/fonts/Golos-UI_Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Golos';
+  src: url('/assets/fonts/Golos-UI_Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Golos';
+  src: url('/assets/fonts/Golos-UI_Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+:root {
+  --clr-black: #1C1E1D;
+  --clr-black-light: #272826;
+  --clr-primary: #2BBE16;
+  --clr-primary-disabled: #227317;
+  --clr-danger: #A80F0F;
+  --clr-white: #F6F2E1;
+  --clr-grey: #808080;
+  --clr-orange: #F5911E;
+  --clr-border: #847F6B;
+  --tui-text-01: #F6F2E1;
+}
+
+html, body {
+  height: 100%;
+  font-family: Golos !important;
+  color: var(--clr-white) !important;
+  font-weight: 400;
+  line-height: 1.25 !important;
+  scroll-behavior: smooth;
+}
+
+.clr-white {
+  color: var(--clr-white);
+}
+
+.clr-primary {
+  color: var(--clr-primary);
+}
+
+.clr-grey {
+  color: var(--clr-grey);
+}
+
+.clr-orange {
+  color: var(--clr-orange);
+}
+
+.clr-danger {
+  color: var(--clr-danger);
+}
+
+.clr-black-light {
+  color: var(--clr-black-light);
+}
+
+.bg-black-light {
+  background-color: var(--clr-black-light);
+}
+
+.bg-black-sp {
+  background-color: var(--clr-black);
+}
+
+.bg-primary {
+  background-color: var(--clr-primary);
+}
+
+.clr-white-tooltip {
+  color: var(--clr-white) !important;
+  margin-top: -3px;
+}
+
+body {
+  color: var(--clr-white);
+  font-weight: 400;
+}
+
 /* You can add global styles to this file, and also import other style files */
+vg-quality-selector select.quality-selector {
+  border: none;
+  outline: none;
+
+  &:focus-visible {
+    outline: none;
+    border: none;
+  }
+}

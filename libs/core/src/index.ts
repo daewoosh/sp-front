@@ -1,1 +1,2 @@
-export * from './lib/core/core.component';
+export * from "./test-setup";
+export * from "./lib";
