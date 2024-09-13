@@ -18,7 +18,7 @@
       "@sp-front/common": ["libs/common/src/index.ts"],
       "@sp/core": ["libs/core/src/index.ts"],
       "@sp-front/courses-page": ["libs/features/courses-page/src/index.ts"],
-      "@sp-front/sdk": ["libs/sdk/src/index.ts"],
+      "@sp-front/sdk/*": ["libs/sdk/src/*"],
 //      "@sp/config": ["libs/app-config/index.ts"],
       "@sp/advanced-course-page": [
         "libs/features/advanced-course-page/src/index.ts"

@@ -1,0 +1,16 @@
+export const CHAR_NO_BREAK_SPACE = '\u00A0';
+export const CHAR_FIGURE_DASH = '\u2012';
+export const CHAR_EN_DASH = '\u2013';
+export const CHAR_EM_DASH = '\u2014';
+export const CHAR_LAQUO = '\u00AB';
+export const CHAR_RAQUO = '\u00BB';
+export const CHAR_HYPHEN = '\u002D';
+export const CHAR_HYPHEN_MINUS = '\uFF0D';
+export const CHAR_SMALL_HYPHEN_MINUS = '\uFE63';
+export const CHAR_MINUS = '\u2212';
+export const CHAR_PLUS = '\u002B';
+export const CHAR_HORIZONTAL_BAR = '\u2015';
+export const CHAR_BULLET = '\u2022';
+export const CHAR_ELLIPSIS = '\u2026';
+export const CHAR_CURRENCY_SIGN = '\u00A4';
+export const CHAR_ZERO_WIDTH_SPACE = '\u200B';

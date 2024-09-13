@@ -7,9 +7,10 @@ import { provideClientHydration } from '@angular/platform-browser';
 import { provideHttpClient, withFetch, withInterceptorsFromDi } from "@angular/common/http";
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideAnimations(),
+  providers: [
     provideClientHydration(),
     provideRouter(appRoutes),
-    provideHttpClient(withInterceptorsFromDi()),
+    provideHttpClient(withInterceptorsFromDi(), withFetch()),
+    provideAnimations(),
     NG_EVENT_PLUGINS],
 };
