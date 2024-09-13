@@ -1,1 +1,1 @@
-export * from './lib/common/common.component';
+export * from './lib/page-layout/page-layout.component';

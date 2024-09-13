@@ -6,9 +6,8 @@ import { dirname, join, resolve } from 'node:path';
 import bootstrap from './src/main.server';
 import 'localstorage-polyfill';
 
-global['localStorage'] = localStorage;
-
-global['requestAnimationFrame'] = function (callback: FrameRequestCallback): number {
+globalThis['localStorage'] = localStorage;
+globalThis['requestAnimationFrame'] = function (callback: FrameRequestCallback): number {
   let lastTime = 0;
   const currTime = new Date().getTime();
   const timeToCall = Math.max(0, 16 - (currTime - lastTime));
@@ -21,9 +20,10 @@ global['requestAnimationFrame'] = function (callback: FrameRequestCallback): num
 };
 
 
-global['cancelAnimationFrame'] = function (id) {
+globalThis['cancelAnimationFrame'] = function (id) {
   clearTimeout(id);
 };
+
 
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
@@ -41,14 +41,15 @@ export function app(): express.Express {
   // server.get('/api/**', (req, res) => { });
   // Serve static files from /browser
   server.get(
-    '*.*',
+    '**',
     express.static(browserDistFolder, {
       maxAge: '1y',
+      index: 'index.html',
     })
   );
 
   // All regular routes use the Angular engine
-  server.get('*', (req, res, next) => {
+  server.get('**', (req, res, next) => {
     const { protocol, originalUrl, baseUrl, headers } = req;
 
     commonEngine
@@ -75,3 +76,5 @@ function run(): void {
     console.log(`Node Express server listening on http://localhost:${port}`);
   });
 }
+
+run();

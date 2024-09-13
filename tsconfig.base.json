@@ -15,10 +15,10 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@sp-front/common": ["libs/common/src/index.ts"],
-      "@sp-front/core": ["libs/core/src/index.ts"],
-      "@sp-front/courses-page": ["libs/features/courses-page/src/index.ts"],
-      "@sp-front/sdk": ["libs/sdk/src/index.ts"]
+      "@sp/common": ["libs/common/src/index.ts"],
+      "@sp/core": ["libs/core/src/index.ts"],
+      "@sp/core/*": ["libs/core/src/*"],
+      "@sp/main-page": ["libs/features/main-page/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

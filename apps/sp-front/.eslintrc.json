@@ -13,7 +13,7 @@
           "error",
           {
             "type": "attribute",
-            "prefix": "spFront",
+            "prefix": "app",
             "style": "camelCase"
           }
         ],
@@ -21,7 +21,7 @@
           "error",
           {
             "type": "element",
-            "prefix": "sp-front",
+            "prefix": "app",
             "style": "kebab-case"
           }
         ]

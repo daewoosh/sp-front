@@ -2,7 +2,7 @@
   "name": "sp-front",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
-  "prefix": "sp-front",
+  "prefix": "app",
   "sourceRoot": "apps/sp-front/src",
   "tags": [],
   "targets": {
@@ -21,8 +21,11 @@
         "tsConfig": "apps/sp-front/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
-          "apps/sp-front/src/favicon.ico",
           "apps/sp-front/src/assets",
+          {
+            "glob": "**/*",
+            "input": "apps/sp-front/public"
+          },
           {
             "glob": "**/*",
             "input": "node_modules/@taiga-ui/icons/src",
@@ -32,13 +35,11 @@
         "styles": [
           "node_modules/@taiga-ui/core/styles/taiga-ui-theme.less",
           "node_modules/@taiga-ui/core/styles/taiga-ui-fonts.less",
-          "node_modules/@taiga-ui/styles/taiga-ui-global.less",
-          "node_modules/@videogular/ngx-videogular/fonts/videogular.css",
           "apps/sp-front/src/styles.scss"
         ],
-        "scripts": [ "node_modules/hls.js/dist/hls.min.js"],
+        "scripts": [],
         "server": "apps/sp-front/src/main.server.ts",
-        "prerender": false,
+        "prerender": true,
         "ssr": {
           "entry": "apps/sp-front/server.ts"
         }
@@ -86,16 +87,7 @@
       }
     },
     "lint": {
-      "executor": "@nx/eslint:lint",
-      "outputs": [
-        "{options.outputFile}"
-      ],
-      "options": {
-        "lintFilePatterns": [
-          "apps/sp-front/**/*.ts",
-          "apps/sp-front/**/*.html"
-        ]
-      }
+      "executor": "@nx/eslint:lint"
     },
     "test": {
       "executor": "@nx/jest:jest",
@@ -104,6 +96,15 @@
       ],
       "options": {
         "jestConfig": "apps/sp-front/jest.config.ts"
+      }
+    },
+    "serve-static": {
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "sp-front:build",
+        "port": 4200,
+        "staticFilePath": "dist/apps/sp-front/browser",
+        "spa": true
       }
     }
   }
