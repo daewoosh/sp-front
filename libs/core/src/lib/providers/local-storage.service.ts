@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 
 import { AUTH_TOKEN_NAME, REFRESH_TOKEN_NAME } from '../constants';
+import { isPlatformBrowser } from "@angular/common";
 
 const PREFIX = 'sp_';
 
@@ -14,24 +15,31 @@ export type Maybe<T> = T | null;
 
 @Injectable()
 export class LocalStorageService {
+  constructor(@Inject(PLATFORM_ID) private platformId: string) {
+  }
+
   public get<K extends keyof LocalStorageTypeMap>(
     key: K
   ): Maybe<LocalStorageTypeMap[K]> {
-    const keyName = this.keyName(key);
-    const item =
-      localStorage.getItem(keyName) || sessionStorage.getItem(keyName);
+    if (isPlatformBrowser(this.platformId)) {
+      const keyName = this.keyName(key);
+      const item =
+        localStorage.getItem(keyName) || sessionStorage.getItem(keyName);
 
-    let result: Maybe<LocalStorageTypeMap[K]> = null;
+      let result: Maybe<LocalStorageTypeMap[K]> = null;
 
-    try {
-      result = JSON.parse(item || 'null');
-    } catch (e) {
-      console.error(
-        `Could not parse the localStorage value for "${key}" (${item})`
-      );
+      try {
+        result = JSON.parse(item || 'null');
+      } catch (e) {
+        console.error(
+          `Could not parse the localStorage value for "${key}" (${item})`
+        );
+      }
+
+      return result;
+    }else {
+      return null;
     }
-
-    return result;
   }
 
   public remove(key: keyof LocalStorageTypeMap): void {
