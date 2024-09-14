@@ -13,7 +13,7 @@ export type LocalStorageTypeMap = {
 };
 export type Maybe<T> = T | null;
 
-@Injectable()
+@Injectable({providedIn:'root'})
 export class LocalStorageService {
   constructor(@Inject(PLATFORM_ID) private platformId: string) {
   }

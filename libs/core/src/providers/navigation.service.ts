@@ -5,7 +5,7 @@ export function notEmptyObject(obj: any) {
   return obj && obj !== null && Object.keys(obj).length > 0;
 }
 
-@Injectable()
+@Injectable({providedIn:'root'})
 export class NavigationService {
 
   constructor(private localStorageService: LocalStorageService) {

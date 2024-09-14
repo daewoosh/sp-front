@@ -9,9 +9,9 @@ import { SpCoreModule } from "@sp/core";
 @Component({
   selector: 'sp-page-layout',
   standalone: true,
-  imports: [CommonModule, RouterModule, HeaderComponent, FooterComponent, SpCoreModule],
+  imports: [CommonModule, RouterModule, HeaderComponent, FooterComponent],
   templateUrl: './page-layout.component.html',
   styleUrl: './page-layout.component.scss',
-  // providers:[NavigationService,LocalStorageService]
+  providers:[NavigationService,LocalStorageService]
 })
 export class PageLayoutComponent {}

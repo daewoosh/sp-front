@@ -1,5 +1,5 @@
-import { Component, Inject, Optional } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, Inject, Optional, PLATFORM_ID } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Router, RouterModule } from "@angular/router";
 // import { EXCHANGE_URL } from "@sp/config";
 import { LearningDropDownComponent } from "../learning-drop-down/learning-drop-down.component";
@@ -13,10 +13,13 @@ import { NavigationService } from "@sp/core/providers";
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
+  showHeader = false;
   public menuClosed = true;
   exchangeUrl="";
   constructor(public navService: NavigationService,
-              private router: Router) {
+              private router: Router,
+              @Inject(PLATFORM_ID) private platformId: string) {
+    this.showHeader = isPlatformBrowser(platformId);
   }
 
   isActiveRoute(route: string) {
