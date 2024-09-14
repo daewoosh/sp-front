@@ -16,8 +16,7 @@ export class HeaderComponent {
   showHeader = false;
   public menuClosed = true;
   exchangeUrl="";
-  constructor(public navService: NavigationService,
-              private router: Router,
+  constructor(private router: Router,
               @Inject(PLATFORM_ID) private platformId: string) {
     this.showHeader = isPlatformBrowser(platformId);
   }

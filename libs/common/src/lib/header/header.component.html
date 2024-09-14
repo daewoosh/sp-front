@@ -1,7 +1,7 @@
 <nav class="sticky top-0 bg-black-sp" style="z-index: 7777">
   <nav class="max-w-6xl mx-auto justify-between items-center px-4 py-6 lg:px-0 flex">
     <div>
-      <a [href]="navService.getUrlWithUtm('/')" class="cursor-pointer"
+      <a routerLink="/" queryParamsHandling="preserve" class="cursor-pointer"
       ><img src="assets/icons/logo.png"
       /></a>
     </div>
@@ -42,18 +42,18 @@
     </div>
 
     <nav class="hidden md:flex space-x-10">
-      <a [href]="navService.getUrlWithUtm('/')"
+      <a routerLink="/" queryParamsHandling="preserve"
          class="nav-link  text-base" [ngClass]="{'active':isRootRoute()}">Главная</a>
       <!--      <a [href]="navService.getUrlWithUtm('/news')" [ngClass]="{'active':isActiveRoute('/news')}"-->
       <!--         class="nav-link text-base">Новости</a>-->
 
-      <a [href]="navService.getUrlWithUtm(exchangeUrl)" target="_blank"
+      <a [href]="exchangeUrl" target="_blank"
          class="nav-link  text-base" [ngClass]="{'active':isActiveRoute('exchanger')}">Обменник</a>
       <!--      <app-courses-drop-down></app-courses-drop-down>-->
       <sp-learning-drop-down></sp-learning-drop-down>
-      <a [routerLink]="navService.getUrlWithUtm('/bonus')" [ngClass]="{'active':isActiveRoute('/bonus')}"
+      <a routerLink="/bonus" queryParamsHandling="preserve" [ngClass]="{'active':isActiveRoute('/bonus')}"
          class="nav-link text-base">Бонусы</a>
-      <a [href]="navService.getUrlWithUtm('/articles')" [ngClass]="{'active':isActiveRoute('/articles')}"
+      <a routerLink="/articles" queryParamsHandling="preserve" [ngClass]="{'active':isActiveRoute('/articles')}"
          class="nav-link text-base">Блог</a>
     </nav>
 
@@ -107,22 +107,22 @@
       </div>
       <div class="mt-6">
         <nav class="grid gap-y-8">
-          <a [href]="navService.getUrlWithUtm('/')"
+          <a routerLink="/" queryParamsHandling="preserve"
              class="nav-link  text-base" [ngClass]="{'active':isRootRoute()}">Главная</a>
 
           <!--          <a [href]="navService.getUrlWithUtm('/news')" routerLinkActive="active"-->
           <!--             class="nav-link  w-fit text-base">Новости</a>-->
-          <a [href]="navService.getUrlWithUtm(exchangeUrl)" target="_blank"
+          <a [href]="exchangeUrl" target="_blank"
              class="nav-link w-fit  text-base">Обменник</a>
 
           <!--          <a [href]="navService.getUrlWithUtm('/news')" routerLinkActive="active"-->
           <!--             class="nav-link  w-fit text-base">Новости</a>-->
 
           <sp-learning-drop-down></sp-learning-drop-down>
-          <a [href]="navService.getUrlWithUtm('/bonus')" routerLinkActive="active"
+          <a routerLink="/bonus" queryParamsHandling="preserve" routerLinkActive="active"
              class="nav-link  w-fit text-base">Бонусы</a>
 
-          <a [href]="navService.getUrlWithUtm('/articles')" [ngClass]="{'active':isActiveRoute('/articles')}"
+          <a routerLink="/articles" queryParamsHandling="preserve" [ngClass]="{'active':isActiveRoute('/articles')}"
              class="nav-link text-base">Блог</a>
         </nav>
       </div>

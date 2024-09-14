@@ -21,24 +21,25 @@
                      class="z-10 text-white font-normal bg-black-sp p-6 rounded divide-y divide-gray-100 shadow">
             <ul class="py-1 text-sm text-gray-700 dark:text-gray-400">
                <li class="mb-4">
-                <a [href]="navService.getUrlWithUtm('/beginner')" class="nav-link text-base">Осознанное
+                <a routerLink="/beginner" queryParamsHandling="preserve" class="nav-link text-base">Осознанное
                   начало</a>
               </li>
               <li class="mb-4">
-                <a [href]="navService.getUrlWithUtm('/advanced')" class="nav-link text-base">Продвинутый
+                <a routerLink="/advanced" queryParamsHandling="preserve" class="nav-link text-base">Продвинутый
                   курс</a>
               </li>
-              <li  class="mb-4">
-                <a [href]="navService.getUrlWithUtm('/booster')" class="nav-link text-base">БУСТЕР</a>
+              <li class="mb-4">
+                <a routerLink="/booster" queryParamsHandling="preserve" class="nav-link text-base">БУСТЕР</a>
 
               </li>
                <li class="mb-4">
-                <a [href]="navService.getUrlWithUtm('/analysis')" class="nav-link text-base">Разбор базы</a>
+                <a routerLink="/analysis" queryParamsHandling="preserve" class="nav-link text-base">Разбор базы</a>
 
               </li>
 
                <li>
-                <a [href]="navService.getUrlWithUtm('/ultimate-course')" class="nav-link text-base">Only Покер</a>
+                <a routerLink="/ultimate-course" queryParamsHandling="preserve"
+                   class="nav-link text-base">Only Покер</a>
 
               </li>
             </ul>

@@ -16,8 +16,7 @@ export class LearningDropDownComponent {
 
   learningOpen = false;
 
-  constructor(public navService: NavigationService,
-              private router: Router,) {
+  constructor(private router: Router,) {
   }
 
   onLearningClick(): void {
