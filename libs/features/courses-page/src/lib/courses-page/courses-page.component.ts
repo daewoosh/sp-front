@@ -11,6 +11,7 @@ import { CoursesSidenavComponent } from "../courses-sidenav/courses-sidenav.comp
 import { COURSES } from "../courses-mock";
 import { CoursesListComponent } from "../courses-list/courses-list.component";
 import { RouterOutlet } from "@angular/router";
+import { CoursesApiService } from "../courses-api.service";
 
 @Component({
   selector: 'sp-front-courses-page',
@@ -22,6 +23,7 @@ import { RouterOutlet } from "@angular/router";
     VgStreamingModule, CoursesSidenavComponent, CoursesListComponent, RouterOutlet],
   templateUrl: './courses-page.component.html',
   styleUrl: './courses-page.component.scss',
+  providers:[CoursesApiService]
 })
 export class CoursesPageComponent {
   courses = COURSES

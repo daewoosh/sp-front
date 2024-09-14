@@ -1,5 +1,5 @@
 <a [routerLink]="menuItem.url" >
-  <div class="flex gap-3 items-center py-[10px] px-7 " routerLinkActive="item-active" [routerLinkActiveOptions]="{exact: true}">
+  <div class="flex gap-3 items-center py-[10px] px-7 " routerLinkActive="item-active" [routerLinkActiveOptions]="{exact: menuItem.url === '.'}">
     <img [src]="'/assets/images/courses/'+menuItem.icon">
     <span class="text-base">{{menuItem.title}}</span>
   </div>

@@ -40,7 +40,7 @@ export class CoursesSidenavComponent implements OnInit {
       return {
         icon: x.icon,
         title: x.title,
-        url: x.slug + '/1',
+        url: x.slug ,
       }
     });
     this.menuItems.unshift({icon: 'all-products.svg', url: '.', title: 'Все продукты'});

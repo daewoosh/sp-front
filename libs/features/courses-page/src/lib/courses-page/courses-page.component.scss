@@ -13,7 +13,7 @@
   background: linear-gradient(180deg, #272826 0%, rgba(39, 40, 38, 0) 100%);
 
   & .content {
-    padding: 41px 46px;
+    @apply px-[22px] py-[30px] lg:py-[41px] lg:px-[46px];
     max-width: 1440px;
   }
 }

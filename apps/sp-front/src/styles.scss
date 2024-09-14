@@ -309,3 +309,9 @@ tui-dialog[data-appearance='sp-modal'] {
   font-family: 'Golos';
   max-width: 540px;
 }
+
+[tuiProgressBar][data-size=s] {
+  --t-height: 6px !important;
+  --tui-background-accent-1:var(--clr-primary)!important;
+  --tui-background-neutral-1: #272826CC;
+}
