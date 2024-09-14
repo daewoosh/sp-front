@@ -37,7 +37,7 @@
           "node_modules/@taiga-ui/core/styles/taiga-ui-fonts.less",
           "apps/sp-front/src/styles.scss"
         ],
-        "scripts": [],
+        "scripts": [ "node_modules/hls.js/dist/hls.min.js"],
         "server": "apps/sp-front/src/main.server.ts",
         "prerender": true,
         "ssr": {
