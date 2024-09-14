@@ -4,7 +4,6 @@ import { RouterModule } from "@angular/router";
 import { HeaderComponent } from "../header";
 import { FooterComponent } from "../footer";
 import { LocalStorageService, NavigationService } from "@sp/core/providers";
-import { SpCoreModule } from "@sp/core";
 
 @Component({
   selector: 'sp-page-layout',
