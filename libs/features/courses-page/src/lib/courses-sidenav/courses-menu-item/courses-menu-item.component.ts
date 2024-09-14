@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { MenuItem } from "../menu-items";
 import { RouterLink, RouterLinkActive } from "@angular/router";
+import { TuiDialogService } from "@taiga-ui/core";
 
 @Component({
   selector: 'sp-courses-menu-item',

@@ -2,8 +2,12 @@ import { Route } from "@angular/router";
 
 export const coursesRoutes: Route[] = [
   {
-    path: ":id/:order",
-    loadComponent: () => import('./courses-item/courses-item.component').then(mod => mod.CoursesItemComponent),
+    path: ":id",
+    loadComponent: () => import('./course-item-page/course-item-page.component').then(mod => mod.CourseItemPageComponent),
+    children: [{
+      path: ":order",
+      loadComponent: () => import('./courses-item/courses-item.component').then(mod => mod.CoursesItemComponent),
+    }]
   },
   {
     path: "",

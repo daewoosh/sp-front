@@ -12,3 +12,17 @@ export interface Course {
   image: string;
   isAvailable: boolean;
 }
+
+
+export enum CourseElementType {
+  Video,
+  Assignment
+}
+
+export interface CourseProgramItem {
+  type: CourseElementType;
+  title: string;
+  order: number;
+  isCompleted: boolean;
+  progress?: number;
+}

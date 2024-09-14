@@ -1,4 +1,8 @@
 .item-active{
   background-color: var(--clr-primary);
   border-radius: 10px;
+
+  & img{
+    filter: brightness(0%);
+  }
 }

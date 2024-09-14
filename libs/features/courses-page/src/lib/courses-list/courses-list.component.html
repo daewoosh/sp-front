@@ -1,4 +1,3 @@
-<div class="max-w-[1440px]">
   <p class="text-white text-4xl mb-8">
     Добро пожаловать, {{profile?.userName ?? ""}}!
   </p>
@@ -7,7 +6,8 @@
     <span class="text-2xl">Все продукты SafePoker</span>
     <div class="btn-link">Видео-курсы</div>
   </div>
-  <div class="flex flex-wrap xl:gap-16" *ngFor="let course of courses">
-    <sp-course-card [course]="course"/>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 md:gap-10 xl:gap-16 mt-10">
+    <ng-container *ngFor="let course of courses">
+      <sp-course-card [course]="course"/>
+    </ng-container>
   </div>
-</div>

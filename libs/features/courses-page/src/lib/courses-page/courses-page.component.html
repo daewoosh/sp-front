@@ -1,10 +1,13 @@
 <div class="courses-page">
   <!--  <div class="sidenav">-->
-  <sp-courses-sidenav [courses]="courses"/>
+  <div class="hidden xl:block">
+    <sp-courses-sidenav [courses]="courses"/>
+  </div>
   <!--  </div>-->
 
   <div class="main">
-    <router-outlet/>
-
+    <div class="content">
+      <router-outlet/>
+    </div>
   </div>
 </div>

@@ -12,24 +12,37 @@ import { CoursesMenuItemComponent } from "./courses-menu-item/courses-menu-item.
   templateUrl: './courses-sidenav.component.html',
   styleUrl: './courses-sidenav.component.scss',
 })
-export class CoursesSidenavComponent implements OnInit{
+export class CoursesSidenavComponent implements OnInit {
   profile: UserProfile = {
     userName: 'Vasia Petya',
     telegramName: '@vasiapetya'
   }
 
-  menuItems:MenuItem[] = [];
+  menuItems: MenuItem[] = [];
+  logoutMenuItem: MenuItem = {
+    icon: 'logout.svg',
+    title: 'Выход',
+    url: '/logout',
+    isExternal: true,
+  };
+  supportMenuItem: MenuItem = {
+    icon: 'help.svg',
+    title: 'Поддержка',
+    url: '/support',
+    isExternal: true,
+  };
+
   @Input() courses: Course[] = [];
 
-  constructor() {
-  }
 
   ngOnInit() {
-    this.menuItems = this.courses.map(x=>{  return{
-      icon:x.icon,
-      title: x.title,
-      url:x.slug+'/1',
-    }});
-    this.menuItems.unshift({icon:'all-products.svg',url:'.',title:'Все продукты'});
+    this.menuItems = this.courses.map(x => {
+      return {
+        icon: x.icon,
+        title: x.title,
+        url: x.slug + '/1',
+      }
+    });
+    this.menuItems.unshift({icon: 'all-products.svg', url: '.', title: 'Все продукты'});
   }
 }

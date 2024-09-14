@@ -169,6 +169,18 @@ a.btn {
     }
   }
 
+  &.warning {
+    color: white;
+    border-color: #DF8316;
+    background: #DF8316;
+
+    &:hover:not([disabled]) {
+      color: white;
+      border-color: #DF8316;
+      box-shadow: 0px 0px 7px #DF8316;
+    }
+  }
+
   &.primary {
     color: white;
     border-color: var(--clr-primary);
@@ -287,4 +299,13 @@ vg-quality-selector select.quality-selector {
     outline: none;
     border: none;
   }
+}
+
+
+tui-dialog[data-appearance='sp-modal'] {
+  border: none;
+  --tui-background-elevation-1: #1C1E1D;
+  color: white;
+  font-family: 'Golos';
+  max-width: 540px;
 }
