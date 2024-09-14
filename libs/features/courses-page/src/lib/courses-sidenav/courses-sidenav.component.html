@@ -1,0 +1,21 @@
+<div class="sidenav-container">
+  <div>
+    <div class="section">
+      МОЙ АККАУНТ
+    </div>
+    <div class="px-7 py-8">
+      <sp-courses-profile [profile]="profile"/>
+    </div>
+
+    <div class="section">
+      МОИ КУРСЫ
+    </div>
+    <div class="mt-8 flex flex-col">
+      <sp-courses-menu-item *ngFor="let menuItem of menuItems" [menuItem]="menuItem"/>
+
+    </div>
+  </div>
+  <div>
+    AAAAA
+  </div>
+</div>

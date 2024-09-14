@@ -1,13 +1,14 @@
 import { Route } from '@angular/router';
 import { PageLayoutComponent } from "@sp/common";
+import { coursesRoutes } from "../../../../libs/features/courses-page/src/lib/courses-routes";
 
 export const appRoutes: Route[] = [
   {
     path: "",
     component: PageLayoutComponent,
-    children:[
+    children: [
       {
-        path:"bonus",
+        path: "bonus",
         loadComponent: () => import('@sp/bonuses-page').then(mod => mod.BonusesPageComponent),
       },
       {
@@ -25,12 +26,13 @@ export const appRoutes: Route[] = [
       {
         path: "courses",
         loadComponent: () => import('@sp/courses-page').then(mod => mod.CoursesPageComponent),
+        children: coursesRoutes
       },
       {
-      path:"",
-      loadComponent: () => import('@sp/main-page').then(mod => mod.MainPageComponent),
-      pathMatch: 'full'
-      // component: MainPageComponent
-    }]
+        path: "",
+        loadComponent: () => import('@sp/main-page').then(mod => mod.MainPageComponent),
+        pathMatch: 'full'
+        // component: MainPageComponent
+      }]
   }
 ];

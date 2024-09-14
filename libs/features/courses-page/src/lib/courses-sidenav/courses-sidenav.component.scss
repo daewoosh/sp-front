@@ -1,0 +1,13 @@
+.sidenav-container {
+  @apply px-[26px] py-12 flex flex-col justify-between h-full;
+  color: white;
+
+  width: var(--sp-sidenav-width);
+  z-index: 1;
+  background-color: black;
+
+  & .section {
+    @apply text-base;
+    border-bottom: 1px solid #272826
+  }
+}

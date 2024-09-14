@@ -1,0 +1,13 @@
+<div class="max-w-[1440px]">
+  <p class="text-white text-4xl mb-8">
+    Добро пожаловать, {{profile?.userName ?? ""}}!
+  </p>
+
+  <div class="flex items-center gap-4 justify-between flex-wrap">
+    <span class="text-2xl">Все продукты SafePoker</span>
+    <div class="btn-link">Видео-курсы</div>
+  </div>
+  <div class="flex flex-wrap xl:gap-16" *ngFor="let course of courses">
+    <sp-course-card [course]="course"/>
+  </div>
+</div>
