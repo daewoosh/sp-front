@@ -312,7 +312,7 @@ tui-dialog[data-appearance='sp-modal'] {
 
 [tuiProgressBar][data-size=s] {
   --t-height: 6px !important;
-  --tui-background-accent-1:var(--clr-primary)!important;
+  --tui-background-accent-1: var(--clr-primary) !important;
   --tui-background-neutral-1: #272826CC;
 }
 
@@ -325,17 +325,27 @@ select, input, textarea {
   & option {
     color: var(--clr-primary);
 
-    & .name{
+    & .name {
       font-size: 1rem !important;
     }
 
-    & .description{
+    & .description {
       font-size: 0.5rem !important;
     }
   }
 
-  &:disabled{
+  &:disabled {
     border-color: #4D4D4D;
   }
 
+}
+
+[tuiAppearance][data-appearance=primary] {
+  --t-bg: white;
+  background: var(--t-bg);
+  color: var(--tui-text-primary-on-accent-1);
+}
+
+[tuiAppearance][data-appearance=secondary] {
+  background: var(--clr-grey);
 }

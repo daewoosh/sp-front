@@ -14,6 +14,6 @@ export const appConfig: ApplicationConfig = {
     provideClientHydration(),
     provideZoneChangeDetection({eventCoalescing: true}),
 
-    NG_EVENT_PLUGINS
+    NG_EVENT_PLUGINS,
   ],
 };

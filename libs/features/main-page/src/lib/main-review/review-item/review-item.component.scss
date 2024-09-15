@@ -1,0 +1,32 @@
+.line {
+  height: 100%;
+  width: 1px;
+  border-left: 0.5px solid var(--clr-primary);
+  box-shadow: 1px 1px 12px var(--clr-primary),
+  inset 1px 1px 12px var(--clr-primary);
+  margin-right: 1.5rem;
+}
+
+.lb{
+  border-left: 0.5px solid var(--clr-primary);
+  padding: 1.5rem;
+}
+
+.with-quotes{
+  position: relative;
+  z-index: 1;
+  &:before{
+    content: url("/assets/icons/quote-up.png");
+    position: absolute;
+    top:-50px;
+    left: -20px;
+
+  }
+
+  &:after{
+    content: url("/assets/icons/quote-down.png");
+    position: absolute;
+    bottom:-20px;
+    right: -20px;
+  }
+}

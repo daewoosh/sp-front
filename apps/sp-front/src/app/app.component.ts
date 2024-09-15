@@ -1,4 +1,4 @@
-import { TuiLoader, TuiRoot } from "@taiga-ui/core";
+import { TuiRoot } from "@taiga-ui/core";
 import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { NxWelcomeComponent } from './nx-welcome.component';
@@ -6,6 +6,8 @@ import { SpCoreModule } from "@sp/core";
 import { filter, Subscription } from "rxjs";
 import { WINDOW } from "@sp/sdk/common";
 import { isPlatformBrowser } from "@angular/common";
+import { EXCHANGE_URL } from "@sp/config";
+import { environment } from "../environments/environment";
 
 @Component({
   standalone: true,
@@ -13,11 +15,15 @@ import { isPlatformBrowser } from "@angular/common";
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
+  providers: [
+    {provide: EXCHANGE_URL, useValue: environment.exchangeUrl}
+  ]
 })
 export class AppComponent implements OnInit, OnDestroy {
   title = 'sp-front';
   subscription?: Subscription;
-  constructor(private router:Router,
+
+  constructor(private router: Router,
               @Inject(WINDOW) private window: Window,
               @Inject(PLATFORM_ID) private platformId: string) {
   }

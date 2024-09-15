@@ -27,7 +27,8 @@
       "@sp/core/*": ["libs/core/src/*"],
       "@sp/courses-page": ["libs/features/courses-page/src/index.ts"],
       "@sp/main-page": ["libs/features/main-page/src/index.ts"],
-      "@sp/sdk/*": ["libs/sdk/src/*"]
+      "@sp/sdk/*": ["libs/sdk/src/*"],
+      "@sp/config": ["libs/app-config/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
