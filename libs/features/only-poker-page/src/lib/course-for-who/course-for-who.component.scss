@@ -1,0 +1,22 @@
+
+
+.grid{
+  display: grid;
+  grid-template-columns: 1fr;
+}
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr; /* Две колонки с минимальной шириной 0 и максимальной 462px */
+  gap: 20px; /* Расстояние между колонками */
+  justify-content: space-between; /* Центрирование колонок */
+}
+
+@media screen and (min-width: 1009px) {
+  .grid-container{
+    grid-template-columns: repeat(2, minmax(0, 463px));
+  }
+}
+
+
+
+

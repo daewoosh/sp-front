@@ -24,6 +24,10 @@ export const appRoutes: Route[] = [
         loadComponent: () => import('@sp/analysis-page').then(mod => mod.AnalysisPageComponent),
       },
       {
+        path: "only-poker",
+        loadComponent: () => import('@sp/only-poker-page').then(mod => mod.OnlyPokerPageComponent),
+      },
+      {
         path: "courses",
         loadComponent: () => import('@sp/courses-page').then(mod => mod.CoursesPageComponent),
         children: coursesRoutes

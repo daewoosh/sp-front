@@ -2,7 +2,7 @@
     <button
       class="flex items-end py-2 rounded  md:p-0 w-fit nav-link text-base"
       type="button"
-      [ngClass]="{'active':isActiveRoute('/booster') || isActiveRoute('/beginner')|| isActiveRoute('/advanced')|| isActiveRoute('/ultimate-course')}"
+      [ngClass]="{'active':isActiveRoute('/booster') || isActiveRoute('/beginner')|| isActiveRoute('/advanced')|| isActiveRoute('/only-poker')}"
       [tuiDropdown]="learningDropdownContent"
       [tuiDropdownManual]="learningOpen"
       (tuiObscured)="onLearningObscured($event)"
@@ -38,7 +38,7 @@
               </li>
 
                <li (click)="learningOpen=false">
-                <a routerLink="/ultimate-course" queryParamsHandling="preserve"
+                <a routerLink="/only-poker" queryParamsHandling="preserve"
                    class="nav-link text-base">Only Покер</a>
 
               </li>
