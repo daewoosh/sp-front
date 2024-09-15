@@ -1,0 +1,12 @@
+.why-block{
+  background-color: var(--clr-black-light);
+  border-radius: 8px;
+  padding: 2rem;
+
+  & .head{
+    color: var(--clr-primary);
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+  }
+}

@@ -1,0 +1,24 @@
+.bg-logo {
+  background-image: url("/assets/images/beginner/background_logo.png");
+  background-size: cover;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: left 30px top;
+
+
+}
+
+@media screen and (min-width: 1024px) {
+  .bg-logo {
+    background-size: 50% 100%;
+  }
+}
+
+.h-line {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  width: 100%;
+  border-bottom: 0.5px solid var(--clr-primary);
+  box-shadow: 1px 1px 12px var(--clr-primary),
+  inset 1px 1px 12px var(--clr-primary);
+}

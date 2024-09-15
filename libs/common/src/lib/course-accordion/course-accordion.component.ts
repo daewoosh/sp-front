@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { CommonModule } from "@angular/common";
-import { TuiExpandComponent } from "@taiga-ui/core";
+import { TuiExpand, TuiExpandComponent } from "@taiga-ui/core";
 
 @Component({
   selector: 'sp-course-accordion',
@@ -8,7 +8,7 @@ import { TuiExpandComponent } from "@taiga-ui/core";
   styleUrls: ['./course-accordion.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, TuiExpandComponent],
+  imports: [CommonModule, TuiExpandComponent, TuiExpand],
 })
 export class CourseAccordionComponent {
 

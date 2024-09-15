@@ -29,6 +29,10 @@ export const appRoutes: Route[] = [
         children: coursesRoutes
       },
       {
+        path: "booster",
+        loadComponent: () => import('@sp/booster-page').then(mod => mod.BoosterPageComponent),
+      },
+      {
         path: "",
         loadComponent: () => import('@sp/main-page').then(mod => mod.MainPageComponent),
         pathMatch: 'full'

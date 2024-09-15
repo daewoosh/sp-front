@@ -1,0 +1,97 @@
+.bg-1 {
+  background: linear-gradient(180deg, #272826 0%, #2BBE16 100%);
+  border-radius: 25px;
+}
+
+
+.bg-2 {
+  background: linear-gradient(180deg, #2BBE16 0%, #272826 100%);
+  border-radius: 25px;
+}
+
+
+.price {
+  font-size: 36px;
+  text-shadow: 0px 0px 5px #FFFFFF;
+  font-weight: 400;
+}
+
+:host {
+  --tui-height-m: 42px;
+  --tui-radius-m: 8px;
+  --tui-padding-l: 0;
+  --tui-color: #17836d;
+  --tui-primary-text: #fff;
+  --tui-primary: #fff;
+  --tui-text-01: var(--clr-white);
+}
+
+.form-image {
+  position: absolute;
+  bottom: -25px;
+  right: 51px;
+  display: none;
+  z-index: 2;
+}
+
+
+@media screen and (min-width: 800px) {
+  .form-image {
+    display: flex;
+    height: 575px;
+    bottom: -72px;
+  }
+}
+
+@media screen and (min-width: 984px) {
+  .form-image {
+    height: 736px;
+    bottom: -92px;
+    right: 44px;
+  }
+}
+
+@media screen and (min-width: 1080px) {
+  .form-image {
+    height: unset;
+    bottom: -104px;
+    right: 64px;
+  }
+}
+
+.line {
+  height: 40px;
+  border-left: 0.5px solid var(--clr-primary);
+  box-shadow: 1px 1px 12px var(--clr-primary),
+  inset 1px 1px 12px var(--clr-primary);
+  @apply hidden sm:block;
+}
+
+.margined {
+  margin-top: -50px;
+  justify-content: center;
+}
+
+@media screen and (min-width: 564px) {
+  .margined {
+    //margin-top: -102px;
+    justify-content: start;
+  }
+}
+
+.c-link {
+  display: none;
+}
+
+.c-link2 {
+  display: flex;
+}
+
+@media screen and (min-width: 440px) {
+  .c-link {
+    display: flex;
+  }
+  .c-link2 {
+    display: none;
+  }
+}
