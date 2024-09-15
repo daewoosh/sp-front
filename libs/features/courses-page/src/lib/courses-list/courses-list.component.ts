@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Course, UserProfile } from "@sp/core/models/user-profile";
+import { Course, UserProfile } from "@sp/core/models";
 import { CourseCardComponent } from "../course-card/course-card.component";
 import { COURSES } from "../courses-mock";
 

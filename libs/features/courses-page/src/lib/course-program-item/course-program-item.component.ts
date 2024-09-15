@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CourseElementType, CourseProgramItem } from "@sp/core/models/user-profile";
+import { CourseElementType, CourseProgramItem } from "@sp/core/models/";
 import { RouterLink } from "@angular/router";
 import { TuiProgress } from "@taiga-ui/kit";
 

@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Course } from "@sp/core/models/user-profile";
+import { Course } from "@sp/core/models";
 import { RouterLink } from "@angular/router";
 import { TuiDialogContext, TuiDialogService } from "@taiga-ui/core";
 

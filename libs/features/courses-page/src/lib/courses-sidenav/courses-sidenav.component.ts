@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CoursesProfileComponent } from "./courses-profile.component";
-import { Course, UserProfile } from "@sp/core/models/user-profile";
+import { Course, UserProfile } from "@sp/core/models";
 import { MenuItem } from "./menu-items";
 import { CoursesMenuItemComponent } from "./courses-menu-item/courses-menu-item.component";
 

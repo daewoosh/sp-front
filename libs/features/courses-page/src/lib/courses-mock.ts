@@ -1,4 +1,4 @@
-import { Course, CourseElementType, CourseProgramItem } from "@sp/core/models/user-profile";
+import { Course, CourseElementType, CourseProgramItem, VideoCourseElement } from "@sp/core/models";
 
 export const COURSES: Course[] = [{
   title: 'Only Покер',
@@ -35,7 +35,7 @@ export const COURSE_PROGRAM: CourseProgramItem[] = [
     title: 'Урок 1. Введение в МТТ',
     order: 1,
     isCompleted: true,
-    progress:100
+    progress: 100
   },
   {
     type: CourseElementType.Assignment,
@@ -48,7 +48,7 @@ export const COURSE_PROGRAM: CourseProgramItem[] = [
     title: 'Урок 2. Игра против любителей',
     order: 3,
     isCompleted: false,
-    progress:70,
+    progress: 70,
   },
   {
     type: CourseElementType.Assignment,
@@ -142,3 +142,12 @@ export const COURSE_PROGRAM: CourseProgramItem[] = [
   }
 ];
 
+
+export const VIDEO_COURSE_ELEMENT: VideoCourseElement = {
+  order: 1,
+  title: 'Урок 2. МТТ турниры и чекфолд',
+  type: CourseElementType.Video,
+  url: 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8',
+  lastPosition: 0,
+  maxPosition: 0
+}

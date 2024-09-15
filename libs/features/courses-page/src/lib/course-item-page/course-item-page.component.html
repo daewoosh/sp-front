@@ -2,10 +2,10 @@
   <div>
     <router-outlet/>
   </div>
-  <tui-scrollbar class="program-list-container">
+
     <ng-container *ngIf="courseProgram$|async as courseProgram">
 
       <sp-course-program-list [program]="courseProgram"></sp-course-program-list>
     </ng-container>
-  </tui-scrollbar>
+
 </div>

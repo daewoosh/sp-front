@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Observable, of } from "rxjs";
-import { Course, CourseProgramItem } from "@sp/core/models/user-profile";
-import { COURSE_PROGRAM, COURSES } from "./courses-mock";
+import { Course, CourseElement, CourseProgramItem } from "@sp/core/models";
+import { COURSE_PROGRAM, COURSES, VIDEO_COURSE_ELEMENT } from "./courses-mock";
 
 @Injectable()
 export class CoursesApiService {
@@ -12,5 +12,9 @@ export class CoursesApiService {
 
   getCourseProgram(slug: string): Observable<CourseProgramItem[]> {
     return of(COURSE_PROGRAM);
+  }
+
+  getCourseElement(slug: string, order: number): Observable<CourseElement> {
+    return of(VIDEO_COURSE_ELEMENT);
   }
 }

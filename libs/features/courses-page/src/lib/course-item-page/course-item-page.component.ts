@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CoursesApiService } from "../courses-api.service";
 import { ActivatedRoute, Router, RouterOutlet } from "@angular/router";
-import { CourseProgramItem } from "@sp/core/models/user-profile";
+import { CourseProgramItem } from "@sp/core/models";
 import { map, Observable, of, switchMap } from "rxjs";
 import { CourseProgramItemComponent } from "../course-program-item/course-program-item.component";
 import { CourseProgramListComponent } from "../course-program-list/course-program-list.component";
