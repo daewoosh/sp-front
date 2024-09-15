@@ -1,8 +1,9 @@
-.item-active{
+.item-active {
   background-color: var(--clr-primary);
   border-radius: 10px;
+  pointer-events: none;
 
-  & img{
+  & img {
     filter: brightness(0%);
   }
 }

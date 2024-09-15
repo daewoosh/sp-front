@@ -11,6 +11,7 @@ export class CoursesApiService {
   }
 
   getCourseProgram(slug: string): Observable<CourseProgramItem[]> {
+    console.log('api call for program');
     return of(COURSE_PROGRAM);
   }
 
