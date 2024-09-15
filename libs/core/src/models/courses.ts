@@ -1,3 +1,5 @@
+import { Assignment } from "@sp/core/models/assignment";
+
 export interface Course {
   title: string;
   subtitle: string;
@@ -26,9 +28,11 @@ export interface CourseElement {
   type: CourseElementType;
   title: string;
   order: number;
+  courseName: string;
 }
 
 export interface VideoCourseElement extends CourseElement {
+  description: string;
   url: string;
   lastPosition: number;
   maxPosition: number;

@@ -1,0 +1,10 @@
+textarea{
+  border-radius: 10px;
+  padding: 18px;
+  border: 1px solid var(--clr-grey);
+
+  &:focus{
+    border: 1px solid var(--clr-primary);
+    outline: 1px solid var(--clr-primary);
+  }
+}

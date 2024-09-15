@@ -317,7 +317,25 @@ tui-dialog[data-appearance='sp-modal'] {
 }
 
 
-//.t-thumb {
-//  background: #474747 !important;
-//  opacity: 0.8 !important;
-//}
+select, input, textarea {
+  background-color: #242625 !important;
+  color: var(--clr-gray) !important;
+
+
+  & option {
+    color: var(--clr-primary);
+
+    & .name{
+      font-size: 1rem !important;
+    }
+
+    & .description{
+      font-size: 0.5rem !important;
+    }
+  }
+
+  &:disabled{
+    border-color: #4D4D4D;
+  }
+
+}

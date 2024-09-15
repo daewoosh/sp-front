@@ -9,7 +9,7 @@
   </div>
   <div class="flex justify-end mt-auto">
     <a class="btn primary font-bold" *ngIf="course.isAvailable" [routerLink]="'./'+course.slug">К обучению</a>
-    <button class="btn warning font-bold" [routerLink]="'./'+course.slug" *ngIf="!course.isAvailable"
+    <button class="btn warning font-bold" *ngIf="!course.isAvailable"
             (click)="showDialog(template)">Открыть доступ
     </button>
   </div>
@@ -19,7 +19,6 @@
 
 <ng-template
   #template
-  let-observer
 >
   <div class="text-center clr-orange text-2xl"><p>Упс!</p></div>
   <div class="flex flex-col text-base">

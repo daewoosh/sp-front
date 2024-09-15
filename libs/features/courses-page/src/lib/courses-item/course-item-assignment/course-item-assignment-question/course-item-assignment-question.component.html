@@ -1,0 +1,15 @@
+<div class="flex gap-3 items-center">
+  <span class="text-2xl font-bold">Задание</span>
+  <div
+    class="text-base font-bold rounded-[40px] bg-[#DF8316] w-[68px] h-[26px] flex items-center justify-center">{{question.order}}
+    /{{courseElement.questions.length}}</div>
+</div>
+<div [innerHTML]="question.text" class="mt-3 text-base text-white"></div>
+
+<div class="text-2xl mt-[30px]">
+  Ваш ответ
+</div>
+<div class="text-base clr-grey mt-2 mb-4">
+  Заполните ответ в текстовом поле ниже
+</div>
+<textarea placeholder="Ответ" class="w-full resize-none" rows="10"></textarea>

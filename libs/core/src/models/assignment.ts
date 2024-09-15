@@ -8,6 +8,6 @@ export interface Assignment extends CourseElement{
 export interface Question {
   text: string;
   answer: string;
-  userAnswer: string;
+  userAnswer?: string;
   order: number;
 }
