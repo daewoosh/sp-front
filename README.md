@@ -8,6 +8,8 @@
 
 ## Run tasks
 
+nx g @nx/angular:library --directory=libs/features/main-page --importPath=@sp/main-page main-page
+
 To run the dev server for your app, use:
 
 ```sh

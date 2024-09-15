@@ -1,1 +1,3 @@
 export * from './lib/courses-page/courses-page.component';
+export * from './lib/courses-routes';
+export * from './lib/courses-mock';

@@ -1,0 +1,13 @@
+.result-head {
+  color: #808080;
+  font-size: 21px;
+  line-height: 25px;
+  padding-bottom: 0.5rem;
+}
+
+.result-line{
+  border-bottom: 0.5px solid var(--clr-primary);
+  box-shadow: 1px 1px 12px var(--clr-primary),
+  inset 1px 1px 12px var(--clr-primary);
+  margin-bottom: 1rem;
+}

@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { BonusesPageComponent } from './bonuses-page.component';
+import { OnlyPokerPageComponent } from './only-poker-page.component';
 
-describe('BonusesPageComponent', () => {
-  let component: BonusesPageComponent;
-  let fixture: ComponentFixture<BonusesPageComponent>;
+describe('OnlyPokerPageComponent', () => {
+  let component: OnlyPokerPageComponent;
+  let fixture: ComponentFixture<OnlyPokerPageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [BonusesPageComponent],
+      imports: [OnlyPokerPageComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(BonusesPageComponent);
+    fixture = TestBed.createComponent(OnlyPokerPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

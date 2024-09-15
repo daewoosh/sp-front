@@ -2,7 +2,7 @@
     <button
       class="flex items-end py-2 rounded  md:p-0 w-fit nav-link text-base"
       type="button"
-      [ngClass]="{'active':isActiveRoute('/booster') || isActiveRoute('/beginner')|| isActiveRoute('/advanced')}"
+      [ngClass]="{'active':isActiveRoute('/booster') || isActiveRoute('/beginner')|| isActiveRoute('/advanced')|| isActiveRoute('/ultimate-course')}"
       [tuiDropdown]="learningDropdownContent"
       [tuiDropdownManual]="learningOpen"
       (tuiObscured)="onLearningObscured($event)"
@@ -20,24 +20,24 @@
                    <div
                      class="z-10 text-white font-normal bg-black-sp p-6 rounded divide-y divide-gray-100 shadow">
             <ul class="py-1 text-sm text-gray-700 dark:text-gray-400">
-               <li class="mb-4">
+               <li class="mb-4" (click)="learningOpen=false">
                 <a routerLink="/beginner" queryParamsHandling="preserve" class="nav-link text-base">Осознанное
                   начало</a>
               </li>
-              <li class="mb-4">
+              <li class="mb-4" (click)="learningOpen=false">
                 <a routerLink="/advanced" queryParamsHandling="preserve" class="nav-link text-base">Продвинутый
                   курс</a>
               </li>
-              <li class="mb-4">
+              <li class="mb-4" (click)="learningOpen=false">
                 <a routerLink="/booster" queryParamsHandling="preserve" class="nav-link text-base">БУСТЕР</a>
 
               </li>
-               <li class="mb-4">
+               <li class="mb-4" (click)="learningOpen=false">
                 <a routerLink="/analysis" queryParamsHandling="preserve" class="nav-link text-base">Разбор базы</a>
 
               </li>
 
-               <li>
+               <li (click)="learningOpen=false">
                 <a routerLink="/ultimate-course" queryParamsHandling="preserve"
                    class="nav-link text-base">Only Покер</a>
 

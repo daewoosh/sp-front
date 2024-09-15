@@ -1,0 +1,52 @@
+.about-card {
+  background: linear-gradient(107.14deg, #272826 19.83%, rgba(39, 40, 38, 0) 50.7%, #272826 80.37%);
+  border-radius: 8px;
+  height: 100%;
+  @apply p-8 lg:py-[50px] lg:pl-[90px] lg:pr-[70px];
+}
+
+.price {
+  font-size: 48px;
+  text-shadow: 0px 0px 5px #FFFFFF;
+}
+
+.price-image {
+  //hidden md:block scale-75 lg:scale-100 absolute top-[-93px] left-[15%] lg:left-[23%] xl:left-[30%]
+  display: none;
+  position: absolute;
+}
+
+@media screen and (min-width: 788px) {
+  .price-image {
+    display: block;
+    transform: scale(0.5);
+    top: -86px;
+    left: 17%;
+  }
+}
+@media screen and (min-width: 848px) {
+  .price-image {
+    display: block;
+    transform: scale(0.7);
+    top: -86px;
+    left: 21%;
+  }
+}
+
+@media screen and (min-width: 900px) {
+  .price-image {
+    display: block;
+    transform: scale(0.9);
+    top: -93px;
+    left: 22%;
+  }
+}
+
+@media screen and (min-width: 1190px) {
+  .price-image {
+    display: block;
+    transform: scale(1);
+    top: -93px;
+    left: 27%;
+  }
+}

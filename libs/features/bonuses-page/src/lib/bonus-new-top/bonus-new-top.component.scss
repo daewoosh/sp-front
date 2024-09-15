@@ -1,0 +1,49 @@
+.analysis-top {
+  overflow: hidden;
+  background: url("/assets/images/analysis/bg-top.png") no-repeat;
+}
+
+.top-images {
+  max-width: 684px;
+  margin: auto;
+}
+
+.button-glow, .logo-glow {
+  position: relative;
+
+  z-index: 1;
+
+  &::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    width: 557px; /* Ширина изображения */
+    height: 557px; /* Высота изображения */
+    background: url('/assets/images/analysis/glow-big.png') no-repeat center center;
+    background-size: contain; /* Это сохранит оригинальные пропорции изображения */
+    pointer-events: none; /* Чтобы изображение не перекрывало кнопки */
+  }
+}
+
+.button-glow {
+  &::before {
+    top: -264px;
+    left: -225px;
+  }
+}
+
+.logo-glow {
+  &::before {
+    top: -122px;
+    right: -225px;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .button-glow, .logo-glow {
+    &::before {
+      //display: none;
+    }
+  }
+}

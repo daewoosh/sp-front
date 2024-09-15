@@ -5,7 +5,7 @@ import { NxWelcomeComponent } from './nx-welcome.component';
 import { SpCoreModule } from "@sp/core";
 import { filter, Subscription } from "rxjs";
 import { WINDOW } from "@sp/sdk/common";
-import { isPlatformBrowser } from "@angular/common";
+import { isPlatformBrowser, ViewportScroller } from "@angular/common";
 import { EXCHANGE_URL } from "@sp/config";
 import { environment } from "../environments/environment";
 
@@ -25,17 +25,19 @@ export class AppComponent implements OnInit, OnDestroy {
 
   constructor(private router: Router,
               @Inject(WINDOW) private window: Window,
-              @Inject(PLATFORM_ID) private platformId: string) {
+              @Inject(PLATFORM_ID) private platformId: string,
+              viewport: ViewportScroller) {
+    viewport.setOffset([0, 100]);
   }
 
   public ngOnInit(): void {
-    this.subscription = this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe(() => {
-        if (isPlatformBrowser(this.platformId)) {
-          this.window.scrollTo(0, 0);
-        }
-      });
+    // this.subscription = this.router.events
+    //   .pipe(filter(event => event instanceof NavigationEnd))
+    //   .subscribe(() => {
+    //     if (isPlatformBrowser(this.platformId)) {
+    //       this.window.scrollTo(0, 0);
+    //     }
+    //   });
   }
 
   public ngOnDestroy(): void {

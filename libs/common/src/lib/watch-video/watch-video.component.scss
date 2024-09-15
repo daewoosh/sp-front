@@ -1,0 +1,14 @@
+.highlighted {
+  position: relative;
+
+  &:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -6px;
+    border-bottom: 0.5px solid var(--clr-primary);
+    box-shadow: 1px 1px 12px var(--clr-primary),
+    inset 1px 1px 12px var(--clr-primary);
+  }
+}

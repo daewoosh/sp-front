@@ -18,17 +18,22 @@
       "@sp/advanced-course-page": [
         "libs/features/advanced-course-page/src/index.ts"
       ],
+      "@sp/agreement-page": ["libs/features/agreement-page/src/index.ts"],
+      "@sp/analysis-page": ["libs/features/analysis-page/src/index.ts"],
       "@sp/beginner-course-page": [
         "libs/features/beginner-course-page/src/index.ts"
       ],
       "@sp/bonuses-page": ["libs/features/bonuses-page/src/index.ts"],
+      "@sp/booster-page": ["libs/features/booster-page/src/index.ts"],
       "@sp/common": ["libs/common/src/index.ts"],
+      "@sp/common/*": ["libs/common/src/lib/*"],
+      "@sp/config": ["libs/app-config/index.ts"],
       "@sp/core": ["libs/core/src/index.ts"],
       "@sp/core/*": ["libs/core/src/*"],
       "@sp/courses-page": ["libs/features/courses-page/src/index.ts"],
       "@sp/main-page": ["libs/features/main-page/src/index.ts"],
-      "@sp/sdk/*": ["libs/sdk/src/*"],
-      "@sp/config": ["libs/app-config/index.ts"]
+      "@sp/only-poker-page": ["libs/features/only-poker-page/src/index.ts"],
+      "@sp/sdk/*": ["libs/sdk/src/*"]
     }
   },
   "exclude": ["node_modules", "tmp"]

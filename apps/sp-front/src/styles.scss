@@ -349,3 +349,48 @@ select, input, textarea {
 [tuiAppearance][data-appearance=secondary] {
   background: var(--clr-grey);
 }
+
+
+.amoforms__fields__submit {
+  max-width: 50px;
+}
+
+
+.bonus-item {
+  &__container {
+    background: linear-gradient(107.14deg, #272826 19.83%, rgba(39, 40, 38, 0) 50.7%, #272826 80.37%);
+    @apply flex flex-col lg:flex-row p-4 md:p-11 gap-6 lg:gap-16 items-center;
+    border-radius: 25px;
+  }
+
+  &__image {
+    flex-shrink: 0;
+    @apply lg:w-[328px];
+
+    & img {
+      @apply scale-75 md:scale-100;
+    }
+  }
+
+  &__title {
+    font-size: 1.5rem;
+    margin-left: 26px;
+  }
+
+  &__items {
+    @apply grid grid-cols-1 md:grid-cols-2 gap-x-11 gap-y-6 mt-11;
+  }
+}
+
+.orange-wrapper {
+  background: linear-gradient(107.14deg, rgba(255, 0, 0, 0.1) 19.83%, rgba(255, 122, 0, 0.5) 50.4%, #DF8316 80.37%);
+  @apply py-[15px] px-10;
+  border-radius: 40px;
+  text-align: center;
+
+  &.resizable{
+    @apply px-3 md:px-10 py-[5px] md:py-[15px];
+  }
+}
+
+

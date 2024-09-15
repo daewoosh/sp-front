@@ -1,6 +1,6 @@
 import { Route } from '@angular/router';
 import { PageLayoutComponent } from "@sp/common";
-import { coursesRoutes } from "../../../../libs/features/courses-page/src/lib/courses-routes";
+import { coursesRoutes } from "@sp/courses-page";
 
 export const appRoutes: Route[] = [
   {
@@ -12,16 +12,16 @@ export const appRoutes: Route[] = [
         loadComponent: () => import('@sp/bonuses-page').then(mod => mod.BonusesPageComponent),
       },
       {
-        path: "bonus",
-        loadComponent: () => import('@sp/bonuses-page').then(mod => mod.BonusesPageComponent),
-      },
-      {
-        path: "advanced-course",
+        path: "advanced",
         loadComponent: () => import('@sp/advanced-course-page').then(mod => mod.AdvancedCoursePageComponent),
       },
       {
-        path: "beginner-course",
+        path: "beginner",
         loadComponent: () => import('@sp/beginner-course-page').then(mod => mod.BeginnerCoursePageComponent),
+      },
+      {
+        path: "analysis",
+        loadComponent: () => import('@sp/analysis-page').then(mod => mod.AnalysisPageComponent),
       },
       {
         path: "courses",

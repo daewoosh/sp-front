@@ -1,0 +1,108 @@
+<div class="max-w-6xl mx-auto py-16 px-8 xl:px-0  md:py-24" id="advanced-program">
+  <div class="text-[30px]">
+    Программа курса
+  </div>
+  <div class="clr-grey text-[21px]  mt-4 mb-10">
+    13 блоков и 16 подробных видеоуроков с тестовыми заданиями
+  </div>
+  <div class="grid max-w-[40rem] mx-auto grid-cols-1 lg:gap-12 lg:max-w-none lg:grid-cols-2 items-start">
+    <div>
+      <sp-course-accordion [index]="0" head="Вводный урок. О курсе" [isOpened]="true">
+        <div class="mb-4">Вы узнаете, чему вы научитесь на этом курсе, для каких игроков он подойдет, а также
+          познакомитесь с большой командой топ-профессионалов, которая работала над созданием этого курса
+        </div>
+        <sp-watch-video videoUrl="https://www.youtube.com/watch?v=iIxGjz0upPg"></sp-watch-video>
+      </sp-course-accordion>
+
+      <sp-course-accordion [index]="1" head="Работа с курсом">
+        Вы узнаете, как лучше работать с курсом, поскольку только осознанный подход к обучению сможет принести должный
+        результат <b>на практике в игре</b>
+      </sp-course-accordion>
+      <sp-course-accordion [index]="2" head="Гейм-селект и банкролл-менеджмент">
+        Вы погрузитесь в тему селекта турниров и узнаете, как лучше подходить в выстраиванию турнирной сетки. Также в
+        уроке будет подробно разобрана важность дисперсии в покере, чтобы вы могли выбрать для себя оптимальное игровое
+        расписание в зависимости от целей, которые ставите перед собой в игре
+      </sp-course-accordion>
+      <sp-course-accordion [index]="3"
+                           head="Все о префлопе (3-беты / Оупен-рейзы /Защита ББ и др.)">
+        <sp-program-sub-item number="3.1" head="Префлоп"
+                             description="Этим уроком мы откроем одну из основ хорошей игры в покер — префлоп. А также расскажем, как получить доступ к ренджам, которые мы создали специально для этого курса"></sp-program-sub-item>
+        <sp-program-sub-item number="3.2" head="Оупен-рейзы"
+                             description="Вы разберёте диапазоны открытия на префлопе в разных стеках, а также факторы, влияющие на корректировку этих диапазонов"></sp-program-sub-item>
+        <sp-program-sub-item number="3.3" head="Колд-коллы и 3-беты"
+                             description="Вы посмотрите, какие руки нужно защищать колом, какие выкидывать, а какие уводить в 3-бет. Также в уроке будут рассмотрены факторы, влияющие на принятие решения"></sp-program-sub-item>
+        <sp-program-sub-item number="3.4" head="Рестилы и 3-бет пуши"
+                             description="Вы узнаете об игре в коротких стеках и о диапазонах рестилов и 3-бет пушей"></sp-program-sub-item>
+        <sp-program-sub-item number="3.5" head="Игра против 3-бетов"
+                             description="Вы выстроите стратегию защиты против 3-бетов, учитывая лики поля"></sp-program-sub-item>
+        <sp-program-sub-item number="3.6" head="Защита ББ"
+                             description="Вы рассмотрите стратегию защиты большого блайнда, разберёте основные концепции и ренжи защиты в разных стеках"></sp-program-sub-item>
+
+      </sp-course-accordion>
+      <sp-course-accordion [index]="4" head="Постфлоп">
+        <sp-program-sub-item number="4.1" head="Постфлоп"
+                             description="В вводном уроке о постфлопе вы узнаете основные понятия сравнения эквити диапазонов для удобства работы со следующими разделами курса"></sp-program-sub-item>
+        <sp-program-sub-item number="4.2" head="Игра без позиции (ООР)"
+                             description="Вы узнаете об игре без позиции на постфлопе, поймете сущность влияния префлопа, тенденции и слабости поля, а также разберёте несколько примеров на практике"></sp-program-sub-item>
+        <sp-program-sub-item number="4.3" head="ООР: 3-бет и 4-бет поты"
+                             description="Вы разберёте особенности игры в 3-бет потах без позиции и погрузитесь в основные моменты 4-бет потов"></sp-program-sub-item>
+        <sp-program-sub-item number="4.4" head="ООР: защита ББ на постфлопе"
+                             description="Вы научитесь защите ББ на постфлопе и способам эксплойта поля в зависимости от типа оппонента"></sp-program-sub-item>
+        <sp-program-sub-item number="4.5" head="ООР: BvB на постфлопе"
+                             description="Главная тема урока — битва блайндов на постфлопе. Вы изучите ее на основе выборки большого количества раздач, откуда сможете сделать выводы по наилучшим подстройкам"></sp-program-sub-item>
+        <sp-program-sub-item number="4.6" head="Мультипоты"
+                             description="Вы узнаете об основных принципах игры в мультипотах. В уроке включен функционал контроля качества"></sp-program-sub-item>
+        <sp-program-sub-item number="4.7" head="Игра в позиции (IP): HJ vs BB"
+                             description="Вы посмотрите на игру в позиции с точки зрения частот, а не стартовых рук. Разберёте типы досок, влияние сайзинга и альтернативные линии. Кстати, это один из самых сложных разделов курса"></sp-program-sub-item>
+        <sp-program-sub-item number="4.8" head="Колд-колл в позиции"
+                             description="Вы рассмотрите свою стратегию, находясь на месте колдколлера в свободной позиции"></sp-program-sub-item>
+      </sp-course-accordion>
+      <sp-course-accordion [index]="5" head="ICM и баббл фактор с примерами"
+      >
+        <sp-program-sub-item number="5.1" head="ICM"
+                             description="Вы узнаете все основные принципы ICM + как одни должны влиять на игру"></sp-program-sub-item>
+        <sp-program-sub-item number="5.2" head="Баббл фактор с примерами"
+                             description="Вы узнаете подробности бабл фактора: как, когда и на кого он больше всего влияет, и что делать в каждой ситуации"></sp-program-sub-item>
+      </sp-course-accordion>
+
+    </div>
+    <div>
+      <sp-course-accordion [index]="6" head="Эффект Card-removal"
+      >Вы узнаете про эффект Card-removal: как он повлияет на корректировку игры
+      </sp-course-accordion>
+      <sp-course-accordion [index]="7" head="PKO турниры">Вы разберёте нокаут-турниры, рассмотрите теорию и особенности
+        игры, а также увидите большое количество наглядных примеров для усвоения нокаут-турниров
+      </sp-course-accordion>
+      <sp-course-accordion [index]="8" head="Работа в специальных программах"
+      >
+        <sp-program-sub-item number="8.1" head="Работа в программе SharkScope"
+                             description="Алгоритм пользования + советы игрокам по работе с сайтом SharkScope"></sp-program-sub-item>
+        <sp-program-sub-item number="8.2" head="Работа в программе Holdem Resources Calculator"
+                             description="Алгоритм пользования + советы игрокам в программе Holdem Resources Calculator"></sp-program-sub-item>
+        <sp-program-sub-item number="8.3" head="Работа в программе Flopzilla"
+                             description="Алгоритм пользования + советы игрокам в программе Flopzilla"></sp-program-sub-item>
+        <sp-program-sub-item number="8.4" head="Работа в программе ICMizer"
+                             description="Алгоритм пользования + советы игрокам в программе ICMizer"></sp-program-sub-item>
+      </sp-course-accordion>
+      <sp-course-accordion [index]="9" head="Вне стола"
+      >Вы узнаете о колоссальном влиянии питания, спорта и саморазвития вне покера на ваши профессиональные результаты
+      </sp-course-accordion>
+      <sp-course-accordion [index]="10"
+                           head="Психология покера"
+      >Вы погрузитесь в тему психологии в покере. Построите покерную сансару,
+        определите свои сильные и слабые стороны, построите планы на будущее
+      </sp-course-accordion>
+      <sp-course-accordion [index]="11" head="Заключение"
+      >Вы сформируете пути развития себя, как игрока, а также подведете итоги работы с курсом
+      </sp-course-accordion>
+      <sp-course-accordion [index]="-1" head="Бонусный урок. Разбор финального стола"
+      >
+        В уроке будет разобран один из финальных столов Глеба Тремзина. Вы обратите внимание на ошибки и рассмотрите
+        оптимальные линии в сложных ситуациях
+      </sp-course-accordion>
+
+    </div>
+  </div>
+
+
+</div>
