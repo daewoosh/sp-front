@@ -1,11 +1,13 @@
 import { Route } from '@angular/router';
 import { PageLayoutComponent } from "@sp/common";
 import { coursesRoutes } from "@sp/courses-page";
+import { AppResolver } from "./app.resolver";
 
 export const appRoutes: Route[] = [
   {
     path: "",
     component: PageLayoutComponent,
+    // resolve: {isLoggedIn: AppResolver},
     children: [
       {
         path: "bonus",

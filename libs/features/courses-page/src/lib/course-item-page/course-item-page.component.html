@@ -3,9 +3,11 @@
     <router-outlet/>
   </div>
 
-    <ng-container *ngIf="courseProgram$|async as courseProgram">
+  <ng-container *ngIf="courseProgram$|async as courseProgram">
 
+    <div class="sticky">
       <sp-course-program-list [program]="courseProgram"></sp-course-program-list>
-    </ng-container>
+    </div>
+  </ng-container>
 
 </div>

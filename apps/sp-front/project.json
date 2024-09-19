@@ -39,7 +39,7 @@
         ],
         "scripts": [ "node_modules/hls.js/dist/hls.min.js"],
         "server": "apps/sp-front/src/main.server.ts",
-        "prerender": true,
+        "prerender": false,
         "ssr": {
           "entry": "apps/sp-front/server.ts"
         }

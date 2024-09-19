@@ -46,19 +46,14 @@ export class BonusRoomsComponent implements OnInit {
     ]).subscribe(
       res => {
         if (res.breakpoints["(min-width: 1050px)"]) {
-          console.log('setting 5');
           this.itemsCount = 5;
         } else if (res.breakpoints["(min-width: 850px) and (max-width: 1049px)"]) {
-          console.log('setting 4');
           this.itemsCount = 4;
         } else if (res.breakpoints["(min-width: 650px) and (max-width: 849px)"]) {
-          console.log('setting 3');
           this.itemsCount = 3;
         } else if (res.breakpoints["(min-width: 450px) and (max-width: 649px)"]) {
-          console.log('setting 2');
           this.itemsCount = 2;
         } else if (res.breakpoints["(min-width: 0px) and (max-width: 449px)"]) {
-          console.log('setting 1');
           this.itemsCount = 1;
         }
         this.cdr.detectChanges();

@@ -58,7 +58,11 @@
     </nav>
 
     <div class="md:flex items-center justify-end md:flex-1 w-[150px]">
-      <a class="btn primary" routerLink="/courses">Кабинет</a>
+
+      <a *ngIf="isLoggedIn$|async;else login" class="btn primary" routerLink="/courses">Кабинет</a>
+      <ng-template #login>
+        <button class="btn primary" (click)="openModal(loginModal)">Вход</button>
+      </ng-template>
     </div>
   </nav>
 </nav>
@@ -132,3 +136,7 @@
 
   <!--MOBILE MENU END-->
 </div>
+
+<ng-template #loginModal>
+  <sp-login-modal/>
+</ng-template>
