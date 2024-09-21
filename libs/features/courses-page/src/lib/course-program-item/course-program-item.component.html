@@ -8,17 +8,17 @@
   <div class="flex gap-2 justify-between items-center mt-[10px] text-sm">
     <div class="flex gap-2 items-center">
       <span class="clr-grey ">Прогресс</span>
-      <div class="flex gap-2 items-center" *ngIf="item.isCompleted && !isCurrent">
+      <div class="flex gap-2 items-center" *ngIf="item.isCompleted && !item.isCurrent">
         <div class="dot green"></div>
         <div class="clr-primary">Выполнено</div>
       </div>
 
-      <div class="flex gap-2 items-center" *ngIf="isCurrent">
+      <div class="flex gap-2 items-center" *ngIf="item.isCurrent">
         <div class="dot warning"></div>
         <div class="clr-orange">Выполнено</div>
       </div>
 
-      <div class="flex gap-2 items-center" *ngIf="!item.isCompleted && !isCurrent">
+      <div class="flex gap-2 items-center" *ngIf="!item.isCompleted && !item.isCurrent">
         <svg width="9" height="12" viewBox="0 0 9 12" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
             d="M8.47059 12H0V5.45455H8.47059V12ZM2.11765 5.45455V3.27273C2.11765 2.06836 3.06741 1.09091 4.23529 1.09091C5.40318 1.09091 6.35294 2.06836 6.35294 3.27273V5.45455H7.41177V3.27273C7.41177 1.46618 5.98977 0 4.23529 0C2.48082 0 1.05882 1.46618 1.05882 3.27273V5.45455H2.11765Z"

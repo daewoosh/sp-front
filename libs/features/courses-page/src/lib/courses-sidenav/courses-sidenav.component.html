@@ -4,7 +4,7 @@
       МОЙ АККАУНТ
     </div>
     <div class="px-7 py-8">
-      <sp-courses-profile [profile]="profile"/>
+      <sp-courses-profile [profile]="(profile$|async)!"/>
     </div>
 
     <div class="section">

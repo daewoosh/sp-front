@@ -8,19 +8,27 @@
     {{course.description}}
   </div>
   <div class="flex justify-end mt-auto">
-    <a class="btn primary font-bold" *ngIf="course.isAvailable" [routerLink]="'./'+course.slug">К обучению</a>
-    <button class="btn warning font-bold" *ngIf="!course.isAvailable"
+    <a class="btn primary font-bold" *ngIf="course.purchased" [routerLink]="'./'+course.slug">К обучению</a>
+    <button class="btn warning font-bold" *ngIf="!course.purchased"
             (click)="showDialog(template)">Открыть доступ
     </button>
   </div>
 
+  <div class="absolute top-[22px] right-[28px]">
+    <ng-container *ngIf="course.purchased;else locked">
+      <img src="/assets/icons/available.svg">
+    </ng-container>
+    <ng-template #locked>
+      <img src="/assets/icons/locked.svg">
+    </ng-template>
+  </div>
 </div>
 
 
 <ng-template
   #template
 >
-  <div class="text-center clr-orange text-2xl"><p>Упс!</p></div>
+  <div class="text-center clr-orange text-2xl mb-5"><p>Упс!</p></div>
   <div class="flex flex-col text-base">
     <p>
       У вас нет доступа к этому курсу.

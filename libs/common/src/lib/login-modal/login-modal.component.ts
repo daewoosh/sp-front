@@ -70,7 +70,7 @@ export class LoginModalComponent {
             isLoggedIn: result.isSuccessLogin,
             user: result.user,
           });
-          this.router.navigate(['/admin/news']);
+          this.router.navigate(['/courses']);
           this.context.completeWith(result);
         } else {
           this.ticker.next(false);

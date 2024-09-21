@@ -46,8 +46,8 @@ export class VideoPlayerComponent {
   getVideoUrl(): string {
     // return 'assets/filename.m3u8';
     // return  'https://localhost:43802/filename.m3u8'
-    return 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8';
-    // return 'https://localhost:43802/Video/2.m3u8';
+    // return 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8';
+    return 'https://localhost:43802/Video/2.m3u8';
     // return this.httpClient.get('https://localhost:43802/Video/1',{observe:'body'})
     //   .pipe(take(1));
   }

@@ -1,9 +1,7 @@
 <div class="courses-page">
-  <!--  <div class="sidenav">-->
-  <div class="sidenav-container">
+  <div class="sidenav-container" *ngIf="courses$|async as courses">
     <sp-courses-sidenav [courses]="courses"/>
   </div>
-  <!--  </div>-->
 
   <div class="main">
     <div class="content">

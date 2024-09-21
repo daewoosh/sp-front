@@ -14,11 +14,7 @@ import { TuiProgress } from "@taiga-ui/kit";
 })
 export class CourseProgramItemComponent {
   @Input() item!: CourseProgramItem;
-  @Input() currentElementOrder: number = 0;
 
   elementTypes= CourseElementType;
 
-  get isCurrent(): boolean {
-    return this.item.order == this.currentElementOrder;
-  }
 }

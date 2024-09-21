@@ -1,5 +1,6 @@
 export interface UserProfile {
-  userName: string;
+  role: number;
+  id: string;
   telegramName: string;
+  displayName: string;
 }
-

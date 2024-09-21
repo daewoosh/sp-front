@@ -1,5 +1,3 @@
-import { Assignment } from "@sp/core/models/assignment";
-
 export interface Course {
   title: string;
   subtitle: string;
@@ -7,7 +5,8 @@ export interface Course {
   description: string;
   icon: string;
   image: string;
-  isAvailable: boolean;
+  purchased: boolean;
+  isActive: boolean;
 }
 
 
@@ -22,6 +21,7 @@ export interface CourseProgramItem {
   order: number;
   isCompleted: boolean;
   progress?: number;
+  isCurrent?: boolean;
 }
 
 export interface CourseElement {

@@ -7,7 +7,8 @@ export const COURSES: Course[] = [{
   description: 'Уникальный формат обучения в команде единомышленников, состоящий из индивидуальных и групповых тренировок!',
   icon: 'only-poker.svg',
   image: 'only-poker.png',
-  isAvailable: true
+  purchased: true,
+  isActive: true
 },
   {
     title: 'Осознанное начало',
@@ -16,7 +17,8 @@ export const COURSES: Course[] = [{
     description: 'Все необходимые знания для новичков, с помощью которых вы положите уверенное начало в покере и начнете расти как игрок.',
     icon: 'osoznannoe-nachalo.svg',
     image: 'osoznannoe-nachalo.png',
-    isAvailable: false
+    purchased: false,
+    isActive: false
   },
   {
     title: 'Продвинутый курс',
@@ -25,7 +27,8 @@ export const COURSES: Course[] = [{
     description: 'Курс для опытных игроков в покер, состоящий из 13-летнего концентрата знаний Глеба Тремзина, а также лучших тренеров SafePoker и MVP Team.',
     icon: 'prodvinutyi-kurs.svg',
     image: 'prodvinutyi-kurs.png',
-    isAvailable: false
+    purchased: false,
+    isActive: false
   }
 ];
 
@@ -147,7 +150,7 @@ export const VIDEO_COURSE_ELEMENT: VideoCourseElement = {
   order: 1,
   title: 'Урок 2. МТТ турниры и чекфолд',
   type: CourseElementType.Video,
-  url: 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8',
+  url: 'https://localhost:43802/Video/2.m3u8',
   lastPosition: 0,
   maxPosition: 0,
   courseName: 'Only Покер',

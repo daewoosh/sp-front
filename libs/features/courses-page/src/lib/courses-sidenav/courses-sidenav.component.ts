@@ -4,6 +4,8 @@ import { CoursesProfileComponent } from "./courses-profile.component";
 import { Course, UserProfile } from "@sp/core/models";
 import { MenuItem } from "./menu-items";
 import { CoursesMenuItemComponent } from "./courses-menu-item/courses-menu-item.component";
+import { AppStateService } from "@sp/core/state";
+import { map, Observable } from "rxjs";
 
 @Component({
   selector: 'sp-courses-sidenav',
@@ -14,9 +16,13 @@ import { CoursesMenuItemComponent } from "./courses-menu-item/courses-menu-item.
 })
 export class CoursesSidenavComponent implements OnInit {
   profile: UserProfile = {
-    userName: 'Vasia Petya',
-    telegramName: '@vasiapetya'
+    telegramName: '@',
+    role: 1,
+    displayName: '',
+    id: '-1',
   }
+
+  profile$: Observable<UserProfile>;
 
   menuItems: MenuItem[] = [];
   logoutMenuItem: MenuItem = {
@@ -34,13 +40,24 @@ export class CoursesSidenavComponent implements OnInit {
 
   @Input() courses: Course[] = [];
 
+  constructor(private appStateService: AppStateService) {
+    this.profile$ = this.appStateService.selectUser
+      .pipe(
+        map(user => {
+          return {
+            ...user,
+            telegramName: '@' + user.telegramName || '@',
+          }
+        })
+      );
+  }
 
   ngOnInit() {
     this.menuItems = this.courses.map(x => {
       return {
         icon: x.icon,
         title: x.title,
-        url: x.slug ,
+        url: x.slug,
       }
     });
     this.menuItems.unshift({icon: 'all-products.svg', url: '.', title: 'Все продукты'});

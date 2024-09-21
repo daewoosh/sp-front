@@ -1,17 +1,19 @@
-import { Component, Inject, PLATFORM_ID } from '@angular/core';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { VgControlsModule } from "@videogular/ngx-videogular/controls";
-import { BitrateOptions, IMediaElement, VgApiService, VgCoreModule } from "@videogular/ngx-videogular/core";
+import { VgCoreModule } from "@videogular/ngx-videogular/core";
 import { VgOverlayPlayModule } from "@videogular/ngx-videogular/overlay-play";
 import { VgBufferingModule } from "@videogular/ngx-videogular/buffering";
 import { VgStreamingModule } from "@videogular/ngx-videogular/streaming";
-import { HttpClient } from "@angular/common/http";
-import { take, throttleTime } from "rxjs";
+import { map, Observable } from "rxjs";
 import { CoursesSidenavComponent } from "../courses-sidenav/courses-sidenav.component";
-import { COURSES } from "../courses-mock";
 import { CoursesListComponent } from "../courses-list/courses-list.component";
 import { RouterOutlet } from "@angular/router";
 import { CoursesApiService } from "../courses-api.service";
+import { Course } from "@sp/core/models";
+import { FooterComponent } from "@sp/common/footer";
+import { CoursesStateService } from "../courses-state.service";
+import { CoursesResolver } from "../courses-resolver.service";
 
 @Component({
   selector: 'sp-front-courses-page',
@@ -20,11 +22,14 @@ import { CoursesApiService } from "../courses-api.service";
     VgControlsModule,
     VgOverlayPlayModule,
     VgBufferingModule,
-    VgStreamingModule, CoursesSidenavComponent, CoursesListComponent, RouterOutlet],
+    VgStreamingModule, CoursesSidenavComponent, CoursesListComponent, RouterOutlet, FooterComponent],
   templateUrl: './courses-page.component.html',
   styleUrl: './courses-page.component.scss',
-  providers:[CoursesApiService]
 })
 export class CoursesPageComponent {
-  courses = COURSES
+  courses$: Observable<Course[]>;
+
+  constructor(coursesState: CoursesStateService) {
+    this.courses$ = coursesState.selectCourses;
+  }
 }

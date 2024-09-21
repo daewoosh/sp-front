@@ -1,18 +1,14 @@
 import {Injectable} from '@angular/core';
 import {StateService} from "./state.service";
 import {Observable} from "rxjs";
-import {UserRole} from "../models";
+import { UserProfile, UserRole } from "../models";
 
 interface UserState {
   isLoggedIn?: boolean;
-  user?: User;
+  user?: UserProfile;
 }
 
-interface User {
-  role: number;
-  id: string;
-  telegramId: number;
-}
+
 
 interface AppState {
   userState: UserState;
@@ -28,8 +24,8 @@ const initialState: AppState = {
   providedIn: 'root'
 })
 export class AppStateService extends StateService<AppState> {
-  public cselectUser: Observable<User | undefined> = this.select(
-    ({userState}: AppState) => userState.user
+  public selectUser: Observable<UserProfile> = this.select(
+    ({userState}: AppState) => userState.user ?? {displayName:'Аноним', telegramName: 'telegram', role: UserRole.User, id: '-1'}
   );
 
   public role: Observable<UserRole | undefined> = this.select(

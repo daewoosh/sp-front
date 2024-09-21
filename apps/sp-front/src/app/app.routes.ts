@@ -1,7 +1,6 @@
 import { Route } from '@angular/router';
 import { PageLayoutComponent } from "@sp/common";
-import { coursesRoutes } from "@sp/courses-page";
-import { AppResolver } from "./app.resolver";
+import { CoursesResolver, coursesRoutes } from "@sp/courses-page";
 
 export const appRoutes: Route[] = [
   {
@@ -32,7 +31,7 @@ export const appRoutes: Route[] = [
       {
         path: "courses",
         loadComponent: () => import('@sp/courses-page').then(mod => mod.CoursesPageComponent),
-        children: coursesRoutes
+        children: coursesRoutes,
       },
       {
         path: "booster",

@@ -1,10 +1,10 @@
 export type Maybe<T> = T | null;
 
 export type AppUser = {
-  displayName: string;
   role: number;
   id: string;
-  telegramId: number;
+  telegramName: string;
+  displayName: string;
 };
 
 export enum UserRole {
@@ -22,3 +22,4 @@ export type LoginResult = {
   accessToken: Maybe<string>;
   user: AppUser;
 };
+
