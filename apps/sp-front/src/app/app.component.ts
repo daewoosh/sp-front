@@ -1,18 +1,14 @@
 import { TuiRoot } from "@taiga-ui/core";
-import { afterNextRender, Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { NxWelcomeComponent } from './nx-welcome.component';
 import { SpCoreModule } from "@sp/core";
 import { Subscription } from "rxjs";
 import { WINDOW } from "@sp/sdk/common";
 import { ViewportScroller } from "@angular/common";
-import { CONFIG, EXCHANGE_URL } from "@sp/config";
-import { environment } from "../environments/environment";
-import { AppResolver } from "./app.resolver";
 
 @Component({
   standalone: true,
-  imports: [NxWelcomeComponent, RouterModule, TuiRoot, SpCoreModule],
+  imports: [RouterModule, TuiRoot, SpCoreModule],
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',

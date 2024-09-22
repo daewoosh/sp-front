@@ -29,6 +29,9 @@ export interface CourseElement {
   title: string;
   order: number;
   courseName: string;
+  isCompleted: boolean;
+  courseSlug: string;
+  id: number;
 }
 
 export interface VideoCourseElement extends CourseElement {
@@ -36,4 +39,5 @@ export interface VideoCourseElement extends CourseElement {
   url: string;
   lastPosition: number;
   maxPosition: number;
+  videoId: number;
 }

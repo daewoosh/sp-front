@@ -11,4 +11,20 @@
   <ng-container *ngFor="let question of courseElement.questions">
     <sp-course-item-assignment-question [courseElement]="courseElement" [question]="question"/>
   </ng-container>
+  <div class="flex justify-end">
+    <button class="btn primary" (click)="sendAnswers()">Отправить ответы</button>
+  </div>
+</div>
+
+<div class="w-full flex flex-wrap justify-end gap-4 mt-12">
+  <button class="btn"
+          [routerLink]="['../',courseElement.order-1]"
+          [ngClass]="{'hidden':!showPrevBtn}">
+    Предыдущий урок
+  </button>
+  <button class="btn primary" [attr.inert]="!canGoNext || null"
+          [routerLink]="['../',courseElement.order+1]"
+          [ngClass]="{'hidden':!showNextBtn, 'disabled':!canGoNext}">
+    Перейти к домашнему заданию
+  </button>
 </div>

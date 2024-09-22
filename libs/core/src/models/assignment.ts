@@ -1,7 +1,6 @@
 import { CourseElement } from ".";
 
 export interface Assignment extends CourseElement{
-  isCompleted: boolean;
   questions: Question[];
 }
 

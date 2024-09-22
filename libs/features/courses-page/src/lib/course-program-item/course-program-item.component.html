@@ -1,7 +1,13 @@
 <div class="item-card" [ngClass]="{'completed':item.isCompleted}">
   <div class="flex items-center justify-between gap-2">
     <span class="text-white text-base">{{item.title}}</span>
-    <a class="btn primary" [routerLink]="'./'+item.order">Смотреть</a>
+    <a class="btn primary" *ngIf="!item.isCurrent"
+       [attr.inert]="!item.isCompleted || null"
+       [ngClass]="{'disabled': !item.isCompleted}"
+       [routerLink]="'./'+item.order">
+      Смотреть
+    </a>
+    <a class="btn warning" *ngIf="item.isCurrent" [routerLink]="'./'+item.order">Вы тут</a>
 <!--    <a class="btn primary block md:hidden" [routerLink]="'./'+item.order"> > </a>-->
   </div>
 
@@ -15,7 +21,7 @@
 
       <div class="flex gap-2 items-center" *ngIf="item.isCurrent">
         <div class="dot warning"></div>
-        <div class="clr-orange">Выполнено</div>
+        <div class="clr-orange">В процессе</div>
       </div>
 
       <div class="flex gap-2 items-center" *ngIf="!item.isCompleted && !item.isCurrent">

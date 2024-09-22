@@ -24,7 +24,7 @@
     </vg-controls>
     <video #myMedia
            [vgMedia]="aaaa(myMedia)"
-           [vgHls]="courseElement.url"
+           [vgHls]="getVideoUrl()"
            #vgHls="vgHls"
 
            (onGetBitrates)="getBitrates($event)"
@@ -37,8 +37,16 @@
 </div>
 
 <div class="w-full flex flex-wrap justify-end gap-4 mt-12">
-  <a class="btn" [routerLink]="['../',courseElement.order-1]">Предыдущий урок</a>
-  <a class="btn primary" [routerLink]="['../',courseElement.order+1]">Перейти к домашнему заданию</a>
+  <button class="btn"
+     [routerLink]="['../',courseElement.order-1]"
+     [ngClass]="{'hidden':!showPrevBtn}">
+    Предыдущий урок
+  </button>
+  <button class="btn primary" [attr.inert]="!canGoNext || null"
+     [routerLink]="['../',courseElement.order+1]"
+     [ngClass]="{'hidden':!showNextBtn, 'disabled':!canGoNext}">
+    Перейти к домашнему заданию
+  </button>
 </div>
 <div class="mt-14">
   <div class="text-2xl">Описание</div>

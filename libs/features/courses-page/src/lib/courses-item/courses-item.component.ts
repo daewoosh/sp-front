@@ -2,10 +2,11 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from "@angular/router";
 import { CoursesApiService } from "../courses-api.service";
-import { Assignment, CourseElement, VideoCourseElement } from "@sp/core/models";
-import { map, Observable, switchMap } from "rxjs";
+import { Assignment, CourseElement, CourseProgramItem, VideoCourseElement } from "@sp/core/models";
+import { map, Observable, switchMap, tap } from "rxjs";
 import { CourseItemVideoComponent } from "./course-item-video/course-item-video.component";
 import { CourseItemAssignmentComponent } from "./course-item-assignment/course-item-assignment.component";
+import { CoursesStateService } from "../courses-state.service";
 
 @Component({
   selector: 'sp-courses-item',
@@ -19,26 +20,24 @@ export class CoursesItemComponent implements OnInit {
 
   courseElement$!: Observable<CourseElement>;
 
-
+  courseElements$: Observable<CourseProgramItem[]>;
   constructor(private activatedRoute: ActivatedRoute,
-              private coursesApiService: CoursesApiService) {
+              private coursesStateService: CoursesStateService) {
+    this.courseElements$ =this.coursesStateService.selectCourseProgram.pipe(
+      tap(program=>{
+        console.log("program updated in courses item");
+        console.log({program})
+      })
+    );
   }
 
   ngOnInit() {
-    this.courseElement$ = this.activatedRoute.paramMap
-      .pipe(
-        map(paramMap => {
-          const slug = paramMap.get('id');
-          const order = Number(paramMap.get('order')); // Явное приведение к числу
-          return { slug, order }; // Возвращаем объект с правильным типом
-        }),
-        switchMap(data => {
-          // Явно типизируем аргумент в switchMap для лучшей читаемости
-          const slug = data.slug!;
-          const order = data.order!;
-          return this.coursesApiService.getCourseElement(slug, order);
-        })
-      );
+
+    this.courseElement$  =this.activatedRoute.data.pipe(
+      map(data => data['item']),
+
+    );
+
   }
 
   videoElement(element: CourseElement):VideoCourseElement{

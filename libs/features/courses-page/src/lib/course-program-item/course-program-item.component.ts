@@ -10,7 +10,7 @@ import { TuiProgress } from "@taiga-ui/kit";
   imports: [CommonModule, RouterLink, TuiProgress],
   templateUrl: './course-program-item.component.html',
   styleUrl: './course-program-item.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CourseProgramItemComponent {
   @Input() item!: CourseProgramItem;

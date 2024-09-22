@@ -192,7 +192,7 @@ a.btn {
       text-decoration: none;
     }
 
-    &:disabled {
+    &:disabled, &.disabled {
       border-color: var(--clr-primary-disabled);
       background: var(--clr-primary-disabled);
       color: var(--clr-grey);

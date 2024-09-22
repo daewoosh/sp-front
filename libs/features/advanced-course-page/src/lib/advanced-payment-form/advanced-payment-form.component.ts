@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 import { CommonModule, DOCUMENT } from "@angular/common";
@@ -10,11 +10,11 @@ import { CommonModule, DOCUMENT } from "@angular/common";
   standalone: true,
   imports:[CommonModule]
 })
-export class AdvancedPaymentFormComponent implements OnInit, AfterViewInit {
+export class AdvancedPaymentFormComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('formContainer') formContainer!: ElementRef;
   form!: FormGroup;
   fragment: string | null = '';
-
+  private scriptElements: HTMLScriptElement[] = [];
 
   constructor(private fb: FormBuilder,
               private route: ActivatedRoute,
@@ -46,5 +46,16 @@ export class AdvancedPaymentFormComponent implements OnInit, AfterViewInit {
     s1.charset = "utf-8";
     s1.src = "https://forms.kommo.com/forms/assets/js/amoforms.js?1683539484";
     this.formContainer.nativeElement.appendChild(s1);
+    this.scriptElements.push(s1);  // Сохраняем ссылку на скрипт
+  }
+
+  ngOnDestroy() {
+    // Удаляем добавленные скрипты из DOM
+    this.scriptElements.forEach(script => {
+      if (script.parentNode) {
+        script.parentNode.removeChild(script);
+      }
+    });
+    this.scriptElements = [];  // Очищаем массив ссылок на скрипты
   }
 }

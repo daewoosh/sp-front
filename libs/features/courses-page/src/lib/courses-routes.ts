@@ -1,5 +1,6 @@
 import { Route } from "@angular/router";
-import { CourseProgramResolver, CoursesResolver } from "./courses-resolver.service";
+import { CoursesResolver } from "./courses-resolver.service";
+import { CourseElementResolver, CourseProgramResolver } from "./course-program-resolver.service";
 
 export const coursesRoutes: Route[] = [
   {
@@ -13,6 +14,7 @@ export const coursesRoutes: Route[] = [
         children: [{
           path: ":order",
           loadComponent: () => import('./courses-item/courses-item.component').then(mod => mod.CoursesItemComponent),
+          resolve: {item:CourseElementResolver}
         }]
       },
       {

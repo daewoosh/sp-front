@@ -153,7 +153,11 @@ export const VIDEO_COURSE_ELEMENT: VideoCourseElement = {
   url: 'https://localhost:43802/Video/2.m3u8',
   lastPosition: 0,
   maxPosition: 0,
+  isCompleted: true,
+  courseSlug: 'only-poker',
   courseName: 'Only Покер',
+  videoId: 1,
+  id: 1,
   description: "Введение в МТТ, терминология, особенности (GTO vs exploit), механика игры, ренжи.<br> <br>" +
     "Не секрет, что профессиональные игроки в покер общаются на «своем» языке. Для того чтобы понимать, о чем они говорят, необходимо изучить покерную терминологию.\n"
 }
@@ -161,9 +165,11 @@ export const VIDEO_COURSE_ELEMENT: VideoCourseElement = {
 export const ASSIGNMENT_COURSE_ELEMENT: Assignment = {
   isCompleted: false,
   order: 2,
+  id: 2,
   type: CourseElementType.Assignment,
   title: 'Домашнее задание 2. МТТ турниры',
   courseName: 'Only Покер',
+  courseSlug: 'only-poker',
   questions: [{
     order: 1,
     answer: 'Мы должны обязательно поизолить . При этом выбор сайза рассматривать от 8бб в такой глубине, так как у разномастных АК чуть меньше эквити, чем у одномастных . ',

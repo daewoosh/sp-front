@@ -29,4 +29,22 @@ export class CoursesStateService extends StateService<CoursesState> {
   public setCourseProgram(courseProgram: CourseProgramItem[]): void {
     this.setState({courseProgram});
   }
+
+  updateVideoProgress(order: number, lastPosition: number, duration: number): void {
+    const currentProgram = [...this.state.courseProgram];
+    for (const item of currentProgram) {
+      if (item.order === order) {
+        const newProgress = Math.ceil(lastPosition / duration * 100);
+        const itemProgress = item.progress || 0;
+        if (newProgress > itemProgress && newProgress <= 100) {
+          item.progress = newProgress;
+        }
+      }
+    }
+    this.setState({courseProgram: currentProgram});
+  }
+
+  completeVideo(order: number) {
+    const currentProgram = [...this.state.courseProgram];
+  }
 }

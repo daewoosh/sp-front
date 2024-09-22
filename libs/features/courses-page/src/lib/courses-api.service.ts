@@ -14,21 +14,24 @@ export class CoursesApiService {
 
   getCourses(): Observable<PagingResult<Course>> {
     return this.http.get<PagingResult<Course>>(`${this.apiPath}/courses`);
-    // return of(COURSES);
   }
 
   getCourseProgram(slug: string): Observable<CourseProgramItem[]> {
     return this.http.get<PagingResult<CourseProgramItem>>(`${this.apiPath}/courses/${slug}/CourseElements/ReadAll`).pipe(
       map(courses => courses.result)
     );
-    // return of(COURSE_PROGRAM);
   }
 
   getCourseElement(slug: string, order: number): Observable<CourseElement> {
-    if (order % 2 === 0) {
-      return of(ASSIGNMENT_COURSE_ELEMENT);
-    }
-    return of(VIDEO_COURSE_ELEMENT);
+    return this.http.get<CourseElement>(`${this.apiPath}/courses/${slug}/${order}`);
+  }
+
+  updateVideoProgress(courseElementId: number, videoContentId: number, lastPosition: number): Observable<any> {
+    return this.http.post(`${this.apiPath}/courseElements/${courseElementId}/videoContent/${videoContentId}/update`, {lastPosition});
+  }
+
+  completeVideo(courseElementId: number, videoContentId: number): Observable<any> {
+    return this.http.post(`${this.apiPath}/courseElements/${courseElementId}/videoContent/${videoContentId}/complete`, {completed:true});
   }
 }
 
