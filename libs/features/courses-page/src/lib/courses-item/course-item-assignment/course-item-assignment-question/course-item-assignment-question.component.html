@@ -6,13 +6,24 @@
 </div>
 <div [innerHTML]="question.text" class="mt-3 text-base text-white"></div>
 
-<div class="text-2xl mt-[30px]">
-  Ваш ответ
-</div>
-<div class="text-base clr-grey mt-2 mb-4">
-  Заполните ответ в текстовом поле ниже
-  <div *ngIf="courseElement.isCompleted">
-    Completed
+<div class="mt-[30px] flex gap-3 flex-wrap items-center mb-3">
+  <div class="text-2xl font-bold">
+    Ваш ответ
   </div>
+  <button class="btn primary check-self" (click)="isExpanded = !isExpanded">
+    Проверить себя
+    <div [ngClass]="{'rotate-180':isExpanded}">
+      <img src="/assets/icons/arrow-up.svg">
+    </div>
+  </button>
 </div>
-<textarea placeholder="Ответ" class="w-full resize-none" rows="10" [(ngModel)]="question.userAnswer"></textarea>
+<div class="text-base clr-grey" *ngIf="!courseElement.isCompleted">
+  Заполните ответ в текстовом поле ниже
+</div>
+<textarea placeholder="Ответ" class="w-full resize-none" rows="7" [(ngModel)]="question.userAnswer"></textarea>
+<ng-container *ngIf="isExpanded">
+  <div class="text-2xl clr-primary font-bold my-4">
+    Правильный ответ
+  </div>
+  <textarea readonly class="w-full resize-none answer" rows="7" [(ngModel)]="question.answer"></textarea>
+</ng-container>

@@ -1,9 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from "@angular/router";
-import { CoursesApiService } from "../courses-api.service";
 import { Assignment, CourseElement, CourseProgramItem, VideoCourseElement } from "@sp/core/models";
-import { map, Observable, switchMap, tap } from "rxjs";
+import { map, Observable, tap } from "rxjs";
 import { CourseItemVideoComponent } from "./course-item-video/course-item-video.component";
 import { CourseItemAssignmentComponent } from "./course-item-assignment/course-item-assignment.component";
 import { CoursesStateService } from "../courses-state.service";

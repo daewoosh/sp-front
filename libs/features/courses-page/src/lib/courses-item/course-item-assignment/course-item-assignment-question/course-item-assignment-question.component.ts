@@ -17,4 +17,6 @@ export class CourseItemAssignmentQuestionComponent {
 
   @Input() question!: Question;
   @Input() courseElement!: Assignment;
+
+  isExpanded = false;
 }

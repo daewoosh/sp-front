@@ -8,3 +8,13 @@ textarea{
     outline: 1px solid var(--clr-primary);
   }
 }
+
+.check-self{
+  @apply flex gap-2 items-center;
+  min-height: 32px;
+}
+
+.answer{
+  border: 1px solid var(--clr-primary);
+  outline: 1px solid var(--clr-primary);
+}

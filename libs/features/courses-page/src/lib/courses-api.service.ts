@@ -39,5 +39,9 @@ export class CoursesApiService {
     });
     return this.http.post(`${this.apiPath}/courseElements/${courseElementId}/assignments/${assignmentId}/createUserAnswers`, request);
   }
+
+  clearUserAnswers(courseElementId: number, assignmentId: number): Observable<any> {
+    return this.http.delete(`${this.apiPath}/courseElements/${courseElementId}/assignments/${assignmentId}/clearUserAnswers`);
+  }
 }
 
