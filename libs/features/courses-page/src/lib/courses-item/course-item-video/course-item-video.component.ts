@@ -1,17 +1,26 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, PLATFORM_ID } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Inject,
+  Input,
+  OnDestroy,
+  PLATFORM_ID
+} from '@angular/core';
 import { CommonModule, isPlatformBrowser } from "@angular/common";
 import { CourseElement, CourseProgramItem, VideoCourseElement } from "@sp/core/models";
 import { VgControlsModule } from "@videogular/ngx-videogular/controls";
 import { BitrateOptions, IMediaElement, VgApiService, VgCoreModule } from "@videogular/ngx-videogular/core";
 import { VgOverlayPlayModule } from "@videogular/ngx-videogular/overlay-play";
 import { HttpClient } from "@angular/common/http";
-import { filter, map, switchMap, take, tap, throttleTime } from "rxjs";
+import { filter, map, Subject, switchMap, take, takeUntil, tap, throttleTime } from "rxjs";
 import { VgStreamingModule } from "@videogular/ngx-videogular/streaming";
 import { VgBufferingModule } from "@videogular/ngx-videogular/buffering";
 import { RouterLink } from "@angular/router";
 import { API_PATH } from "@sp/config";
 import { CoursesApiService } from "../../courses-api.service";
 import { CoursesStateService } from "../../courses-state.service";
+import { TuiDataList, TuiDataListComponent, TuiDropdownDirective, TuiDropdownOpen, TuiOptGroup } from "@taiga-ui/core";
 
 @Component({
   selector: 'sp-course-item-video',
@@ -20,19 +29,22 @@ import { CoursesStateService } from "../../courses-state.service";
     VgControlsModule,
     VgOverlayPlayModule,
     VgBufferingModule,
-    VgStreamingModule, RouterLink],
+    VgStreamingModule, RouterLink, TuiDropdownDirective, TuiDropdownOpen, TuiDataListComponent, TuiOptGroup, TuiDataList],
   templateUrl: './course-item-video.component.html',
   styleUrl: './course-item-video.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CourseItemVideoComponent {
+export class CourseItemVideoComponent implements OnDestroy{
   @Input() courseElement!: VideoCourseElement;
   @Input() courseProgram!: CourseProgramItem[];
 
   bitrates: BitrateOptions[] = [];
+  selectedBitrate: BitrateOptions | null = null;
   canShowPlayer = false;
 
   api?: VgApiService;
+
+  destroy$ = new Subject<void>();
 
   constructor(@Inject(PLATFORM_ID) private platformId: string,
               @Inject(API_PATH) private apiPath: string,
@@ -45,9 +57,15 @@ export class CourseItemVideoComponent {
 
   }
 
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   getBitrates($event: BitrateOptions[]) {
     console.log($event);
     this.bitrates = $event;
+    this.selectedBitrate = $event[0];
   }
 
 
@@ -56,14 +74,7 @@ export class CourseItemVideoComponent {
   }
 
   getVideoUrl(): string {
-    // return 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8';
     return `${this.apiPath}/Video/${this.courseElement.courseSlug}/${this.courseElement.order}/master.m3u8`;
-    // return 'assets/filename.m3u8';
-    // return  'https://localhost:43802/filename.m3u8'
-    // return 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8';
-    // return 'https://localhost:43802/Video/2.m3u8';
-    // return this.httpClient.get('https://localhost:43802/Video/1',{observe:'body'})
-    //   .pipe(take(1));
   }
 
   onPlayerReady($event: VgApiService) {
@@ -85,7 +96,9 @@ export class CourseItemVideoComponent {
         }
       )
 
-    this.api!.getDefaultMedia().subscriptions.seeking.subscribe(
+    this.api!.getDefaultMedia().subscriptions.seeking
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
       seeking => {
         // if (seeking.target.currentTime> this.courseElement.maxPosition){
         //   this.api!.getDefaultMedia().currentTime = this.courseElement.maxPosition;
@@ -94,14 +107,9 @@ export class CourseItemVideoComponent {
       }
     );
 
-    this.api!.getDefaultMedia().subscriptions.seeked.subscribe(
-      seeked => {
-        console.log({seeked});
-      }
-    );
-
     this.api!.getDefaultMedia().subscriptions.timeUpdate
       .pipe(
+        takeUntil(this.destroy$),
         map((event)=> Math.ceil(event.target.currentTime)),
         filter((currentTime) => currentTime  > 4),
         throttleTime(5000),
@@ -117,12 +125,13 @@ export class CourseItemVideoComponent {
 
     this.api!.getDefaultMedia().subscriptions.ended
       .pipe(
+        takeUntil(this.destroy$),
         switchMap(() => this.coursesApiService.completeVideo(this.courseElement.id, this.courseElement.videoId))
       )
       .subscribe(
       _=> {
         this.courseElement.isCompleted = true;
-        this.coursesStateService.completeVideo(this.courseElement.order);}
+        this.coursesStateService.completeItem(this.courseElement.order);}
     )
   }
 

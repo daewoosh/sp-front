@@ -93,6 +93,10 @@ body {
   font-weight: 400;
 }
 
+.page-content {
+  min-height: calc(100dvh - var(--sp-header-height));
+}
+
 [type="email"]:focus,
 [type="url"]:focus,
 [type="password"]:focus,

@@ -6,21 +6,25 @@ export const coursesRoutes: Route[] = [
   {
     path:"",
     resolve: {CoursesResolver},
+    data: {hideFooter:true},
     children:[
       {
         path: ":id",
         loadComponent: () => import('./course-item-page/course-item-page.component').then(mod => mod.CourseItemPageComponent),
         resolve: {CourseProgramResolver},
+        data: {hideFooter:true},
         children: [{
           path: ":order",
           loadComponent: () => import('./courses-item/courses-item.component').then(mod => mod.CoursesItemComponent),
-          resolve: {item:CourseElementResolver}
+          resolve: {item:CourseElementResolver},
+          data: {hideFooter:true},
         }]
       },
       {
         path: "",
         loadComponent: () => import('./courses-list/courses-list.component').then(mod => mod.CoursesListComponent),
-        pathMatch: "full"
+        pathMatch: "full",
+        data: {hideFooter:true},
       },
     ]
   },

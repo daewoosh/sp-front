@@ -53,5 +53,9 @@ export class AppStateService extends StateService<AppState> {
   getUserId(): string | undefined {
     return this.state.userState.user?.id;
   }
+
+  logout(){
+    this.setUserState({isLoggedIn: false, user: undefined});
+  }
 }
 

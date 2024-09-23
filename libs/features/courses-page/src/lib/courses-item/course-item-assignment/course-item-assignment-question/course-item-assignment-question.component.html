@@ -10,7 +10,7 @@
   <div class="text-2xl font-bold">
     Ваш ответ
   </div>
-  <button class="btn primary check-self" (click)="isExpanded = !isExpanded">
+  <button class="btn primary check-self" (click)="isExpanded = !isExpanded" *ngIf="courseElement.isCompleted">
     Проверить себя
     <div [ngClass]="{'rotate-180':isExpanded}">
       <img src="/assets/icons/arrow-up.svg">

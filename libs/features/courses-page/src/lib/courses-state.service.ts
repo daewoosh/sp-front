@@ -44,7 +44,18 @@ export class CoursesStateService extends StateService<CoursesState> {
     this.setState({courseProgram: currentProgram});
   }
 
-  completeVideo(order: number) {
+  completeItem(order: number) {
     const currentProgram = [...this.state.courseProgram];
+    for (const item of currentProgram) {
+      if (item.order === order) {
+        item.progress = 100;
+        item.isCompleted = true;
+        item.isCurrent = false;
+      }
+      if (item.order === order + 1 && !item.isCompleted) {
+        item.isCurrent = true;
+      }
+      this.setState({courseProgram: currentProgram});
+    }
   }
 }

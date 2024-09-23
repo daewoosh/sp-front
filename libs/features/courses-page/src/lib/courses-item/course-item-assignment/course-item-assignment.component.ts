@@ -7,6 +7,7 @@ import {
 import { RouterLink } from "@angular/router";
 import { CoursesApiService } from "../../courses-api.service";
 import { TuiAlertService } from "@taiga-ui/core";
+import { CoursesStateService } from "../../courses-state.service";
 
 @Component({
   selector: 'sp-course-item-assignment',
@@ -25,7 +26,8 @@ export class CourseItemAssignmentComponent implements OnInit {
   constructor(private coursesApiService: CoursesApiService,
               private cdr: ChangeDetectorRef,
               @Inject(TuiAlertService)
-              private readonly alertService: TuiAlertService) {
+              private readonly alertService: TuiAlertService,
+              private coursesStateService: CoursesStateService) {
   }
 
   get showPrevBtn() {
@@ -60,6 +62,7 @@ export class CourseItemAssignmentComponent implements OnInit {
           this.courseElement.isCompleted = true;
           this.isResetMode = false;
           this.alertService.open('Ваши ответы сохранены', {appearance: 'success'}).subscribe();
+          this.coursesStateService.completeItem(this.courseElement.order);
           this.cdr.detectChanges();
         }
       );

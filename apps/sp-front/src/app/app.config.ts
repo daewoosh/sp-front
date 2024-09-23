@@ -11,7 +11,7 @@ import {
 import {
   InMemoryScrollingFeature,
   InMemoryScrollingOptions,
-  provideRouter,
+  provideRouter, withComponentInputBinding,
   withInMemoryScrolling
 } from '@angular/router';
 import { appRoutes } from './app.routes';
@@ -25,6 +25,7 @@ import { initializeApplication } from "./applnitializer";
 import { API_PATH, CONFIG, EXCHANGE_URL } from "@sp/config";
 import { environment } from "../environments/environment";
 import { CoursesResolver } from "@sp/courses-page";
+import { CourseActivationService } from "@sp/core/providers";
 
 @Injectable()
 class GlobalErrorHandler implements ErrorHandler {
@@ -44,7 +45,7 @@ const inMemoryScrollingFeature: InMemoryScrollingFeature =
 export const appConfig: ApplicationConfig = {
   providers: [
     provideHttpClient(withInterceptorsFromDi(), withFetch()),
-    provideRouter(appRoutes, inMemoryScrollingFeature),
+    provideRouter(appRoutes, inMemoryScrollingFeature, withComponentInputBinding()),
     provideAnimations(),
     provideClientHydration(),
     provideZoneChangeDetection({eventCoalescing: true}),
@@ -56,6 +57,7 @@ export const appConfig: ApplicationConfig = {
     {provide: API_PATH, useValue: environment.apiUrl},
     {provide: EXCHANGE_URL, useValue: environment.exchangeUrl},
     {provide: CONFIG, useValue: environment},
+    CourseActivationService,
     {
       provide: APP_INITIALIZER,
       useFactory: initializeApplication,

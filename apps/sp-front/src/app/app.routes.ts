@@ -32,10 +32,19 @@ export const appRoutes: Route[] = [
         path: "courses",
         loadComponent: () => import('@sp/courses-page').then(mod => mod.CoursesPageComponent),
         children: coursesRoutes,
+        // data: {hideFooter:true},
       },
       {
         path: "booster",
         loadComponent: () => import('@sp/booster-page').then(mod => mod.BoosterPageComponent),
+      },
+      {
+        path: "logout",
+        loadComponent: () => import('@sp/common').then(mod => mod.LogoutComponent),
+      },
+      {
+        path: "activateCourse/:token",
+        loadComponent: () => import('@sp/courses-page').then(mod => mod.ActivateCourseComponent),
       },
       {
         path: "",

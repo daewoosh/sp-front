@@ -33,6 +33,7 @@
           }
         ],
         "styles": [
+          "node_modules/@videogular/ngx-videogular/fonts/videogular.css",
           "node_modules/@taiga-ui/core/styles/taiga-ui-theme.less",
           "node_modules/@taiga-ui/core/styles/taiga-ui-fonts.less",
           "apps/sp-front/src/styles.scss"

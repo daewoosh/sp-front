@@ -22,6 +22,7 @@ export interface CourseProgramItem {
   isCompleted: boolean;
   progress?: number;
   isCurrent?: boolean;
+  isAvailable?: boolean;
 }
 
 export interface CourseElement {

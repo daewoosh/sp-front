@@ -1,0 +1,15 @@
+<ng-container *ngIf="isLoggedIn$|async;else login">
+
+</ng-container>
+<ng-template #login>
+  <div class="flex items-center justify-center page-content">
+    <div class="flex items-center flex-col gap-3">
+      <div class="text-2xl font-bold">Необходимо авторизоваться для активации курса.</div>
+      <button class="btn primary" (click)="openModal()">Войти</button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #loginModal>
+  <sp-login-modal/>
+</ng-template>

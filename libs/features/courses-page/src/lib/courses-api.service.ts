@@ -3,12 +3,18 @@ import { map, Observable } from "rxjs";
 import { Course, CourseElement, CourseProgramItem, PagingResult, Question } from "@sp/core/models";
 import { API_PATH } from "@sp/config";
 import { HttpClient } from "@angular/common/http";
+import { CourseActivationService } from "@sp/core/providers";
 
 @Injectable({providedIn: 'root'})
-export class CoursesApiService {
+export class CoursesApiService extends CourseActivationService{
 
   constructor(@Inject(API_PATH) private apiPath: string,
               private http: HttpClient) {
+    super();
+  }
+
+  override activateCourse(token:string): Observable<{wasAdded:boolean}>{
+    return this.http.post<{wasAdded:boolean}>(`${this.apiPath}/courses/activate`, {token});
   }
 
   getCourses(): Observable<PagingResult<Course>> {
