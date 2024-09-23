@@ -1,7 +1,6 @@
 import { Inject, Injectable } from "@angular/core";
-import { map, Observable, of } from "rxjs";
-import { Course, CourseElement, CourseProgramItem, PagingResult } from "@sp/core/models";
-import { ASSIGNMENT_COURSE_ELEMENT, COURSE_PROGRAM, VIDEO_COURSE_ELEMENT } from "./courses-mock";
+import { map, Observable } from "rxjs";
+import { Course, CourseElement, CourseProgramItem, PagingResult, Question } from "@sp/core/models";
 import { API_PATH } from "@sp/config";
 import { HttpClient } from "@angular/common/http";
 
@@ -31,7 +30,14 @@ export class CoursesApiService {
   }
 
   completeVideo(courseElementId: number, videoContentId: number): Observable<any> {
-    return this.http.post(`${this.apiPath}/courseElements/${courseElementId}/videoContent/${videoContentId}/complete`, {completed:true});
+    return this.http.post(`${this.apiPath}/courseElements/${courseElementId}/videoContent/${videoContentId}/complete`, {completed: true});
+  }
+
+  createUserAnswers(courseElementId: number, assignmentId: number, questions: Question[]): Observable<any> {
+    const request = questions.map(q => {
+      return {questionId: q.id, userAnswer: q.userAnswer}
+    });
+    return this.http.post(`${this.apiPath}/courseElements/${courseElementId}/assignments/${assignmentId}/createUserAnswers`, request);
   }
 }
 

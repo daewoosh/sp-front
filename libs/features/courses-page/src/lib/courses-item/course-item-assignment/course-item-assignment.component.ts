@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, Input } from '@angular/core';
 import { Assignment, CourseProgramItem } from "@sp/core/models";
 import { CommonModule } from "@angular/common";
 import {
@@ -18,21 +18,29 @@ export class CourseItemAssignmentComponent {
   @Input() courseElement!: Assignment;
   @Input() courseProgram!: CourseProgramItem[];
 
-  constructor(private coursesApiService: CoursesApiService) {
+  constructor(private coursesApiService: CoursesApiService,
+              private cdr: ChangeDetectorRef) {
   }
 
-  get showPrevBtn(){
+  get showPrevBtn() {
     return this.courseElement.order > 1;
   }
 
-  get showNextBtn(){
+  get showNextBtn() {
     return this.courseElement.order < this.courseProgram.length;
   }
-  get canGoNext(){
+
+  get canGoNext() {
     return this.courseElement.isCompleted;
   }
 
   sendAnswers() {
-    this.coursesApiService.
+    this.coursesApiService.createUserAnswers(this.courseElement.id, this.courseElement.assignmentId, this.courseElement.questions)
+      .subscribe(
+        res => {
+          this.courseElement.isCompleted = true;
+          this.cdr.detectChanges();
+        }
+      );
   }
 }

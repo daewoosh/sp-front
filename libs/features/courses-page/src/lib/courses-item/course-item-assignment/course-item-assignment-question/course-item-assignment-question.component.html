@@ -11,5 +11,8 @@
 </div>
 <div class="text-base clr-grey mt-2 mb-4">
   Заполните ответ в текстовом поле ниже
+  <div *ngIf="courseElement.isCompleted">
+    Completed
+  </div>
 </div>
-<textarea placeholder="Ответ" class="w-full resize-none" rows="10"></textarea>
+<textarea placeholder="Ответ" class="w-full resize-none" rows="10" [(ngModel)]="question.userAnswer"></textarea>
