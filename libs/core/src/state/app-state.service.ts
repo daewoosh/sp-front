@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {StateService} from "./state.service";
 import {Observable} from "rxjs";
 import { UserProfile, UserRole } from "../models";
+import { map } from "rxjs/operators";
 
 interface UserState {
   isLoggedIn?: boolean;
@@ -40,6 +41,12 @@ export class AppStateService extends StateService<AppState> {
   public isLoggedIn$: Observable<boolean> = this.select(
     (state: AppState) => state.userState?.isLoggedIn??false
   )
+
+  public isAdmin$: Observable<boolean> = this.role.pipe(
+    map(
+      (role) => !!role && (role === UserRole.Admin || role === UserRole.Support)
+    )
+  );
 
   constructor() {
     super(initialState);

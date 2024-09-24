@@ -1,0 +1,20 @@
+.admin-navigation {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  gap: 3rem;
+  flex-wrap: wrap;
+
+}
+
+.active {
+  border-color: var(--clr-primary);
+  color: var(--clr-primary);
+}
+
+@media screen and (min-width: 460px) {
+  .admin-navigation {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}

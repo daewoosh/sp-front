@@ -18,21 +18,19 @@ import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
 })
 export class HeaderComponent {
 
-  private readonly dialogs = inject(TuiDialogService);
-  private readonly injector = inject(INJECTOR);
-
   showHeader = false;
   public menuClosed = true;
-  exchangeUrl="";
-
-  isLoggedIn$:Observable<boolean>;
-
+  exchangeUrl = "";
+  isLoggedIn$: Observable<boolean>;
+  isAdmin$: Observable<boolean>;
+  private readonly dialogs = inject(TuiDialogService);
+  private readonly injector = inject(INJECTOR);
   private readonly dialog = this.dialogs.open<number>(
     new PolymorpheusComponent(LoginModalComponent, this.injector),
     {
       data: 237,
       dismissible: true,
-      appearance:'sp-modal'
+      appearance: 'sp-modal'
     },
   );
 
@@ -42,6 +40,7 @@ export class HeaderComponent {
               private dialogs2: TuiDialogService) {
     this.showHeader = isPlatformBrowser(platformId);
     this.isLoggedIn$ = appStateService.isLoggedIn$;
+    this.isAdmin$ = appStateService.isAdmin$;
   }
 
   isActiveRoute(route: string) {

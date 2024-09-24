@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@sp/admin": ["libs/features/admin/src/index.ts"],
       "@sp/advanced-course-page": [
         "libs/features/advanced-course-page/src/index.ts"
       ],

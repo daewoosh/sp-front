@@ -2,7 +2,7 @@
   "name": "only-poker-page",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/features/only-poker-page/src",
-  "prefix": "lib",
+  "prefix": "sp",
   "projectType": "library",
   "tags": [],
   "targets": {

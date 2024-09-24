@@ -17,14 +17,13 @@ import {
 import { appRoutes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
 import { HTTP_INTERCEPTORS, provideHttpClient, withFetch, withInterceptorsFromDi } from "@angular/common/http";
-import { AuthInterceptor, ErrorInterceptor } from "@sp/core/guards";
+import { AdminGuard, AuthGuard, AuthInterceptor, ErrorInterceptor } from "@sp/core/guards";
 import { provideStoreDevtools } from "@ngrx/store-devtools";
 import { provideAnimationsAsync } from "@angular/platform-browser/animations/async";
 import { AppResolver, ClientService } from "./app.resolver";
 import { initializeApplication } from "./applnitializer";
 import { API_PATH, CONFIG, EXCHANGE_URL } from "@sp/config";
 import { environment } from "../environments/environment";
-import { CoursesResolver } from "@sp/courses-page";
 import { CourseActivationService } from "@sp/core/providers";
 
 @Injectable()
@@ -58,6 +57,8 @@ export const appConfig: ApplicationConfig = {
     {provide: EXCHANGE_URL, useValue: environment.exchangeUrl},
     {provide: CONFIG, useValue: environment},
     CourseActivationService,
+    AdminGuard,
+    AuthGuard,
     {
       provide: APP_INITIALIZER,
       useFactory: initializeApplication,

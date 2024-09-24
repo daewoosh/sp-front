@@ -1,6 +1,8 @@
 import { Route } from '@angular/router';
 import { PageLayoutComponent } from "@sp/common";
-import { CoursesResolver, coursesRoutes } from "@sp/courses-page";
+import { coursesRoutes } from "@sp/courses-page";
+import { AdminGuard, AuthGuard } from "@sp/core/guards";
+import { adminRoutes } from "@sp/admin";
 
 export const appRoutes: Route[] = [
   {
@@ -30,9 +32,14 @@ export const appRoutes: Route[] = [
       },
       {
         path: "courses",
+        canActivate: [AuthGuard],
         loadComponent: () => import('@sp/courses-page').then(mod => mod.CoursesPageComponent),
         children: coursesRoutes,
-        // data: {hideFooter:true},
+      },
+      {
+        path: "admin",
+        canActivate: [AdminGuard],
+        children: adminRoutes,
       },
       {
         path: "booster",
