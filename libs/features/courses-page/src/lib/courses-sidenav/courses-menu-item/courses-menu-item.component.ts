@@ -15,4 +15,29 @@ import { TuiDialogService } from "@taiga-ui/core";
 })
 export class CoursesMenuItemComponent {
   @Input() menuItem!: MenuItem;
+
+  constructor(private dialogs: TuiDialogService) {
+  }
+
+  protected showDialog(event:MouseEvent, content: any): void {
+    if (!this.menuItem.isAvailable){
+      event.stopPropagation();
+      event.preventDefault();
+      const dialog =this.dialogs.open(content, {appearance: 'sp-modal',})
+      dialog.subscribe(
+        {
+          next: (data) => {
+            console.info(`Dialog emitted data = ${data}`);
+          },
+          complete: () => {
+            console.info('Dialog closed');
+          },
+        }
+      );
+    }
+  }
+
+  navigateToCourses() {
+
+  }
 }

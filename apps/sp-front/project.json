@@ -12,6 +12,12 @@
         "{options.outputPath}"
       ],
       "options": {
+        "define": {
+          "API_URL": "\"https://localhost:43802/api/v1\"",
+          "APP_URL": "\"http://localhost:4200\"",
+          "AUTH_BOT_NAME": "\"ppokerTest_bot\"",
+          "EXCHANGE_URL": "\"https://devex.safe-poker.ru\""
+        },
         "outputPath": "dist/apps/sp-front",
         "index": "apps/sp-front/src/index.html",
         "browser": "apps/sp-front/src/main.ts",
@@ -46,6 +52,28 @@
         }
       },
       "configurations": {
+        "dev": {
+          "index": "apps/sp-front/src/index.dev.html",
+          "define": {
+            "API_URL": "\"https://dev.safe-poker.ru/api/v1\"",
+            "APP_URL": "\"https://dev.safe-poker.ru\"",
+            "AUTH_BOT_NAME": "\"pokerLearnDevBot\"",
+            "EXCHANGE_URL": "\"https://devex.safe-poker.ru\""
+          },
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "2mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "outputHashing": "all"
+        },
         "production": {
           "budgets": [
             {

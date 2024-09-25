@@ -10,7 +10,6 @@ import { HttpClient } from '@angular/common/http';
 import { AppStateService } from "@sp/core/state";
 import { LoginResult } from "@sp/core/models";
 import { isPlatformBrowser } from "@angular/common";
-import { API_PATH, CONFIG, Environment } from "@sp/config";
 
 @Injectable()
 export class AppResolver implements Resolve<boolean> {
@@ -31,7 +30,6 @@ export class ClientService {
     private httpClient: HttpClient,
     private appStateService: AppStateService,
     @Inject(PLATFORM_ID) private platformId: any,
-    @Inject(CONFIG) private config: Environment
   ) {}
 
   public checkAuthenticatedStatus(): any {
@@ -51,7 +49,7 @@ export class ClientService {
 
   private validateAuthToken(): Promise<boolean> {
     return firstValueFrom(this.httpClient
-      .get<LoginResult>(`${this.config.apiUrl}/auth/check`)
+      .get<LoginResult>(`${API_URL}/auth/check`)
       .pipe(
         map((loginResult) => {
           if (!loginResult.isSuccessLogin) {

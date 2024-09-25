@@ -11,7 +11,8 @@ import {
 import {
   InMemoryScrollingFeature,
   InMemoryScrollingOptions,
-  provideRouter, withComponentInputBinding,
+  provideRouter,
+  withComponentInputBinding,
   withInMemoryScrolling
 } from '@angular/router';
 import { appRoutes } from './app.routes';
@@ -20,11 +21,11 @@ import { HTTP_INTERCEPTORS, provideHttpClient, withFetch, withInterceptorsFromDi
 import { AdminGuard, AuthGuard, AuthInterceptor, ErrorInterceptor } from "@sp/core/guards";
 import { provideStoreDevtools } from "@ngrx/store-devtools";
 import { provideAnimationsAsync } from "@angular/platform-browser/animations/async";
-import { AppResolver, ClientService } from "./app.resolver";
+import { ClientService } from "./app.resolver";
 import { initializeApplication } from "./applnitializer";
-import { API_PATH, CONFIG, EXCHANGE_URL } from "@sp/config";
-import { environment } from "../environments/environment";
 import { CourseActivationService } from "@sp/core/providers";
+import { CourseAccessGuard } from "@sp/courses-page";
+import { API_PATH, EXCHANGE_URL as EXCHANGE_URL_TOKEN } from "@sp/config";
 
 @Injectable()
 class GlobalErrorHandler implements ErrorHandler {
@@ -53,12 +54,12 @@ export const appConfig: ApplicationConfig = {
     NG_EVENT_PLUGINS,
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
     provideAnimationsAsync(),
-    {provide: API_PATH, useValue: environment.apiUrl},
-    {provide: EXCHANGE_URL, useValue: environment.exchangeUrl},
-    {provide: CONFIG, useValue: environment},
+    {provide: API_PATH, useValue: API_URL},
+    {provide: EXCHANGE_URL_TOKEN, useValue: EXCHANGE_URL},
     CourseActivationService,
     AdminGuard,
     AuthGuard,
+    CourseAccessGuard,
     {
       provide: APP_INITIALIZER,
       useFactory: initializeApplication,

@@ -8,7 +8,7 @@ export const COURSES: Course[] = [{
   icon: 'only-poker.svg',
   image: 'only-poker.png',
   purchased: true,
-  isActive: true
+  isAvailable: true
 },
   {
     title: 'Осознанное начало',
@@ -18,7 +18,7 @@ export const COURSES: Course[] = [{
     icon: 'osoznannoe-nachalo.svg',
     image: 'osoznannoe-nachalo.png',
     purchased: false,
-    isActive: false
+    isAvailable: false
   },
   {
     title: 'Продвинутый курс',
@@ -28,7 +28,7 @@ export const COURSES: Course[] = [{
     icon: 'prodvinutyi-kurs.svg',
     image: 'prodvinutyi-kurs.png',
     purchased: false,
-    isActive: false
+    isAvailable: false
   }
 ];
 

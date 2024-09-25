@@ -29,13 +29,13 @@ export class CoursesSidenavComponent implements OnInit {
     icon: 'logout.svg',
     title: 'Выход',
     url: '/logout',
-    isExternal: true,
+    isAvailable: true,
   };
   supportMenuItem: MenuItem = {
     icon: 'help.svg',
     title: 'Поддержка',
     url: '/support',
-    isExternal: true,
+    isAvailable: true,
   };
 
   @Input() courses: Course[] = [];
@@ -58,8 +58,9 @@ export class CoursesSidenavComponent implements OnInit {
         icon: x.icon,
         title: x.title,
         url: x.slug,
+        isAvailable: x.isAvailable
       }
     });
-    this.menuItems.unshift({icon: 'all-products.svg', url: '.', title: 'Все продукты'});
+    this.menuItems.unshift({icon: 'all-products.svg', url: '.', title: 'Все продукты', isAvailable: true});
   }
 }

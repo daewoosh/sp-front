@@ -9,8 +9,6 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { v4 as uuid } from 'uuid';
 import { LoginResult } from "@sp/core/models";
 import { AUTH_HASH_NAME, AUTH_TOKEN_NAME } from "@sp/core";
-import { CONFIG, Environment } from "@sp/config";
-
 import { injectContext } from '@taiga-ui/polymorpheus';
 import { TuiDialogContext } from "@taiga-ui/core";
 
@@ -37,7 +35,6 @@ export class LoginModalComponent {
     private httpClient: HttpClient,
     private appStateService: AppStateService,
     private readonly router: Router,
-    @Inject(CONFIG) private config: Environment,
     private activatedRoute: ActivatedRoute,
     private courseActivationService: CourseActivationService
   ) {
@@ -46,7 +43,6 @@ export class LoginModalComponent {
   public ngOnInit(): void {
     this.token = uuid();
     const token = this.activatedRoute.snapshot.paramMap.get('token');
-    console.log('token', token);
     this.ticker
       .pipe(
         startWith(true),
@@ -59,7 +55,7 @@ export class LoginModalComponent {
       .pipe(
         switchMap(() =>
           this.httpClient
-            .post<LoginResult>(`${this.config.apiUrl}/auth`, {
+            .post<LoginResult>(`${API_URL}/auth`, {
               authHash: this.token,
             })
             .pipe(
@@ -107,7 +103,7 @@ export class LoginModalComponent {
   }
 
   login() {
-    const authUrl = `https://t.me/${this.config.authBotName}?start=${this.token}`;
+    const authUrl = `https://t.me/${AUTH_BOT_NAME}?start=${this.token}`;
     this.localStorage.set(AUTH_HASH_NAME, this.token);
     this.ticker.next(true);
     this.window.open(authUrl);

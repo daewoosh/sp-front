@@ -28,7 +28,6 @@ export class PageLayoutComponent implements OnInit {
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe(() => {
-        console.log('NavigationEnd');
         // Получаем текущий активный маршрут
         let currentRoute = this.activatedRoute;
 
@@ -39,7 +38,6 @@ export class PageLayoutComponent implements OnInit {
 
         // Подписываемся на данные текущего маршрута
         currentRoute.data.subscribe(data => {
-          console.log(data);
           this.showFooter = !data['hideFooter'];
         });
       });

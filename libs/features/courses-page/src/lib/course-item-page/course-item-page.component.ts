@@ -28,8 +28,6 @@ export class CourseItemPageComponent implements OnInit {
   ngOnInit() {
     this.courseProgram$ = this.coursesStateService.selectCourseProgram.pipe(
       tap(program=>{
-        console.log('program was updated');
-        console.log({program});
         const currentOrder = this.activatedRoute.snapshot.firstChild?.paramMap.get('order');
         if (!currentOrder) {
           const firstIncomplete = program.find(item => !item.isCompleted);

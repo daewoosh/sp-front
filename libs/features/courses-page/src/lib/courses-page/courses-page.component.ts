@@ -14,6 +14,7 @@ import { Course } from "@sp/core/models";
 import { FooterComponent } from "@sp/common/footer";
 import { CoursesStateService } from "../courses-state.service";
 import { CoursesResolver } from "../courses-resolver.service";
+import { CourseAccessGuard } from "../courses-routes";
 
 @Component({
   selector: 'sp-front-courses-page',
@@ -25,6 +26,7 @@ import { CoursesResolver } from "../courses-resolver.service";
     VgStreamingModule, CoursesSidenavComponent, CoursesListComponent, RouterOutlet, FooterComponent],
   templateUrl: './courses-page.component.html',
   styleUrl: './courses-page.component.scss',
+  providers:[CourseAccessGuard]
 })
 export class CoursesPageComponent {
   courses$: Observable<Course[]>;

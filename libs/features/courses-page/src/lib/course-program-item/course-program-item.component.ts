@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CourseElementType, CourseProgramItem } from "@sp/core/models/";
 import { RouterLink } from "@angular/router";
@@ -15,6 +15,7 @@ import { TuiProgress } from "@taiga-ui/kit";
 export class CourseProgramItemComponent {
   @Input() item!: CourseProgramItem;
 
-  elementTypes= CourseElementType;
+  elementTypes = CourseElementType;
+
 
 }

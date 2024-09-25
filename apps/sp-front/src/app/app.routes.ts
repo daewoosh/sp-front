@@ -54,6 +54,10 @@ export const appRoutes: Route[] = [
         loadComponent: () => import('@sp/courses-page').then(mod => mod.ActivateCourseComponent),
       },
       {
+        path:"login",
+        loadComponent: () => import('@sp/common').then(mod => mod.OneTimeLoginComponent),
+      },
+      {
         path: "",
         loadComponent: () => import('@sp/main-page').then(mod => mod.MainPageComponent),
         pathMatch: 'full'

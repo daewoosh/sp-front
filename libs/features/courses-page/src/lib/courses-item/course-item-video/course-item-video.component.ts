@@ -20,7 +20,17 @@ import { RouterLink } from "@angular/router";
 import { API_PATH } from "@sp/config";
 import { CoursesApiService } from "../../courses-api.service";
 import { CoursesStateService } from "../../courses-state.service";
-import { TuiDataList, TuiDataListComponent, TuiDropdownDirective, TuiDropdownOpen, TuiOptGroup } from "@taiga-ui/core";
+import {
+  TuiDataList,
+  TuiDataListComponent,
+  TuiDataListDirective,
+  TuiDropdownDirective,
+  TuiDropdownOpen,
+  TuiOptGroup
+} from "@taiga-ui/core";
+import { TuiComboBoxModule, TuiSelectModule } from '@taiga-ui/legacy';
+
+
 
 @Component({
   selector: 'sp-course-item-video',
@@ -29,9 +39,10 @@ import { TuiDataList, TuiDataListComponent, TuiDropdownDirective, TuiDropdownOpe
     VgControlsModule,
     VgOverlayPlayModule,
     VgBufferingModule,
-    VgStreamingModule, RouterLink, TuiDropdownDirective, TuiDropdownOpen, TuiDataListComponent, TuiOptGroup, TuiDataList],
+    VgStreamingModule, RouterLink, TuiDropdownDirective, TuiDropdownOpen, TuiDataListComponent, TuiOptGroup, TuiDataList,
+    TuiComboBoxModule, TuiDataListDirective, TuiSelectModule],
   templateUrl: './course-item-video.component.html',
-  styleUrl: './course-item-video.component.css',
+  styleUrl: './course-item-video.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CourseItemVideoComponent implements OnDestroy{
@@ -41,6 +52,16 @@ export class CourseItemVideoComponent implements OnDestroy{
   bitrates: BitrateOptions[] = [];
   selectedBitrate: BitrateOptions | null = null;
   canShowPlayer = false;
+
+  selectedSpeed: { label: string; value: number } = { label: '1x', value: 1 };
+
+  speeds: { label: string; value: number }[] = [
+    { label: '0.5x', value: 0.5 },
+    { label: '1x', value: 1 },
+    { label: '1.5x', value: 1.5 },
+    { label: '2x', value: 2 },
+  ];
+
 
   api?: VgApiService;
 
@@ -63,7 +84,6 @@ export class CourseItemVideoComponent implements OnDestroy{
   }
 
   getBitrates($event: BitrateOptions[]) {
-    console.log($event);
     this.bitrates = $event;
     this.selectedBitrate = $event[0];
   }
@@ -74,19 +94,11 @@ export class CourseItemVideoComponent implements OnDestroy{
   }
 
   getVideoUrl(): string {
-    return `${this.apiPath}/Video/${this.courseElement.courseSlug}/${this.courseElement.order}/master.m3u8`;
+    return `${API_URL}/Video/${this.courseElement.courseSlug}/${this.courseElement.order}/master.m3u8`;
   }
 
   onPlayerReady($event: VgApiService) {
     this.api = $event;
-    console.log(this.api?.isCompleted);
-    // this.api!.getDefaultMedia().subscriptions.progress.subscribe(
-    //   (res) => {
-    //     console.log(res);
-    //     // Set the video to the beginning
-    //     // this.api.getDefaultMedia().currentTime = 0;
-    //   }
-    // );
 
     this.api!.getDefaultMedia().subscriptions.canPlay
       .pipe(take(1))

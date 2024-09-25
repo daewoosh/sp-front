@@ -34,7 +34,6 @@ export class VideoPlayerComponent {
   }
 
   getBitrates($event: BitrateOptions[]) {
-    console.log($event);
     this.bitrates = $event;
   }
 

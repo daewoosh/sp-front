@@ -24,8 +24,6 @@ export class CoursesItemComponent implements OnInit {
               private coursesStateService: CoursesStateService) {
     this.courseElements$ =this.coursesStateService.selectCourseProgram.pipe(
       tap(program=>{
-        console.log("program updated in courses item");
-        console.log({program})
       })
     );
   }

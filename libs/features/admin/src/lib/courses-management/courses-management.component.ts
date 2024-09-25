@@ -1,6 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { CommonModule, LocationStrategy } from '@angular/common';
 import { AdminApiService } from "../admin.api.service";
+import { ClipboardModule } from "ngx-clipboard";
+import { TuiAlertService, TuiDataList } from "@taiga-ui/core";
+import { TuiDataListWrapper } from "@taiga-ui/kit";
 
 interface Course {
   id: number;
@@ -10,7 +13,9 @@ interface Course {
 @Component({
   selector: 'sp-courses-management',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ClipboardModule,
+    TuiDataList,
+    TuiDataListWrapper,],
   templateUrl: './courses-management.component.html',
   styleUrl: './courses-management.component.scss',
 })
@@ -22,16 +27,22 @@ export class CoursesManagementComponent {
   createdLink = '';
 
   constructor(private adminApiService: AdminApiService,
-              private locationStrategy: LocationStrategy) {
+              @Inject(TuiAlertService)
+              private readonly alertService: TuiAlertService,
+              ) {
   }
 
   createAccessLink() {
     this.adminApiService.createCoursePurchaseRequest(1).subscribe(
       res => {
         if (res) {
-          this.createdLink = `${this.locationStrategy.getBaseHref()}/activateCourse/${res.token}`;
+          this.createdLink = `${APP_URL}/activateCourse/${res.token}`;
         }
       }
     );
+  }
+
+  copied() {
+    this.alertService.open(`Скопировано в буфер обмена`).subscribe();
   }
 }

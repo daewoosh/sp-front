@@ -6,7 +6,7 @@ export interface Course {
   icon: string;
   image: string;
   purchased: boolean;
-  isActive: boolean;
+  isAvailable: boolean;
 }
 
 

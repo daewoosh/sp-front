@@ -4,7 +4,8 @@
   "license": "MIT",
   "scripts": {
     "start": "nx serve sp-front",
-    "build": "nx build sp-front --skip-nx-cache --configuration=production"
+    "build": "nx build sp-front --skip-nx-cache --configuration=production",
+    "build:dev": "nx build sp-front --skip-nx-cache --configuration=dev"
   },
   "private": true,
   "dependencies": {
@@ -29,11 +30,13 @@
     "@taiga-ui/event-plugins": "^4.0.2",
     "@taiga-ui/icons": "^4.6.0",
     "@taiga-ui/kit": "^4.6.0",
+    "@taiga-ui/legacy": "^4.8.1",
     "@videogular/ngx-videogular": "^8.0.0",
     "express": "~4.18.2",
     "hls.js": "^1.5.15",
     "localstorage-polyfill": "^1.0.1",
     "ng-morph": "^4.8.1",
+    "ngx-clipboard": "^16.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "uuid": "^10.0.0",
