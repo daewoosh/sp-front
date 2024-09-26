@@ -25,6 +25,7 @@
     "@ngrx/router-store": "~18.0.2",
     "@ngrx/store": "~18.0.2",
     "@ngrx/store-devtools": "~18.0.2",
+    "@taiga-ui/addon-mobile": "^4.8.1",
     "@taiga-ui/cdk": "^4.6.0",
     "@taiga-ui/core": "^4.6.0",
     "@taiga-ui/event-plugins": "^4.0.2",

@@ -18,8 +18,8 @@ import { VgStreamingModule } from "@videogular/ngx-videogular/streaming";
 import { VgBufferingModule } from "@videogular/ngx-videogular/buffering";
 import { RouterLink } from "@angular/router";
 import { API_PATH } from "@sp/config";
-import { CoursesApiService } from "../../courses-api.service";
-import { CoursesStateService } from "../../courses-state.service";
+import { CoursesApiService } from "@sp/core/providers/courses-api.service";
+import { CoursesStateService } from "@sp/core/providers/courses-state.service";
 import {
   TuiDataList,
   TuiDataListComponent,

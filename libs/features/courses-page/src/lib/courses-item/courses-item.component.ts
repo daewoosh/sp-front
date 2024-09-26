@@ -5,7 +5,7 @@ import { Assignment, CourseElement, CourseProgramItem, VideoCourseElement } from
 import { map, Observable, tap } from "rxjs";
 import { CourseItemVideoComponent } from "./course-item-video/course-item-video.component";
 import { CourseItemAssignmentComponent } from "./course-item-assignment/course-item-assignment.component";
-import { CoursesStateService } from "../courses-state.service";
+import { CoursesStateService } from "@sp/core/providers/courses-state.service";
 
 @Component({
   selector: 'sp-courses-item',

@@ -57,10 +57,10 @@ export class CoursesSidenavComponent implements OnInit {
       return {
         icon: x.icon,
         title: x.title,
-        url: x.slug,
+        url: `/courses/${x.slug}`,
         isAvailable: x.isAvailable
       }
     });
-    this.menuItems.unshift({icon: 'all-products.svg', url: '.', title: 'Все продукты', isAvailable: true});
+    this.menuItems.unshift({icon: 'all-products.svg', url: '/courses', title: 'Все продукты', isAvailable: true});
   }
 }

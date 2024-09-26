@@ -6,7 +6,7 @@ import { Observable, of, tap } from "rxjs";
 import { CourseProgramItemComponent } from "../course-program-item/course-program-item.component";
 import { CourseProgramListComponent } from "../course-program-list/course-program-list.component";
 import { TuiScrollbar } from "@taiga-ui/core";
-import { CoursesStateService } from "../courses-state.service";
+import { CoursesStateService } from "@sp/core/providers/courses-state.service";
 
 @Component({
   selector: 'sp-course-item-page',

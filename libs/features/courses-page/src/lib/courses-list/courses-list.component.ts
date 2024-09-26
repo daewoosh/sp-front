@@ -5,7 +5,7 @@ import { CourseCardComponent } from "../course-card/course-card.component";
 import { COURSES } from "../courses-mock";
 import { AppStateService } from "@sp/core/state";
 import { Observable } from "rxjs";
-import { CoursesStateService } from "../courses-state.service";
+import { CoursesStateService } from "@sp/core/providers/courses-state.service";
 
 @Component({
   selector: 'sp-courses-list',

@@ -4,7 +4,7 @@ import { AppStateService } from "@sp/core/state";
 import { ActivatedRoute, Router } from "@angular/router";
 import { LoginModalComponent } from "@sp/common/login-modal/login-modal.component";
 import { CourseActivationService } from "@sp/core/providers";
-import { CoursesApiService } from "../courses-api.service";
+import { CoursesApiService } from "@sp/core/providers/courses-api.service";
 import { catchError, of, switchMap, take } from "rxjs";
 import { PolymorpheusComponent } from "@taiga-ui/polymorpheus";
 import { TuiDialogService } from "@taiga-ui/core";

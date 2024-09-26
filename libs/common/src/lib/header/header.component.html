@@ -1,16 +1,16 @@
 <nav class="sticky top-0 bg-[#1C1E1D] z-50">
-  <nav class="max-w-6xl mx-auto justify-between items-center px-4 py-6 lg:px-0 flex">
-    <div>
+  <nav class="max-w-6xl mx-auto justify-between items-center px-4 py-6 xl:px-0 flex gap-1">
+    <div class="flex-shrink-0">
       <a routerLink="/" queryParamsHandling="preserve" class="cursor-pointer"
       ><img src="assets/icons/logo.png"
       /></a>
     </div>
 
 
-        <div *ngIf="isAdmin$|async" class="ml-4">
-          <a routerLink="/admin/courses"
-             class="nav-link text-base">Админка</a>
-        </div>
+    <!--    <div *ngIf="isAdmin$|async" class="ml-4">-->
+    <!--      <a routerLink="/admin/courses"-->
+    <!--         class="nav-link text-base">Админка</a>-->
+    <!--    </div>-->
 
 
     <div class="flex justify-start flex-1"></div>
@@ -57,18 +57,32 @@
          class="nav-link text-base">Блог</a>
     </nav>
 
-    <div class="md:flex items-center justify-end md:flex-1 w-[150px]">
+    <button class="profile-circle block md:hidden ml-4" (click)="toggle(true)" (tuiActiveZoneChange)="toggle($event)">
+      <img class="unhovered" src="assets/icons/man.svg"/>
+      <img class="hovered" src="assets/icons/man-hover.svg"/>
+      <div *tuiSidebar="sidebarOpen; direction: 'left'">
+        <div class="h-screen" *ngIf="courses$|async as courses">
+          <sp-courses-sidenav [courses]="courses"/>
+        </div>
+      </div>
 
-      <a *ngIf="isLoggedIn$|async;else login" class="btn primary" routerLink="/courses">Кабинет</a>
-      <ng-template #login>
-        <button class="btn primary" (click)="openModal(loginModal)">Вход</button>
-      </ng-template>
+    </button>
+
+    <div class="md:flex items-center justify-end  hidden lg:block">
+
+      <div class="ml-2 w-[150px]">
+        <a *ngIf="isLoggedIn$|async;else login" class="btn primary"
+           routerLink="/courses">Кабинет</a>
+        <ng-template #login>
+          <button class="btn primary" (click)="openModal(loginModal)">Вход</button>
+        </ng-template>
+      </div>
     </div>
   </nav>
 </nav>
 <!--MOBILE MENU BEGIN-->
 <div
-  class="sticky top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden" style="z-index: 9777"
+  class="absolute top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden" style="z-index: 9777"
   [class.hidden]="menuClosed"
 >
   <div

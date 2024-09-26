@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
 import { Resolve } from "@angular/router";
 import { Course } from "@sp/core/models";
-import { CoursesStateService } from "./courses-state.service";
+import { CoursesStateService } from "@sp/core/providers/courses-state.service";
 import { map, tap } from "rxjs";
-import { CoursesApiService } from "./courses-api.service";
+import { CoursesApiService } from "@sp/core/providers/courses-api.service";
 
 @Injectable({providedIn: 'root'})
 export class CoursesResolver implements Resolve<Course[]> {

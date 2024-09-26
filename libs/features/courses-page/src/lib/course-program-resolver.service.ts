@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot, Resolve } from "@angular/router";
 import { CourseElement, CourseProgramItem } from "@sp/core/models";
-import { CoursesApiService } from "./courses-api.service";
-import { CoursesStateService } from "./courses-state.service";
+import { CoursesApiService } from "@sp/core/providers/courses-api.service";
+import { CoursesStateService } from "@sp/core/providers/courses-state.service";
 import { map, Observable, tap } from "rxjs";
 
 @Injectable({providedIn: 'root'})

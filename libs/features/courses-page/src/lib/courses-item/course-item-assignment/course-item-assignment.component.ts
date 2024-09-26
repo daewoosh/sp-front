@@ -5,9 +5,9 @@ import {
   CourseItemAssignmentQuestionComponent
 } from "./course-item-assignment-question/course-item-assignment-question.component";
 import { RouterLink } from "@angular/router";
-import { CoursesApiService } from "../../courses-api.service";
+import { CoursesApiService } from "@sp/core/providers/courses-api.service";
 import { TuiAlertService } from "@taiga-ui/core";
-import { CoursesStateService } from "../../courses-state.service";
+import { CoursesStateService } from "@sp/core/providers/courses-state.service";
 
 @Component({
   selector: 'sp-course-item-assignment',

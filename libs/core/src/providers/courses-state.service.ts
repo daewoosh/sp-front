@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
-import { StateService } from "@sp/core/state";
-import { Course, CourseProgramItem } from "@sp/core/models";
+import { StateService } from "../state";
+import { Course, CourseProgramItem } from "../models";
 
 export interface CoursesState {
   courses: Course[];

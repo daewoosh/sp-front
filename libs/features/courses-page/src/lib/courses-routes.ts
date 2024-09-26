@@ -11,7 +11,7 @@ import { CoursesResolver } from "./courses-resolver.service";
 import { CourseElementResolver, CourseProgramResolver } from "./course-program-resolver.service";
 import { inject, Injectable, INJECTOR } from "@angular/core";
 import { AppStateService } from "@sp/core/state";
-import { CoursesStateService } from "./courses-state.service";
+import { CoursesStateService } from "@sp/core/providers/courses-state.service";
 import { map, of } from "rxjs";
 import { TuiDialogService } from "@taiga-ui/core";
 import { PolymorpheusComponent } from "@taiga-ui/polymorpheus";
