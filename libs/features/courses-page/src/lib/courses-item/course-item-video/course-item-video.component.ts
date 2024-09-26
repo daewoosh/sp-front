@@ -29,6 +29,7 @@ import {
   TuiOptGroup
 } from "@taiga-ui/core";
 import { TuiComboBoxModule, TuiSelectModule } from '@taiga-ui/legacy';
+import { TuiActiveZone } from "@taiga-ui/cdk";
 
 
 
@@ -40,7 +41,7 @@ import { TuiComboBoxModule, TuiSelectModule } from '@taiga-ui/legacy';
     VgOverlayPlayModule,
     VgBufferingModule,
     VgStreamingModule, RouterLink, TuiDropdownDirective, TuiDropdownOpen, TuiDataListComponent, TuiOptGroup, TuiDataList,
-    TuiComboBoxModule, TuiDataListDirective, TuiSelectModule],
+    TuiComboBoxModule, TuiDataListDirective, TuiSelectModule, TuiActiveZone],
   templateUrl: './course-item-video.component.html',
   styleUrl: './course-item-video.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -156,5 +157,24 @@ export class CourseItemVideoComponent implements OnDestroy{
   }
   get canGoNext(){
     return this.courseElement.isCompleted;
+  }
+
+  showQuality = false;
+  showSpeed = false;
+
+  onSpeedActiveZone(active: boolean) {
+    if (active && this.showSpeed){
+      this.showSpeed = false;
+      return;
+    }
+    this.showSpeed = active;
+  }
+
+  onQualityActiveZone(active: boolean) {
+    if (active && this.showQuality){
+      this.showQuality = false;
+      return;
+    }
+    this.showQuality = active;
   }
 }

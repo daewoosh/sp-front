@@ -2,7 +2,7 @@
   <vg-player (onPlayerReady)="onPlayerReady($event)" *ngIf="canShowPlayer">
     <vg-overlay-play vgFor="myMedia2"></vg-overlay-play>
 
-    <vg-controls *ngIf="bitrates.length" class="h-[70px]" [vgAutohide]="true">
+    <vg-controls *ngIf="bitrates.length" class="h-[70px]" [vgAutohide]="false">
       <!--      <vg-scrub-bar>-->
       <!--        <vg-scrub-bar-current-time vgFor="myMedia2" [vgSlider]="true"></vg-scrub-bar-current-time>-->
       <!--        <vg-scrub-bar-buffering-time vgFor="myMedia2"></vg-scrub-bar-buffering-time>-->
@@ -15,45 +15,51 @@
         <div class="flex justify-between">
           <div class="flex gap-2">
             <vg-play-pause vgFor="myMedia2"></vg-play-pause>
-<!--            <vg-playback-button vgFor="myMedia2" [playbackValues]="['0.5', '1.0', '2.0', '4.0' ]"></vg-playback-button>-->
+            <!--            <vg-playback-button vgFor="myMedia2" [playbackValues]="['0.5', '1.0', '2.0', '4.0' ]"></vg-playback-button>-->
 
-            <button tuiDropdownOpen
-                    type="button"
-                    [tuiDropdown]="contentSpeed">
-              {{selectedSpeed?.label ?? ''}}
-            </button>
 
-            <ng-template #contentSpeed
-                         let-close>
-              <div *ngFor="let item of speeds" class="flex gap-1 flex-col p-2 bg-[#1C1E1D] text-white text-base">
-                <button type="button" class="hover:bg-[var(--clr-primary)] px-2 rounded" (click)="myMedia.playbackRate = item.value;selectedSpeed = item;close()">
-                  {{item.label}}
-                </button>
+            <div (tuiActiveZoneChange)="onSpeedActiveZone($event)" class="flex relative items-center">
+              <div class="text-ellipsis">
+                {{selectedSpeed?.label ?? ''}}
               </div>
-            </ng-template>
+
+              <ng-container *ngIf="showSpeed">
+                <div class="dd-container speed"
+                >
+                  <div *ngFor="let item of speeds" class="w-full"
+                  >
+                    <button type="button" class="hover:bg-[var(--clr-primary)] px-2 rounded w-full"
+                            (click)="myMedia.playbackRate = item.value;selectedSpeed = item;showSpeed=false">
+                      {{item.label}}
+                    </button>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
 
             <vg-time-display vgFor="myMedia2" [vgProperty]="'current'" [vgFormat]="'mm:ss'"></vg-time-display>
           </div>
           <div class="flex gap-2">
-            <!--            <vg-quality-selector [bitrates]="bitrates" class="qSelector"-->
-            <!--                                 (onBitrateChange)="vgHls.setBitrate($event)">-->
 
-            <!--            </vg-quality-selector>-->
-
-
-            <button tuiDropdownOpen
-                    type="button"
-                    [tuiDropdown]="content">
-              {{selectedBitrate?.label ?? ''}}
-            </button>
-
-            <ng-template #content let-close>
-              <div *ngFor="let item of bitrates" class="flex gap-1 flex-col p-2 bg-[#1C1E1D] text-white text-base">
-                <button type="button" class="hover:bg-[var(--clr-primary)] px-2 rounded" (click)="vgHls.setBitrate(item);selectedBitrate = item;close()">
-                  {{item.label}}
-                </button>
+            <div (tuiActiveZoneChange)="onQualityActiveZone($event)" class="flex relative items-center">
+              <div
+                (click)="showQuality = true">
+                {{selectedBitrate?.label ?? ''}}
               </div>
-            </ng-template>
+
+              <ng-container *ngIf="showQuality">
+                <div class="dd-container"
+                >
+                  <div *ngFor="let item of bitrates" class="w-full"
+                  >
+                    <button type="button" class="hover:bg-[var(--clr-primary)] px-2 rounded w-full"
+                            (click)="vgHls.setBitrate(item);selectedBitrate = item;showQuality=false">
+                      {{item.label}}
+                    </button>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
 
             <vg-mute vgFor="myMedia2"></vg-mute>
             <vg-volume vgFor="myMedia2" class="hidden sm:inline-flex"></vg-volume>
