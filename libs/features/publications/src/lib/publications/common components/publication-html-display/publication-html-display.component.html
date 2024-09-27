@@ -1,0 +1,11 @@
+<div class="blured-display-container pt-10 pb-6 px-[50px]">
+  <div class="relative clr-white editor">
+    <tui-editor-socket [content]="htmlString || ''"></tui-editor-socket>
+  </div>
+  <div class="text-base clr-grey text-end w-full mt-6">{{publicationDate | date: "dd.MM.yyyy"}}</div>
+</div>
+
+<div [hidden]="true">
+  <template #bannerTemplate></template>
+</div>
+

@@ -1,0 +1,21 @@
+<div class="font-bold text-[30px] mt-[3.75rem]">
+  {{selectedTag.value}}
+</div>
+<div class="flex flex-wrap gap-5 mt-6" [ngClass]="{'h-[54px] overflow-hidden':!isTagListExpanded}">
+  <div *ngFor="let tag of tags" (click)="select(tag)" class="publication-filter-tag min-w"
+       [ngClass]="{'selected':tag.id == selectedTag.id}">
+    {{tag.value}}
+  </div>
+</div>
+
+<div class="text-base cursor-pointer hover:text-[var(--clr-primary)] mt-3"
+  (click)="isTagListExpanded = !isTagListExpanded">{{isTagListExpanded ? 'Свернуть' : 'Все категории'}}</div>
+
+<ng-container *ngIf="articles.length>0">
+  <div infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50"
+       (scrolled)="loadMore()"
+       class="grid grid-cols-1 gap-y-6 mt-16">
+    <app-article-item-tile *ngFor="let article of articles" [article]="article"
+                           [isAdmin]="isAdmin"></app-article-item-tile>
+  </div>
+</ng-container>

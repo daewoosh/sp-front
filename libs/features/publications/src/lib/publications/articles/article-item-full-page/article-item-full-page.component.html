@@ -1,0 +1,17 @@
+<div class="publication-page">
+  <div class="max-w-6xl  mx-auto py-12 px-8 xl:px-0">
+    <a class="btn block flex-1 w-[195px]" routerLink="/articles">
+      <div class="flex items-center justify-center gap-2">
+        <svg width="13" height="22" viewBox="0 0 13 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M12.1534 0.146447C12.3487 0.341709 12.3487 0.658291 12.1534 0.853553L2.00699 11L12.1534 21.1464C12.3487 21.3417 12.3487 21.6583 12.1534 21.8536C11.9582 22.0488 11.6416 22.0488 11.4463 21.8536L0.592773 11L11.4463 0.146447C11.6416 -0.0488155 11.9582 -0.0488155 12.1534 0.146447Z"
+                fill="white"/>
+        </svg>
+        К списку статей
+      </div>
+    </a>
+    <div *ngIf="publication$|async as publication">
+      <app-article-full-content [publication]="publication"></app-article-full-content>
+    </div>
+  </div>
+</div>
