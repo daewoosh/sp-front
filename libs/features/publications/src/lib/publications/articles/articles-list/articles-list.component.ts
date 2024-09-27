@@ -4,17 +4,18 @@ import { CommonModule } from "@angular/common";
 import { PublicationShortDto, PublicationType, TagDto } from "@sp/core/models";
 import { PublicationsApiService } from "@sp/core/providers";
 import { InfiniteScrollDirective } from "ngx-infinite-scroll";
+import { ArticleItemTileComponent } from "../article-item-tile/article-item-tile.component";
 
 @Component({
   selector: 'sp-articles-list',
   templateUrl: './articles-list.component.html',
   styleUrls: ['./articles-list.component.scss'],
   standalone: true,
-  imports: [CommonModule, InfiniteScrollDirective]
+  imports: [CommonModule, InfiniteScrollDirective, ArticleItemTileComponent]
 })
 export class ArticlesListComponent implements OnInit {
 
-  @Input() tags: TagDto[] | null = [];
+  @Input() tags: TagDto[] = [];
   selectedTag!: TagDto;
   @Input() isAdmin = false;
   articles: PublicationShortDto[] = [];

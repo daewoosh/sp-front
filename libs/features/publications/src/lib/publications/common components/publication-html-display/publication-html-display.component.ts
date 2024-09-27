@@ -13,12 +13,13 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import { SafeHtml } from "@angular/platform-browser";
-import { NgDompurifySanitizer } from "@tinkoff/ng-dompurify";
 import { AdvancedBannerComponent } from "./advanced-banner/advanced-banner.component";
 import { BeginnerBannerComponent } from "./beginner-banner/beginner-banner.component";
 import { BoosterBannerComponent } from "./booster-banner/booster-banner.component";
 import { ExchangerBannerComponent } from "./exchanger-banner/exchanger-banner.component";
 import { CommonModule } from "@angular/common";
+import { TuiEditorSocket } from "@taiga-ui/editor";
+import { NgDompurifySanitizer } from "@taiga-ui/dompurify";
 
 @Component({
   selector: 'sp-publication-html-display',
@@ -26,7 +27,7 @@ import { CommonModule } from "@angular/common";
   styleUrls: ['./publication-html-display.component.scss'],
   encapsulation: ViewEncapsulation.None,
   standalone: true,
-  imports: [CommonModule]
+  imports: [CommonModule, TuiEditorSocket]
 })
 export class PublicationHtmlDisplayComponent implements OnInit, AfterViewInit, AfterViewChecked {
   @ViewChild('bannerTemplate', {read: ViewContainerRef}) container: any;
@@ -72,25 +73,45 @@ export class PublicationHtmlDisplayComponent implements OnInit, AfterViewInit, A
   }
 
 
+  // private replaceBanner(name: string, componentType: Type<any>) {
+  //   this.container.clear();
+  //   const isThere = this.htmlString.includes(name);
+  //   if (isThere) {
+  //     const factory: ComponentFactory<any> =
+  //       this.resolver.resolveComponentFactory(componentType);
+  //     const componentRef = this.container.createComponent(factory);
+  //
+  //     // // Вручную вызываем ngOnInit у созданного компонента
+  //     if (componentRef.instance.ngOnInit) {
+  //       componentRef.instance.ngOnInit();
+  //     }
+  //
+  //     // Ждем завершения отрисовки компонента
+  //     setTimeout(() => {
+  //       const htmlString2 = componentRef.location.nativeElement.innerHTML;
+  //       this.htmlString = this.htmlString.replace(name, htmlString2);
+  //     });
+  //   }
+  // }
+
   private replaceBanner(name: string, componentType: Type<any>) {
     this.container.clear();
     const isThere = this.htmlString.includes(name);
     if (isThere) {
-      const factory: ComponentFactory<any> =
-        this.resolver.resolveComponentFactory(componentType);
-      const componentRef = this.container.createComponent(factory);
+      // Create the component directly using the component type
+      const componentRef = this.container.createComponent(componentType);
 
-      // // Вручную вызываем ngOnInit у созданного компонента
-      if (componentRef.instance.ngOnInit) {
-        componentRef.instance.ngOnInit();
-      }
+      // No need to manually call ngOnInit; Angular handles lifecycle hooks automatically
 
-      // Ждем завершения отрисовки компонента
+      // Wait for the component to be rendered and change detection to run
       setTimeout(() => {
         const htmlString2 = componentRef.location.nativeElement.innerHTML;
         this.htmlString = this.htmlString.replace(name, htmlString2);
+
+        // Optionally destroy the component to free up resources
+        componentRef.destroy();
       });
     }
-
   }
+
 }

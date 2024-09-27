@@ -1,7 +1,7 @@
-import {Injectable} from "@angular/core";
-import {ActivatedRouteSnapshot, ActivationStart, Resolve, Router, RouterStateSnapshot} from "@angular/router";
-import {catchError, EMPTY, filter, Observable, takeUntil, tap} from "rxjs";
-import {Meta, Title} from "@angular/platform-browser";
+import { Injectable } from "@angular/core";
+import { ActivatedRouteSnapshot, ActivationStart, Resolve, Router, RouterStateSnapshot } from "@angular/router";
+import { catchError, EMPTY, filter, Observable, takeUntil, tap } from "rxjs";
+import { Meta, Title } from "@angular/platform-browser";
 import { PublicationsApiService } from "@sp/core/providers";
 import { PublicationType } from "@sp/core/models";
 
@@ -22,11 +22,12 @@ export class PublicationByNameResolver implements Resolve<boolean> {
     const navigateAway$ = this.router.events.pipe(
       filter((event) => event instanceof ActivationStart)
     );
+
     let publicationType = PublicationType.None;
-    if (route.url[0].path.includes('news')) {
+    if (route.url[0].path.includes('news') || (route.parent?.url[0]?.path?.includes('news') ?? false)) {
       publicationType = PublicationType.News;
     }
-    if (route.url[0].path.includes('articles')) {
+    if (route.url[0].path.includes('articles') || (route.parent?.url[0]?.path?.includes('articles') ?? false)) {
       publicationType = PublicationType.Article;
     }
 
