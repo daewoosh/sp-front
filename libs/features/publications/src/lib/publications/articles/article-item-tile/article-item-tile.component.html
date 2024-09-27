@@ -1,0 +1,29 @@
+<a [routerLink]="['/articles',article.name]">
+  <div class="blured-display-container article-tile">
+    <div class="relative flex flex-nowrap flex-col lg:flex-row ">
+      <div class="text-[3rem] lg:-rotate-90 h-fit self-center publish-date">{{article.publishDate|date:'dd.MM'}}</div>
+      <div class="img-container lg:w-[400px] shrink-0 h-[200px] sm:h-[300px]">
+        <img class="contained-image" [src]="article.coverImageUrl" [alt]="article.coverAlt"
+             [title]="article.coverTitle">
+      </div>
+      <div class="vertical-line mx-[30px] py-[40px] self-center hidden lg:block"></div>
+      <div class="py-[40px] w-full px-12 lg:pr-12 flex flex-col sm:flex-row sm:gap-5">
+        <div>
+          <div class="max-w-[335px] text-[21px] leading-[25px]">{{article.title}}</div>
+          <div class="max-w-[525px] mt-5 text-base clr-grey grow article-description">
+            <tui-line-clamp [linesLimit]="5" [content]="article.description"></tui-line-clamp>
+          </div>
+        </div>
+        <div class="shrink-0 self-end">
+          <a class="read-more inline-block mr-4" *ngIf="isAdmin" [routerLink]="['/admin/articles/edit',article.name]">Редактировать</a>
+          <a class="read-more mt-5 inline-block float-right"
+             [routerLink]="['/articles',article.name]">
+            читать дальше
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</a>

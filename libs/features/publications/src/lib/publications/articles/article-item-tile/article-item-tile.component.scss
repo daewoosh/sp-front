@@ -1,0 +1,67 @@
+.article-tile {
+
+  & .vertical-line {
+    position: relative;
+    width: 1px;
+    height: 200px;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 200px;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--clr-black-light), #ffffff, var(--clr-black-light));
+      box-shadow: 0px 0px 3px rgba(255, 255, 255, 0.2);
+    }
+  }
+
+  & .read-more {
+    @apply text-sm mt-3 text-end;
+    cursor: pointer;
+
+    &:hover {
+      color: var(--clr-primary);
+    }
+
+  }
+
+  &:hover {
+    & .read-more {
+      color: var(--clr-primary);
+    }
+
+    & .vertical-line::before{
+      background: linear-gradient(to bottom, var(--clr-black-light), var(--clr-primary), var(--clr-black-light));
+    }
+
+    & .article-description{
+      color: var(--clr-white);
+    }
+  }
+}
+
+
+.img-container {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  /* set a fixed height for the parent container */
+  position: relative; /* add this to make sure the contained image is positioned correctly */
+}
+
+.contained-image {
+  position: absolute; /* make the image absolute so we can position it inside the parent container */
+  top: 50%; /* position the image in the middle of the parent container */
+  left: 50%;
+  transform: translate(-50%, -50%); /* center the image properly */
+  max-height: calc(100% - 30px); /* subtract the total padding (20px top + 20px bottom) from the parent container height */
+  object-fit: contain; /* set the object-fit property */
+  width: 100%; /* make sure the image width fills its container */
+  height: auto; /* allow the height to adjust based on the aspect ratio of the image */
+}
+
+
+.publish-date {
+  color: rgba(255, 255, 255, 0.05);
+}

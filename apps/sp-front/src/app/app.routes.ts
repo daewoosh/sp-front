@@ -3,6 +3,7 @@ import { PageLayoutComponent } from "@sp/common";
 import { coursesRoutes } from "@sp/courses-page";
 import { AdminGuard, AuthGuard } from "@sp/core/guards";
 import { adminRoutes } from "@sp/admin";
+import { publicationsRoutes } from "../../../../libs/features/publications/src/lib/publications.routes";
 
 export const appRoutes: Route[] = [
   {
@@ -56,6 +57,10 @@ export const appRoutes: Route[] = [
       {
         path:"login",
         loadComponent: () => import('@sp/common').then(mod => mod.OneTimeLoginComponent),
+      },
+      {
+        path:"articles",
+        children:publicationsRoutes,
       },
       {
         path: "",

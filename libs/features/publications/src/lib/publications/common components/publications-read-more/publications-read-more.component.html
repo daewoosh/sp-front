@@ -1,0 +1,20 @@
+<div class="blured-display-container mt-6">
+  <div class="p-12 relative">
+    <div class="grid grid-cols-1 lg:grid-cols-2 lg:gap-20">
+      <div>
+        <sp-read-more-item *ngIf="publications[0]" [publication]="publications[0]" [publicationType]="publicationType"></sp-read-more-item>
+        <div class="horizontal-line"></div>
+
+        <sp-read-more-item *ngIf="publications[1]" [publication]="publications[1]" [publicationType]="publicationType"></sp-read-more-item>
+        <div class="horizontal-line block lg:hidden"></div>
+      </div>
+      <div>
+        <sp-read-more-item *ngIf="publications[2]" [publication]="publications[2]" [publicationType]="publicationType"></sp-read-more-item>
+        <div class="horizontal-line"></div>
+
+        <sp-read-more-item *ngIf="publications[3]" [publication]="publications[3]" [publicationType]="publicationType"></sp-read-more-item>
+      </div>
+    </div>
+  </div>
+</div>
+<sp-more-products></sp-more-products>
