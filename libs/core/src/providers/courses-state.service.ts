@@ -5,11 +5,13 @@ import { Course, CourseProgramItem } from "../models";
 export interface CoursesState {
   courses: Course[];
   courseProgram: CourseProgramItem[];
+  coursesLoaded: boolean;
 }
 
 const initialState: CoursesState = {
   courses: [],
-  courseProgram: []
+  courseProgram: [],
+  coursesLoaded: false,
 }
 
 @Injectable({providedIn: 'root'})
@@ -18,12 +20,14 @@ export class CoursesStateService extends StateService<CoursesState> {
   public selectCourses = this.select(({courses}: CoursesState) => courses);
   public selectCourseProgram = this.select(({courseProgram}: CoursesState) => courseProgram);
 
+
   constructor() {
     super(initialState);
   }
 
   public setCourses(courses: Course[]): void {
-    this.setState({courses});
+    this.setState({courses, coursesLoaded: true});
+
   }
 
   public setCourseProgram(courseProgram: CourseProgramItem[]): void {
@@ -57,5 +61,9 @@ export class CoursesStateService extends StateService<CoursesState> {
       }
       this.setState({courseProgram: currentProgram});
     }
+  }
+
+  clearCourses(){
+    this.setState(initialState);
   }
 }

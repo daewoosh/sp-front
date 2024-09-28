@@ -3,10 +3,6 @@
     <vg-overlay-play vgFor="myMedia2"></vg-overlay-play>
 
     <vg-controls *ngIf="bitrates.length" class="h-[70px]" [vgAutohide]="false">
-      <!--      <vg-scrub-bar>-->
-      <!--        <vg-scrub-bar-current-time vgFor="myMedia2" [vgSlider]="true"></vg-scrub-bar-current-time>-->
-      <!--        <vg-scrub-bar-buffering-time vgFor="myMedia2"></vg-scrub-bar-buffering-time>-->
-      <!--      </vg-scrub-bar>-->
       <div class="flex-grow pr-5">
         <vg-scrub-bar class="block h-[20px]">
           <vg-scrub-bar-current-time vgFor="myMedia2" [vgSlider]="true"></vg-scrub-bar-current-time>
@@ -15,8 +11,6 @@
         <div class="flex justify-between">
           <div class="flex gap-2">
             <vg-play-pause vgFor="myMedia2"></vg-play-pause>
-            <!--            <vg-playback-button vgFor="myMedia2" [playbackValues]="['0.5', '1.0', '2.0', '4.0' ]"></vg-playback-button>-->
-
 
             <div (tuiActiveZoneChange)="onSpeedActiveZone($event)" class="flex relative items-center">
               <div class="text-ellipsis">

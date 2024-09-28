@@ -1,1 +1,1 @@
-export * from './lib/publications/publications.component';
+export * from './lib/publications.routes';

@@ -12,15 +12,16 @@ import { LoginResult } from "@sp/core/models";
 import { isPlatformBrowser } from "@angular/common";
 
 @Injectable()
-export class AppResolver implements Resolve<boolean> {
+export class AppResolver implements Resolve<any> {
   constructor(private clientService: ClientService) {
   }
 
   public resolve(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ): Observable<boolean> {
-    return this.clientService.checkAuthenticatedStatus();
+  ): Observable<any> {
+    return this.clientService.checkAuthenticatedStatus().pipe(
+    );
   }
 }
 
@@ -32,7 +33,7 @@ export class ClientService {
     @Inject(PLATFORM_ID) private platformId: any,
   ) {}
 
-  public checkAuthenticatedStatus(): any {
+  public checkAuthenticatedStatus(): Observable<boolean> {
     if (!isPlatformBrowser(this.platformId)) {
       return of(false);
     }else
@@ -47,8 +48,8 @@ export class ClientService {
     );
   }
 
-  private validateAuthToken(): Promise<boolean> {
-    return firstValueFrom(this.httpClient
+  private validateAuthToken(): Observable<boolean> {
+    return this.httpClient
       .get<LoginResult>(`${API_URL}/auth/check`)
       .pipe(
         map((loginResult) => {
@@ -65,6 +66,6 @@ export class ClientService {
         }),
         catchError(() => {
           return of(false)}),
-      ));
+      );
   }
 }

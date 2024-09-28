@@ -3,13 +3,12 @@ import { PageLayoutComponent } from "@sp/common";
 import { coursesRoutes } from "@sp/courses-page";
 import { AdminGuard, AuthGuard } from "@sp/core/guards";
 import { adminRoutes } from "@sp/admin";
-import { publicationsRoutes } from "../../../../libs/features/publications/src/lib/publications.routes";
+import { publicationsRoutes } from "@sp/publications";
 
 export const appRoutes: Route[] = [
   {
     path: "",
     component: PageLayoutComponent,
-    // resolve: {isLoggedIn: AppResolver},
     children: [
       {
         path: "bonus",

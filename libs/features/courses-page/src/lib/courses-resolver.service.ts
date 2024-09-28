@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
-import { Resolve } from "@angular/router";
+import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from "@angular/router";
 import { Course } from "@sp/core/models";
 import { CoursesStateService } from "@sp/core/providers/courses-state.service";
-import { map, tap } from "rxjs";
+import { map, Observable, of, switchMap, take, tap } from "rxjs";
 import { CoursesApiService } from "@sp/core/providers/courses-api.service";
 
 @Injectable({providedIn: 'root'})
@@ -11,10 +11,21 @@ export class CoursesResolver implements Resolve<Course[]> {
               private coursesStateService: CoursesStateService) {
   }
 
-  resolve() {
-    return this.coursesApiService.getCourses().pipe(
-      map(courses => courses.result),
-      tap(courses => this.coursesStateService.setCourses(courses))
+  resolve(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<Course[]> {
+    return this.coursesStateService.selectCourses.pipe(
+      take(1),
+      switchMap(courses => {
+        if (courses.length) {
+          return of(courses);
+        }
+        return this.coursesApiService.getCourses().pipe(
+          map(response => response.result),
+          tap(courses => this.coursesStateService.setCourses(courses))
+        );
+      })
     );
   }
 }

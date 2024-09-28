@@ -17,7 +17,13 @@ import {
 } from '@angular/router';
 import { appRoutes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
-import { HTTP_INTERCEPTORS, provideHttpClient, withFetch, withInterceptorsFromDi } from "@angular/common/http";
+import {
+  HTTP_INTERCEPTORS,
+  HttpClient,
+  provideHttpClient,
+  withFetch,
+  withInterceptorsFromDi
+} from "@angular/common/http";
 import { AdminGuard, AuthGuard, AuthInterceptor, ErrorInterceptor } from "@sp/core/guards";
 import { provideStoreDevtools } from "@ngrx/store-devtools";
 import { provideAnimationsAsync } from "@angular/platform-browser/animations/async";
@@ -26,6 +32,7 @@ import { initializeApplication } from "./applnitializer";
 import { CourseActivationService } from "@sp/core/providers";
 import { CourseAccessGuard } from "@sp/courses-page";
 import { API_PATH, EXCHANGE_URL as EXCHANGE_URL_TOKEN } from "@sp/config";
+import { CoursesStateService } from "@sp/core/providers/courses-state.service";
 
 @Injectable()
 class GlobalErrorHandler implements ErrorHandler {
@@ -64,7 +71,7 @@ export const appConfig: ApplicationConfig = {
       provide: APP_INITIALIZER,
       useFactory: initializeApplication,
       multi: true,
-      deps: [ClientService],
+      deps: [ClientService, CoursesStateService, HttpClient],
     },
   ],
 };

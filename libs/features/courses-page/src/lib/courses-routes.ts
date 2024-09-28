@@ -5,14 +5,14 @@ import {
   MaybeAsync,
   Route,
   Router,
-  RouterStateSnapshot
+  RouterStateSnapshot, UrlTree
 } from "@angular/router";
 import { CoursesResolver } from "./courses-resolver.service";
 import { CourseElementResolver, CourseProgramResolver } from "./course-program-resolver.service";
 import { inject, Injectable, INJECTOR } from "@angular/core";
 import { AppStateService } from "@sp/core/state";
 import { CoursesStateService } from "@sp/core/providers/courses-state.service";
-import { map, of } from "rxjs";
+import { map, Observable, of, switchMap, take } from "rxjs";
 import { TuiDialogService } from "@taiga-ui/core";
 import { PolymorpheusComponent } from "@taiga-ui/polymorpheus";
 import { CourseNoAccessModalComponent } from "./course-no-access-modal/course-no-access-modal.component";
@@ -37,30 +37,68 @@ export class CourseAccessGuard implements CanActivate {
     private coursesStateService: CoursesStateService
   ) {
   }
-
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): MaybeAsync<GuardResult> {
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<boolean | UrlTree> {
     const id = route.params['id'];
-    if (id) {
-      return this.coursesStateService.selectCourses.pipe(
-        map(courses => {
-          const course = courses.find(course => course.slug === id && course.isAvailable === true);
-          if (course || !courses.length) {
-            return true;
-          }
-          this.dialog.subscribe(
-            {
-              next: (data) => {
-                if (data) {
-                  this.router.navigate(['/courses']);
-                }
-              }
-            }
-          );
-          return false;
-        })
-      )
+    if (!id) {
+      // No course ID provided, redirect to home
+      return of(this.router.createUrlTree(['/']));
     }
-    return of(false);
+
+    // Check if the user is logged in
+    return this.appStateService.isLoggedIn$.pipe(
+      take(1),
+      switchMap((isLoggedIn) => {
+        if (!isLoggedIn) {
+          // User is not logged in, redirect to home
+          return of(this.router.createUrlTree(['/']));
+        }
+
+        // User is logged in, check if they have access to the course
+        return this.coursesStateService.selectCourses.pipe(
+          take(1),
+          map((courses) => {
+            const course = courses.find(
+              (course) =>
+                course.slug === id &&
+                course.isAvailable === true &&
+                course.purchased
+            );
+            if (course) {
+              // User has access to the course, allow navigation
+              return true;
+            }
+
+            // User does not have access to the course
+            // Show the modal dialog without waiting
+            this.dialogs.open<boolean>(
+              new PolymorpheusComponent(
+                CourseNoAccessModalComponent,
+                this.injector
+              ),
+              {
+                data: 237, // Pass any data if needed
+                dismissible: true,
+                appearance: 'sp-modal',
+              }
+            ).subscribe();
+
+            // Decide what to return based on whether the user navigated from within the app
+            if (this.router.navigated) {
+              // The user navigated from within the app
+              // Cancel navigation and stay on the current page
+              return false;
+            } else {
+              // The user entered the URL directly
+              // Redirect to '/courses'
+              return this.router.createUrlTree(['/courses']);
+            }
+          })
+        );
+      })
+    );
   }
 }
 

@@ -29,7 +29,7 @@ interface Link {
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
-export class HeaderComponent implements OnInit{
+export class HeaderComponent {
 
   sidebarOpen = false;
   courses$: Observable<Course[]>;
@@ -68,8 +68,7 @@ export class HeaderComponent implements OnInit{
               @Inject(PLATFORM_ID) private platformId: string,
               private appStateService: AppStateService,
               private dialogs2: TuiDialogService,
-              private coursesStateService: CoursesStateService,
-              private coursesApiService: CoursesApiService) {
+              private coursesStateService: CoursesStateService) {
     this.showHeader = isPlatformBrowser(platformId);
     this.isLoggedIn$ = appStateService.isLoggedIn$;
     this.isAdmin$ = appStateService.isAdmin$;
@@ -80,23 +79,6 @@ export class HeaderComponent implements OnInit{
       .subscribe(() => {
         this.sidebarOpen = false;
       });
-  }
-
-  ngOnInit() {
-    this.coursesStateService.selectCourses.pipe(
-      take(1),
-      switchMap(courses=>{
-        if(courses.length === 0){
-          return this.coursesApiService.getCourses().pipe(
-            map(courses => {
-              this.coursesStateService.setCourses(courses.result);
-              return courses;
-            })
-          )
-        }
-        return of(courses);
-      })
-    ).subscribe();
   }
 
   isActiveRoute(route: string) {
