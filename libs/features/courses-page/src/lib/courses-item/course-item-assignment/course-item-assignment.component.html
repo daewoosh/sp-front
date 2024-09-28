@@ -26,6 +26,6 @@
   <button class="btn primary" [attr.inert]="!canGoNext || null"
           [routerLink]="['../',courseElement.order+1]"
           [ngClass]="{'hidden':!showNextBtn, 'disabled':!canGoNext}">
-    Перейти к следующему уроку
+    {{nextButtonLabel}}
   </button>
 </div>

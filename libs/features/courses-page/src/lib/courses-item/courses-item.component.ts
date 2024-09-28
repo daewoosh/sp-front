@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from "@angular/router";
 import { Assignment, CourseElement, CourseProgramItem, VideoCourseElement } from "@sp/core/models";
@@ -18,30 +18,38 @@ import { CoursesStateService } from "@sp/core/providers/courses-state.service";
 export class CoursesItemComponent implements OnInit {
 
   courseElement$!: Observable<CourseElement>;
+  @ViewChild('coursesItem') coursesItemElement!: ElementRef;
 
   courseElements$: Observable<CourseProgramItem[]>;
+
   constructor(private activatedRoute: ActivatedRoute,
               private coursesStateService: CoursesStateService) {
-    this.courseElements$ =this.coursesStateService.selectCourseProgram.pipe(
-      tap(program=>{
+    this.courseElements$ = this.coursesStateService.selectCourseProgram.pipe(
+      tap(program => {
       })
     );
   }
 
   ngOnInit() {
 
-    this.courseElement$  =this.activatedRoute.data.pipe(
+    this.courseElement$ = this.activatedRoute.data.pipe(
+      tap(_ => {
+        setTimeout(() => {
+          const height = this.coursesItemElement.nativeElement.offsetHeight;
+          console.log(height);
+          this.coursesStateService.setCourseItemHeight(height);
+        }, 500);
+      }),
       map(data => data['item']),
-
     );
-
   }
 
-  videoElement(element: CourseElement):VideoCourseElement{
+
+  videoElement(element: CourseElement): VideoCourseElement {
     return element as VideoCourseElement;
   }
 
-  assignmentElement(element: CourseElement):Assignment{
+  assignmentElement(element: CourseElement): Assignment {
     return element as Assignment;
   }
 }

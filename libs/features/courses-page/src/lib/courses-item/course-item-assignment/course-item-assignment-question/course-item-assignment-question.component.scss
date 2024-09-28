@@ -1,20 +1,31 @@
-textarea{
+textarea {
   border-radius: 10px;
   padding: 18px;
   border: 1px solid var(--clr-grey);
 
-  &:focus{
+  &:focus {
     border: 1px solid var(--clr-primary);
     outline: 1px solid var(--clr-primary);
   }
 }
 
-.check-self{
+.check-self {
   @apply flex gap-2 items-center;
   min-height: 32px;
 }
 
-.answer{
+.answer {
+  padding: 18px;
+  border-radius: 10px;
+  font-size: 1rem;
   border: 1px solid var(--clr-primary);
   outline: 1px solid var(--clr-primary);
+}
+
+.text-red-700 {
+  color: red;
+}
+
+.text-black {
+  color: black;
 }

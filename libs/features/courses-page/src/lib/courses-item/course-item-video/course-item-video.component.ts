@@ -8,7 +8,7 @@ import {
   PLATFORM_ID
 } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from "@angular/common";
-import { CourseElement, CourseProgramItem, VideoCourseElement } from "@sp/core/models";
+import { CourseElement, CourseElementType, CourseProgramItem, VideoCourseElement } from "@sp/core/models";
 import { VgControlsModule } from "@videogular/ngx-videogular/controls";
 import { BitrateOptions, IMediaElement, VgApiService, VgCoreModule } from "@videogular/ngx-videogular/core";
 import { VgOverlayPlayModule } from "@videogular/ngx-videogular/overlay-play";
@@ -30,6 +30,8 @@ import {
 } from "@taiga-ui/core";
 import { TuiComboBoxModule, TuiSelectModule } from '@taiga-ui/legacy';
 import { TuiActiveZone } from "@taiga-ui/cdk";
+import { sanitize } from "dompurify";
+import { NgDompurifyPipe } from "@taiga-ui/dompurify";
 
 
 
@@ -41,7 +43,7 @@ import { TuiActiveZone } from "@taiga-ui/cdk";
     VgOverlayPlayModule,
     VgBufferingModule,
     VgStreamingModule, RouterLink, TuiDropdownDirective, TuiDropdownOpen, TuiDataListComponent, TuiOptGroup, TuiDataList,
-    TuiComboBoxModule, TuiDataListDirective, TuiSelectModule, TuiActiveZone],
+    TuiComboBoxModule, TuiDataListDirective, TuiSelectModule, TuiActiveZone, NgDompurifyPipe],
   templateUrl: './course-item-video.component.html',
   styleUrl: './course-item-video.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -157,6 +159,17 @@ export class CourseItemVideoComponent implements OnDestroy{
   }
   get canGoNext(){
     return this.courseElement.isCompleted;
+  }
+
+  get nextButtonLabel(){
+    //order идет с 1 поэтому используем order
+    if (this.courseProgram[this.courseElement.order] && this.courseProgram[this.courseElement.order].type === CourseElementType.Video){
+      return 'Перейти к следующему уроку';
+    }
+    if (this.courseProgram[this.courseElement.order] && this.courseProgram[this.courseElement.order].type === CourseElementType.Assignment){
+      return 'Перейти к домашнему заданию';
+    }
+    return 'Далее';
   }
 
   showQuality = false;

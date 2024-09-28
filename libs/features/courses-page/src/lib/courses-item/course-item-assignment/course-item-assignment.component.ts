@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, OnInit } from '@angular/core';
-import { Assignment, CourseProgramItem } from "@sp/core/models";
+import { Assignment, CourseElementType, CourseProgramItem } from "@sp/core/models";
 import { CommonModule } from "@angular/common";
 import {
   CourseItemAssignmentQuestionComponent
@@ -40,6 +40,17 @@ export class CourseItemAssignmentComponent implements OnInit {
 
   get canGoNext() {
     return this.courseElement.isCompleted;
+  }
+
+  get nextButtonLabel(){
+    //order идет с 1 поэтому используем order
+    if (this.courseProgram[this.courseElement.order] && this.courseProgram[this.courseElement.order].type === CourseElementType.Video){
+      return 'Перейти к следующему уроку';
+    }
+    if (this.courseProgram[this.courseElement.order] && this.courseProgram[this.courseElement.order].type === CourseElementType.Assignment){
+      return 'Перейти к домашнему заданию';
+    }
+    return 'Далее';
   }
 
   ngOnInit() {

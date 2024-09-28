@@ -19,21 +19,23 @@ export class CourseItemPageComponent implements OnInit {
 
 
   courseProgram$: Observable<CourseProgramItem[]> = of([]);
+  height$: Observable<number>;
 
   constructor(private coursesStateService: CoursesStateService,
               private activatedRoute: ActivatedRoute,
               private router: Router) {
+    this.height$ = this.coursesStateService.selectCourseItemHeight;
   }
 
   ngOnInit() {
     this.courseProgram$ = this.coursesStateService.selectCourseProgram.pipe(
-      tap(program=>{
+      tap(program => {
         const currentOrder = this.activatedRoute.snapshot.firstChild?.paramMap.get('order');
         if (!currentOrder) {
           const firstIncomplete = program.find(item => !item.isCompleted);
 
           if (firstIncomplete) {
-            this.router.navigate([firstIncomplete.order], { relativeTo: this.activatedRoute });
+            this.router.navigate([firstIncomplete.order], {relativeTo: this.activatedRoute});
           }
         }
       })

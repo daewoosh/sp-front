@@ -4,7 +4,7 @@
     class="text-base font-bold rounded-[40px] bg-[#DF8316] w-[68px] h-[26px] flex items-center justify-center">{{question.order}}
     /{{courseElement.questions.length}}</div>
 </div>
-<div [innerHTML]="question.text" class="mt-3 text-base text-white"></div>
+<div [innerHTML]="question.text" class="mt-2 text-base text-white"></div>
 
 <div class="mt-[30px] flex gap-3 flex-wrap items-center mb-3">
   <div class="text-2xl font-bold">
@@ -25,5 +25,7 @@
   <div class="text-2xl clr-primary font-bold my-4">
     Правильный ответ
   </div>
-  <textarea readonly class="w-full resize-none answer" rows="7" [(ngModel)]="question.answer"></textarea>
+  <div [innerHTML]="question.answer|dompurify" class="answer">
+
+  </div>
 </ng-container>

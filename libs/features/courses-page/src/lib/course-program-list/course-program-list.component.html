@@ -2,7 +2,7 @@
   <span class="text-white text-2xl">Программа курса</span>
   <span class="clr-grey text-sm">Прогресс {{completedCount}}/{{program.length}}</span>
 </div>
-<tui-scrollbar class="mt-5  program-list-container" tuiTheme="dark">
+<tui-scrollbar class="mt-5  program-list-container" tuiTheme="dark" [style.max-height.px]="height$|async">
   <div class="flex flex-col gap-5">
     <sp-course-program-item *ngFor="let item of program" [item]="item"/>
   </div>

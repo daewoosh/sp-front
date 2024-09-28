@@ -136,10 +136,10 @@
   <button class="btn primary" [attr.inert]="!canGoNext || null"
           [routerLink]="['../',courseElement.order+1]"
           [ngClass]="{'hidden':!showNextBtn, 'disabled':!canGoNext}">
-    Перейти к домашнему заданию
+    {{nextButtonLabel}}
   </button>
 </div>
 <div class="mt-14">
   <div class="text-2xl">Описание</div>
-  <div class="text-base" [innerHTML]="courseElement.description"></div>
+  <div class="text-base mt-4" [innerHTML]="courseElement.description | dompurify"></div>
 </div>

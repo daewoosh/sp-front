@@ -6,12 +6,14 @@ export interface CoursesState {
   courses: Course[];
   courseProgram: CourseProgramItem[];
   coursesLoaded: boolean;
+  courseItemHeight: number; // Высота элемента программы курса (полная информация об элементе курса)
 }
 
 const initialState: CoursesState = {
   courses: [],
   courseProgram: [],
   coursesLoaded: false,
+  courseItemHeight: 0,
 }
 
 @Injectable({providedIn: 'root'})
@@ -19,7 +21,8 @@ export class CoursesStateService extends StateService<CoursesState> {
 
   public selectCourses = this.select(({courses}: CoursesState) => courses);
   public selectCourseProgram = this.select(({courseProgram}: CoursesState) => courseProgram);
-
+  public selectCoursesLoaded = this.select(({coursesLoaded}: CoursesState) => coursesLoaded);
+  public selectCourseItemHeight = this.select(({courseItemHeight}: CoursesState) => courseItemHeight);
 
   constructor() {
     super(initialState);
@@ -63,7 +66,12 @@ export class CoursesStateService extends StateService<CoursesState> {
     }
   }
 
-  clearCourses(){
+  setCourseItemHeight(height: number): void {
+    this.setState({courseItemHeight: height});
+  }
+
+
+  clearCourses() {
     this.setState(initialState);
   }
 }
