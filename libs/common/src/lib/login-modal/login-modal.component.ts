@@ -11,6 +11,7 @@ import { LoginResult } from "@sp/core/models";
 import { AUTH_HASH_NAME, AUTH_TOKEN_NAME } from "@sp/core";
 import { injectContext } from '@taiga-ui/polymorpheus';
 import { TuiDialogContext } from "@taiga-ui/core";
+import { SsrCookieService } from "ngx-cookie-service-ssr";
 
 const FORM_CLOSE_TIMEOUT = 100000;
 const AUTH_REQUEST_INTERVAL = 2000;
@@ -36,7 +37,8 @@ export class LoginModalComponent {
     private appStateService: AppStateService,
     private readonly router: Router,
     private activatedRoute: ActivatedRoute,
-    private courseActivationService: CourseActivationService
+    private courseActivationService: CourseActivationService,
+    private cookieService: SsrCookieService
   ) {
   }
 
@@ -61,7 +63,8 @@ export class LoginModalComponent {
             .pipe(
               switchMap((result) => {
                 if (result) {
-                  this.localStorage.set(AUTH_TOKEN_NAME, result.accessToken!);
+                  // this.localStorage.set(AUTH_TOKEN_NAME, result.accessToken!);
+                  this.cookieService.set(AUTH_TOKEN_NAME, result.accessToken!);
                   if (token) {
                     // Активация курса выполняется только после успешного логина и при наличии токена
                     return this.courseActivationService.activateCourse(token).pipe(

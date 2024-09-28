@@ -7,6 +7,7 @@ import { HttpClient } from "@angular/common/http";
 import { AppStateService } from "@sp/core/state";
 import { AUTH_HASH_NAME, AUTH_TOKEN_NAME } from "@sp/core";
 import { LoginResult } from "@sp/core/models";
+import { SsrCookieService } from "ngx-cookie-service-ssr";
 
 @Component({
   selector: 'sp-one-time-login',
@@ -23,6 +24,7 @@ export class OneTimeLoginComponent implements OnInit{
     private router: Router,
     private httpClient: HttpClient,
     private appStateService: AppStateService,
+    private cookieService: SsrCookieService
   ) {
     this.inputParams$ = this.route.queryParamMap.pipe(
       map((params: ParamMap) => {
@@ -36,7 +38,8 @@ export class OneTimeLoginComponent implements OnInit{
   ngOnInit(): void {
     this.inputParams$.subscribe((authInfo) => {
       const hashInStorage = this.localStorageService.get(AUTH_HASH_NAME);
-      const token = this.localStorageService.get(AUTH_TOKEN_NAME);
+      // const token = this.localStorageService.get(AUTH_TOKEN_NAME);
+      const token = this.cookieService.get(AUTH_TOKEN_NAME);
       if (hashInStorage && hashInStorage == authInfo.authHash && token) {
         this.router.navigate(['/courses']);
       } else {
@@ -52,8 +55,9 @@ export class OneTimeLoginComponent implements OnInit{
           )
           .subscribe((result?: LoginResult) => {
             if (result) {
-              this.localStorageService.set(AUTH_TOKEN_NAME, result.accessToken!);
-              this.localStorageService.set(AUTH_HASH_NAME, authInfo.authHash!);
+              //this.localStorageService.set(AUTH_TOKEN_NAME, result.accessToken!);
+              this.cookieService.set(AUTH_TOKEN_NAME, result.accessToken!);
+              // this.localStorageService.set(AUTH_HASH_NAME, authInfo.authHash!);
               this.appStateService.setUserState({
                 isLoggedIn: result.isSuccessLogin,
                 user: result.user,

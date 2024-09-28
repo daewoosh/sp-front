@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
 import bootstrap from './src/main.server';
 import 'localstorage-polyfill';
+import { REQUEST as SSR_REQUEST } from "ngx-cookie-service-ssr";
 
 globalThis['localStorage'] = localStorage;
 globalThis['requestAnimationFrame'] = function (callback: FrameRequestCallback): number {
@@ -58,7 +59,10 @@ export function app(): express.Express {
         documentFilePath: indexHtml,
         url: `${protocol}://${headers.host}${originalUrl}`,
         publicPath: browserDistFolder,
-        providers: [{ provide: APP_BASE_HREF, useValue: baseUrl }],
+        providers: [{
+          provide: APP_BASE_HREF, useValue: req.baseUrl },
+          { provide: SSR_REQUEST, useValue: req },
+          { provide: 'RESPONSE', useValue: res },],
       })
       .then((html) => res.send(html))
       .catch((err) => next(err));
