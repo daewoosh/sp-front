@@ -1,69 +1,70 @@
 <div>
-  <vg-player (onPlayerReady)="onPlayerReady($event)" *ngIf="canShowPlayer" (onMediaReady)="mediaReady($event)">
-    <vg-overlay-play [vgFor]="videoId" (dblclick)="toggleFullScreen()"></vg-overlay-play>
+  <tui-loader size="xxl" [showLoader]="(videoLoading$|async)!" class="video-loader">
+    <vg-player (onPlayerReady)="onPlayerReady($event)" *ngIf="canShowPlayer">
+      <vg-overlay-play [vgFor]="videoId" (dblclick)="toggleFullScreen()"></vg-overlay-play>
 
-    <vg-controls *ngIf="bitrates.length" class="h-[70px]" [vgAutohide]="false">
-      <div class="flex-grow pr-5">
-        <vg-scrub-bar class="block h-[20px]">
-          <vg-scrub-bar-current-time [vgFor]="videoId" [vgSlider]="true"></vg-scrub-bar-current-time>
-          <vg-scrub-bar-buffering-time [vgFor]="videoId"></vg-scrub-bar-buffering-time>
-        </vg-scrub-bar>
-        <div class="flex justify-between">
-          <div class="flex gap-2">
-            <vg-play-pause [vgFor]="videoId"></vg-play-pause>
+      <vg-controls *ngIf="bitrates.length" class="h-[70px]" [vgAutohide]="true">
+        <div class="flex-grow pr-5">
+          <vg-scrub-bar class="block h-[20px]">
+            <vg-scrub-bar-current-time [vgFor]="videoId" [vgSlider]="true"></vg-scrub-bar-current-time>
+            <vg-scrub-bar-buffering-time [vgFor]="videoId"></vg-scrub-bar-buffering-time>
+          </vg-scrub-bar>
+          <div class="flex justify-between">
+            <div class="flex gap-2">
+              <vg-play-pause [vgFor]="videoId"></vg-play-pause>
 
-            <div (tuiActiveZoneChange)="onSpeedActiveZone($event)" class="flex relative items-center">
-              <div class="text-ellipsis">
-                {{selectedSpeed?.label ?? ''}}
+              <div (tuiActiveZoneChange)="onSpeedActiveZone($event)" class="flex relative items-center">
+                <div class="text-ellipsis">
+                  {{selectedSpeed?.label ?? ''}}
+                </div>
+
+                <ng-container *ngIf="showSpeed">
+                  <div class="dd-container speed"
+                  >
+                    <div *ngFor="let item of speeds" class="w-full"
+                    >
+                      <button type="button" class="hover:bg-[var(--clr-primary)] px-2 rounded w-full"
+                              (click)="myMedia.playbackRate = item.value;selectedSpeed = item;showSpeed=false">
+                        {{item.label}}
+                      </button>
+                    </div>
+                  </div>
+                </ng-container>
               </div>
 
-              <ng-container *ngIf="showSpeed">
-                <div class="dd-container speed"
-                >
-                  <div *ngFor="let item of speeds" class="w-full"
-                  >
-                    <button type="button" class="hover:bg-[var(--clr-primary)] px-2 rounded w-full"
-                            (click)="myMedia.playbackRate = item.value;selectedSpeed = item;showSpeed=false">
-                      {{item.label}}
-                    </button>
-                  </div>
-                </div>
-              </ng-container>
+              <vg-time-display [vgFor]="videoId" [vgProperty]="'current'" [vgFormat]="'mm:ss'"></vg-time-display>
             </div>
+            <div class="flex gap-2">
 
-            <vg-time-display [vgFor]="videoId" [vgProperty]="'current'" [vgFormat]="'mm:ss'"></vg-time-display>
-          </div>
-          <div class="flex gap-2">
+              <div (tuiActiveZoneChange)="onQualityActiveZone($event)" class="flex relative items-center">
+                <div
+                  (click)="showQuality = true">
+                  {{selectedBitrate?.label ?? ''}}
+                </div>
 
-            <div (tuiActiveZoneChange)="onQualityActiveZone($event)" class="flex relative items-center">
-              <div
-                (click)="showQuality = true">
-                {{selectedBitrate?.label ?? ''}}
+                <ng-container *ngIf="showQuality">
+                  <div class="dd-container"
+                  >
+                    <div *ngFor="let item of bitrates" class="w-full"
+                    >
+                      <button type="button" class="hover:bg-[var(--clr-primary)] px-2 rounded w-full"
+                              (click)="vgHls.setBitrate(item);selectedBitrate = item;showQuality=false">
+                        {{item.label}}
+                      </button>
+                    </div>
+                  </div>
+                </ng-container>
               </div>
 
-              <ng-container *ngIf="showQuality">
-                <div class="dd-container"
-                >
-                  <div *ngFor="let item of bitrates" class="w-full"
-                  >
-                    <button type="button" class="hover:bg-[var(--clr-primary)] px-2 rounded w-full"
-                            (click)="vgHls.setBitrate(item);selectedBitrate = item;showQuality=false">
-                      {{item.label}}
-                    </button>
-                  </div>
-                </div>
-              </ng-container>
+              <vg-mute [vgFor]="videoId"></vg-mute>
+              <vg-volume [vgFor]="videoId" class="hidden sm:inline-flex"></vg-volume>
+              <vg-fullscreen></vg-fullscreen>
             </div>
-
-            <vg-mute [vgFor]="videoId"></vg-mute>
-            <vg-volume [vgFor]="videoId" class="hidden sm:inline-flex"></vg-volume>
-            <vg-fullscreen ></vg-fullscreen>
           </div>
         </div>
-      </div>
-    </vg-controls>
+      </vg-controls>
 
-    <tui-loader size="xxl" [showLoader]="(videoLoading$|async)!" class="video-loader" [inheritColor]="true">
+      <!--    <tui-loader size="xxl" [showLoader]="(videoLoading$|async)!" class="video-loader" [inheritColor]="true">-->
       <video #myMedia
              [vgMedia]="aaaa(myMedia)"
              [vgHls]="getVideoUrl()"
@@ -72,11 +73,13 @@
              [id]="'video-' + courseElement.id+'-'+courseElement.order"
              type="video/mp4"
              crossorigin
+             class="relative"
              (dblclick)="toggleFullScreen()"
       >
       </video>
-    </tui-loader>
-  </vg-player>
+      <!--    </tui-loader>-->
+    </vg-player>
+  </tui-loader>
 </div>
 
 <div class="w-full flex flex-wrap justify-end gap-4 mt-12">

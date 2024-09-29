@@ -113,7 +113,6 @@ export class CourseItemVideoComponent implements OnDestroy {
     if (changes['courseElement'] && !changes['courseElement'].firstChange) {
       // Если пришел новый courseElement
       this.canShowPlayer = false;
-      console.log('new changes');
       // Через 50 мс устанавливаем обратно в true
       setTimeout(() => {
         this.canShowPlayer = true;
@@ -215,10 +214,6 @@ export class CourseItemVideoComponent implements OnDestroy {
       return;
     }
     this.showQuality = active;
-  }
-
-  mediaReady($event: any) {
-    console.log('Media Ready', $event);
   }
 
   @HostListener('window:keydown', ['$event'])
