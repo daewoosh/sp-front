@@ -3,14 +3,18 @@
     Добро пожаловать, {{profile.displayName ?? ""}}!
   </p>
 
-  <div class="flex items-center gap-4 justify-between flex-wrap">
+  <div class="flex items-center gap-4 justify-between flex-wrap mb-10">
     <span class="text-2xl">Все продукты SafePoker</span>
     <div class="btn-link">Видео-курсы</div>
   </div>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 md:gap-10 xl:gap-16 mt-10">
+  <div class="cards-container gap-8 sm:gap-y-[40px] lg:gap-x-[62px] lg:gap-y-[40px]">
     <ng-container *ngFor="let course of courses$|async">
-      <sp-course-card [course]="course"/>
+      <div class="course-card">
+        <div class="course-card-content">
+          <sp-course-card [course]="course"/>
+        </div>
+      </div>
     </ng-container>
   </div>
 </div>
