@@ -5,7 +5,8 @@
   "scripts": {
     "start": "nx serve sp-front",
     "build": "nx build sp-front --skip-nx-cache --configuration=production",
-    "build:dev": "nx build sp-front --skip-nx-cache --configuration=dev"
+    "build:dev": "nx build sp-front --skip-nx-cache --configuration=dev",
+    "serve:ssr": "node dist/apps/server/server.mjs"
   },
   "private": true,
   "dependencies": {

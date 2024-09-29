@@ -1,12 +1,14 @@
-import { Inject, Injectable } from "@angular/core";
+import { Inject, Injectable, PLATFORM_ID } from "@angular/core";
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
 import { TuiAlertService } from "@taiga-ui/core";
 import { catchError, Observable, tap, throwError } from "rxjs";
+import { isPlatformBrowser } from "@angular/common";
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
   constructor(@Inject(TuiAlertService)
-              private readonly alertService: TuiAlertService) {
+              private readonly alertService: TuiAlertService,
+              @Inject(PLATFORM_ID) private platformId: any) {
   }
 
   public intercept(
@@ -15,7 +17,8 @@ export class ErrorInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(
       catchError((response: any) => {
-        if (response instanceof HttpErrorResponse && response.status !== 401) {
+        console.log({response});
+        if (response instanceof HttpErrorResponse && response.status !== 401 && isPlatformBrowser(this.platformId)) {
           if (response.status === 403) {
             this.alertService.open(
               'Доступ запрещен', {appearance: "error", autoClose: 5000}

@@ -63,8 +63,11 @@ export class LoginModalComponent {
             .pipe(
               switchMap((result) => {
                 if (result) {
-                  // this.localStorage.set(AUTH_TOKEN_NAME, result.accessToken!);
-                  this.cookieService.set(AUTH_TOKEN_NAME, result.accessToken!);
+                  this.cookieService.set(AUTH_TOKEN_NAME, result.accessToken!, {
+                    path: '/',
+                    sameSite: 'None',
+                    secure: true, // Ensure your site is served over HTTPS
+                  } );
                   if (token) {
                     // Активация курса выполняется только после успешного логина и при наличии токена
                     return this.courseActivationService.activateCourse(token).pipe(

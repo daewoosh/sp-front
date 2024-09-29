@@ -35,7 +35,7 @@ export class HeaderComponent {
   courses$: Observable<Course[]>;
 
 
-  showHeader = false;
+  showHeader = true;
   public menuClosed = true;
   exchangeUrl = "";
   isLoggedIn$: Observable<boolean>;
@@ -69,7 +69,7 @@ export class HeaderComponent {
               private appStateService: AppStateService,
               private dialogs2: TuiDialogService,
               private coursesStateService: CoursesStateService) {
-    this.showHeader = isPlatformBrowser(platformId);
+    // this.showHeader = isPlatformBrowser(platformId);
     this.isLoggedIn$ = appStateService.isLoggedIn$;
     this.isAdmin$ = appStateService.isAdmin$;
     this.courses$ = this.coursesStateService.selectCourses;

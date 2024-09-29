@@ -1,15 +1,10 @@
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
-import {
-  Resolve,
-  RouterStateSnapshot,
-  ActivatedRouteSnapshot,
-} from '@angular/router';
-import { firstValueFrom, Observable, of } from 'rxjs';
-import { take, mergeMap, map, catchError } from 'rxjs/operators';
+import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot, } from '@angular/router';
+import { Observable, of } from 'rxjs';
+import { catchError, map, mergeMap, take } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { AppStateService } from "@sp/core/state";
 import { LoginResult } from "@sp/core/models";
-import { isPlatformBrowser } from "@angular/common";
 
 @Injectable()
 export class AppResolver implements Resolve<any> {
@@ -20,8 +15,7 @@ export class AppResolver implements Resolve<any> {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<any> {
-    return this.clientService.checkAuthenticatedStatus().pipe(
-    );
+    return this.clientService.checkAuthenticatedStatus();
   }
 }
 
@@ -34,9 +28,7 @@ export class ClientService {
   ) {}
 
   public checkAuthenticatedStatus(): Observable<boolean> {
-    if (!isPlatformBrowser(this.platformId)) {
-      return of(false);
-    }else
+
     return this.appStateService.userState.pipe(
       take(1),
       mergeMap(({ isLoggedIn }) => {
