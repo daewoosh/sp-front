@@ -1,4 +1,4 @@
-import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Inject, Input, OnInit, ViewChild } from '@angular/core';
 import { CommonModule, DOCUMENT } from "@angular/common";
 
 @Component({
@@ -9,6 +9,7 @@ import { CommonModule, DOCUMENT } from "@angular/common";
   imports:[CommonModule]
 })
 export class BoosterPaymentComponent implements OnInit {
+  @Input() showOtherProducts = true;
   @ViewChild('formContainer') formContainer!: ElementRef;
   constructor(@Inject(DOCUMENT) private document: Document) { }
 
