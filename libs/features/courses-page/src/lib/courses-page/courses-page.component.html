@@ -1,1 +1,12 @@
-<p>courses-page works!</p>
+<div class="courses-page">
+  <div class="sidenav-container" *ngIf="courses$|async as courses">
+    <sp-courses-sidenav [courses]="courses"/>
+  </div>
+
+  <div class="main">
+    <div class="content">
+      <router-outlet/>
+    </div>
+    <sp-footer></sp-footer>
+  </div>
+</div>

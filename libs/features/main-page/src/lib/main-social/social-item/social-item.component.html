@@ -1,0 +1,25 @@
+<div class="flex flex-col sm:flex-row flex-wrap pl-8 gap-3 with-left-border md:items-center mt-16 md:justify-between">
+  <div class="flex sm:items-center max-w-[327px]">
+    <div class="shrink-0">
+      <img [src]="imageSrc">
+    </div>
+<!--    <div class="round-icon">-->
+<!--      <img [src]="imageSrc">-->
+<!--    </div>-->
+    <div class="flex flex-col justify-between ml-5">
+      <div class="text-white text-base">{{name}}</div>
+      <div class="clr-grey text-sm">{{description}}</div>
+    </div>
+  </div>
+  <a [href]="goToUrl" target="_blank" class="btn w-fit  max-h-[45px]">
+    <div class="flex items-center justify-center gap-2">
+
+      Перейти
+      <svg style="margin-top: 4px" width="13" height="22" viewBox="0 0 13 22" fill="none" xmlns="http://www.w3.org/2000/svg" class="rotate-180">
+        <path fill-rule="evenodd" clip-rule="evenodd"
+              d="M12.1534 0.146447C12.3487 0.341709 12.3487 0.658291 12.1534 0.853553L2.00699 11L12.1534 21.1464C12.3487 21.3417 12.3487 21.6583 12.1534 21.8536C11.9582 22.0488 11.6416 22.0488 11.4463 21.8536L0.592773 11L11.4463 0.146447C11.6416 -0.0488155 11.9582 -0.0488155 12.1534 0.146447Z"
+              fill="white"/>
+      </svg>
+    </div>
+  </a>
+</div>

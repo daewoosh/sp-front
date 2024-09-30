@@ -1,0 +1,29 @@
+<div class="course-card">
+  <div class="text-[21px] leading-[25px]">{{course.title}}</div>
+  <div class="text-xs clr-grey"  *ngIf="course.isAvailable">{{course.subtitle}}</div>
+  <div class="text-xs text-[#DF8316]"  *ngIf="!course.isAvailable">скоро появится в личном кабинете</div>
+  <div class="mt-4 2xl:h-[260px]">
+    <img class="mx-auto" [src]="'assets/images/courses/'+course.image"/>
+  </div>
+  <div class="text-sm leading-4 mt-4 mb-6">
+    {{course.description}}
+  </div>
+  <div class="flex justify-end mt-auto">
+    <a class="btn primary font-bold" *ngIf="course.purchased" [routerLink]="'./'+course.slug">К обучению</a>
+    <a [routerLink]="['/',course.slug]" class="btn warning font-bold" *ngIf="!course.purchased || !course.isAvailable">
+      <span *ngIf="course.isAvailable">Открыть доступ</span>
+      <span *ngIf="!course.isAvailable">Узнать больше</span>
+    </a>
+  </div>
+
+  <div class="absolute top-[22px] right-[28px]">
+    <ng-container *ngIf="course.purchased;else locked">
+      <img src="/assets/icons/available.svg">
+    </ng-container>
+    <ng-template #locked>
+      <img src="/assets/icons/locked.svg">
+    </ng-template>
+  </div>
+</div>
+
+

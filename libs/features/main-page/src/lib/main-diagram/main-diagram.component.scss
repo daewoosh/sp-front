@@ -1,0 +1,18 @@
+.mvp-link {
+  color: var(--clr-grey);
+
+  & img {
+    border-radius: 50px;
+    border: 2px solid var(--clr-black);
+  }
+
+  &:hover {
+    color: var(--clr-primary);
+
+    & img {
+      border: 2px solid var(--clr-primary);
+    }
+  }
+
+
+}

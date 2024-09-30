@@ -1,0 +1,17 @@
+<div class="p-12 bg-black-light rounded-3xl relative mt-10">
+  <div>
+    <a class="absolute btn primary m-auto" (click)="onClick($event)"
+       style="left: 0; right: 0; width: 200px; top:-22.5px" *ngIf="clickAction.observed">{{name}}</a>
+    <a class="absolute btn primary m-auto" [href]="goTo" style="left: 0; right: 0; width: 200px; top:-22.5px"
+       *ngIf="!clickAction.observed">{{name}}</a>
+    <div class="flex justify-center" [style]="'margin-right:' + imageMargin+';margin-bottom:'+bottomMargin">
+      <img [src]="imgSrc">
+    </div>
+    <div style="font-size: 21px;line-height: 25px;" [style]="'max-width:'+ maxWidth">{{header}}</div>
+    <ng-content></ng-content>
+  </div>
+  <div class="flex justify-center mt-9">
+    <a class="btn" (click)="onClick($event)" *ngIf="clickAction.observed">Узнать больше</a>
+    <a class="btn" [href]="goTo" *ngIf="!clickAction.observed">Узнать больше</a>
+  </div>
+</div>

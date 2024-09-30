@@ -1,0 +1,24 @@
+:host {
+  --sp-sidenav-width: 296px;
+}
+
+.courses-page {
+  min-height: calc(100dvh - var(--sp-header-height));
+  display: flex;
+}
+
+.sidenav-container {
+  @apply hidden xl:block;
+  position: fixed;
+  height: calc(100dvh - var(--sp-header-height));
+}
+
+.main {
+  flex-grow: 1;
+  background: linear-gradient(180deg, #272826 0%, rgba(39, 40, 38, 0) 100%);
+  @apply xl:ml-[296px];
+  & .content {
+    @apply px-[22px] py-[30px] lg:py-[41px] lg:px-[46px];
+
+  }
+}

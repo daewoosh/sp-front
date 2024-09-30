@@ -1,1 +1,3 @@
-export * from './lib/core/core.component';
+export * from './sp-core.module';
+export * from './constants';
+export * from './types';

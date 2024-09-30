@@ -1,0 +1,98 @@
+<div class="aaa flex flex-col xl:flex-row xl:gap-[60px] gap-6">
+  <div class="xl:flex-1 flex flex-col items-center mt-6 ">
+    <tui-carousel
+      #carousel
+
+      [(index)]="index"
+      [itemsCount]="1"
+      class="w-[300px] sm:w-full"
+    >
+      <div *tuiItem class="flex flex-col items-center">
+        <div class="sp-name">GTO Wizard</div>
+        <div>
+          <img class="sp-img" src="assets/images/booster/apps/GTO_Wizard.png">
+        </div>
+      </div>
+
+      <div *tuiItem class="flex flex-col items-center">
+        <div class="sp-name">Holdem Resources Calculator</div>
+        <div class="xl:self-baseline ">
+<!--          <img class="sp-img" src="assets/images/booster/holdem.gif">-->
+          <sp-holdem-img></sp-holdem-img>
+        </div>
+      </div>
+
+      <div *tuiItem class="flex flex-col items-center">
+        <div class="sp-name">Simple Preflop</div>
+        <div>
+          <img class="sp-img max-h-[366px]" src="assets/images/booster/apps/Simple_Preflop.png">
+        </div>
+      </div>
+
+
+      <div *tuiItem class="flex flex-col items-center">
+        <div class="sp-name">Префлоп-чарты</div>
+        <div>
+          <img class="sp-img" src="assets/images/booster/apps/preflop_charts.png">
+        </div>
+      </div>
+    </tui-carousel>
+    <div class="flex gap-12 mt-5">
+      <button
+
+        (click)="prev()"
+      >
+        <svg width="12" height="22" viewBox="0 0 12 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M11.5607 0.146447C11.7559 0.341709 11.7559 0.658291 11.5607 0.853553L1.41421 11L11.5607 21.1464C11.7559 21.3417 11.7559 21.6583 11.5607 21.8536C11.3654 22.0488 11.0488 22.0488 10.8536 21.8536L0 11L10.8536 0.146447C11.0488 -0.0488155 11.3654 -0.0488155 11.5607 0.146447Z"
+                fill="white"/>
+        </svg>
+
+      </button>
+      <tui-pagination
+        size="s"
+        class="pagination"
+        [length]="4"
+        [(index)]="index"
+        (indexChange)="duration=0"
+      ></tui-pagination>
+      <button
+
+        (click)="next()"
+      >
+        <svg width="12" height="22" viewBox="0 0 12 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M0.146371 21.8536C-0.048891 21.6583 -0.048891 21.3417 0.146371 21.1464L10.2928 11L0.146373 0.853553C-0.0488892 0.65829 -0.0488892 0.341708 0.146373 0.146445C0.341636 -0.0488158 0.658217 -0.0488157 0.85348 0.146445L11.707 11L0.853478 21.8536C0.658216 22.0488 0.341634 22.0488 0.146371 21.8536Z"
+                fill="white"/>
+        </svg>
+
+      </button>
+    </div>
+  </div>
+  <div class="xl:flex-1 xl:mt-[50px] px-4">
+    <div class="font-bold text-2xl text-white">
+      Доступ к серверу с<br>
+      платным софтом
+    </div>
+    <div class="mt-[26px] mb-[30px]">
+      На протяжении всего времени в БУСТЕРе вы получаете возможность использования лучших программ для совершенствования
+      вашей игры:
+    </div>
+
+    <sp-text-with-check
+      [text]="'<span class=\'text-white font-bold\'>GTO Wizard</span> — лучшая программа для изучения теории оптимальной игры (GTO) и открытия эффективных эксплойтов поля.'">
+    </sp-text-with-check>
+    <sp-text-with-check
+      [text]="'<span class=\'text-white font-bold\'>Holdem Resources Calculator</span> — префлоп-калькулятор, позволяющий анализировать руки с учётом величины стека соперников, их действий, заданных диапазонов.'">
+    </sp-text-with-check>
+    <sp-text-with-check
+      [text]="'<span class=\'text-white font-bold\'>Simple Preflop</span> — мощный калькулятор расчёта стратегии игры по GTO на префлопе. Вы изучите самые прибыльные отклонения от оптимальной стратегии.'">
+    </sp-text-with-check>
+    <sp-text-with-check
+      [text]="'<span class=\'text-white font-bold\'>Префлоп-чарты</span> с удобным оформлением - ваша готовая стратегия к плюсовым действиям на префлопе.'">
+    </sp-text-with-check>
+
+
+  </div>
+</div>
+

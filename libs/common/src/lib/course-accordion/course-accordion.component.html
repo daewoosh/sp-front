@@ -1,0 +1,31 @@
+<div [ngClass]="{'pointer-events-none':!isExpandable}" class="mt-5">
+  <h2>
+    <button type="button"
+            class="acc-head h-fit py-4 sm:py-0 sm:h-[61px] rounded-tl-3xl rounded-br-3xl" (click)="toggle()">
+      <div class="flex gap-2" [ngClass]="{'items-center':index===-1}">
+        <div *ngIf="index!== -1">{{index}}.</div>
+        <div *ngIf="index=== -1"><img src="assets/icons/gift.svg"></div>
+        <div class="whitespace-pre-line" [style]="'font-size:'+fontSize">{{head}}</div>
+      </div>
+      <svg data-accordion-icon class=" shrink-0" width="15" height="9" viewBox="0 0 15 9" fill="none"
+           xmlns="http://www.w3.org/2000/svg"
+           [ngClass]="{'rotate-180' : !isOpened}"
+           *ngIf="isExpandable">
+        <path fill-rule="evenodd" clip-rule="evenodd"
+              d="M14.8536 8.06058C14.6583 8.25585 14.3417 8.25585 14.1464 8.06058L7.5 1.41414L0.853554 8.06058C0.658291 8.25585 0.341709 8.25585 0.146446 8.06058C-0.0488157 7.86532 -0.0488157 7.54874 0.146446 7.35348L7.5 -7.59959e-05L14.8536 7.35348C15.0488 7.54874 15.0488 7.86532 14.8536 8.06058Z"
+              fill="white"/>
+      </svg>
+      <img src="assets/icons/check.png" *ngIf="!isExpandable">
+
+    </button>
+  </h2>
+  <div>
+    <tui-expand [expanded]="isOpened">
+      <ng-template tuiExpandContent>
+        <div class="acc-body">
+          <ng-content></ng-content>
+        </div>
+      </ng-template>
+    </tui-expand>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+.acc-head{
+  @apply flex items-center justify-between w-full text-left px-7;
+  background: linear-gradient(180deg, rgba(43, 190, 22, 0.22) 0%, rgba(39, 40, 38, 0.25) 100%);
+  color: var(--clr-white);
+  //height: 61px;
+
+  line-height: 19px;
+}
+.acc-body{
+  background-color: var(--clr-black-light);
+  padding: 1.5rem 2rem 1.5rem 50px;
+  width: calc(100% - 20px);
+  margin-top: 0.25rem;
+}

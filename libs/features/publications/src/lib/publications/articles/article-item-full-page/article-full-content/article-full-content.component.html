@@ -1,0 +1,14 @@
+<div class="mt-10 flex justify-center">
+  <h1 class="text-[32px] max-w-[560px] leading-[36px] text-center">
+    {{publication.title}}
+  </h1>
+</div>
+<div class="mt-10">
+  <sp-publication-html-display [htmlString]="publication.fullHtml!" [publicationDate]="publication.publishDate!"></sp-publication-html-display>
+</div>
+<div class="mt-[50px] text-[30px]">
+  Еще статьи по категории
+</div>
+<div>
+  <sp-publications-read-more [publications]="publication.relatedPublicationList!" [publicationType]="publication.publicationType"></sp-publications-read-more>
+</div>

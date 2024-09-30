@@ -1,0 +1,31 @@
+<div class="flex gap-3 items-center">
+  <span class="text-2xl font-bold">Задание</span>
+  <div
+    class="text-base font-bold rounded-[40px] bg-[#DF8316] w-[68px] h-[26px] flex items-center justify-center">{{question.order}}
+    /{{courseElement.questions.length}}</div>
+</div>
+<div [innerHTML]="question.text" class="mt-2 text-base text-white"></div>
+
+<div class="mt-[30px] flex gap-3 flex-wrap items-center mb-3">
+  <div class="text-2xl font-bold">
+    Ваш ответ
+  </div>
+  <button class="btn primary check-self" (click)="isExpanded = !isExpanded" *ngIf="courseElement.isCompleted">
+    Проверить себя
+    <div [ngClass]="{'rotate-180':isExpanded}">
+      <img src="/assets/icons/arrow-up.svg">
+    </div>
+  </button>
+</div>
+<div class="text-base clr-grey" *ngIf="!courseElement.isCompleted">
+  Заполните ответ в текстовом поле ниже
+</div>
+<textarea placeholder="Ответ" class="w-full resize-none" rows="7" [(ngModel)]="question.userAnswer"></textarea>
+<ng-container *ngIf="isExpanded">
+  <div class="text-2xl clr-primary font-bold my-4">
+    Правильный ответ
+  </div>
+  <div [innerHTML]="question.answer|dompurify" class="answer">
+
+  </div>
+</ng-container>

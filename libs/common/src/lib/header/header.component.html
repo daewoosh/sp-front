@@ -1,0 +1,156 @@
+<nav class="sticky top-0 bg-[#1C1E1D] z-50">
+  <nav class="max-w-6xl mx-auto justify-between items-center px-4 py-6 xl:px-0 flex gap-1">
+    <div class="flex-shrink-0">
+      <a routerLink="/" queryParamsHandling="preserve" class="cursor-pointer"
+      ><img src="assets/icons/logo.png"
+      /></a>
+    </div>
+
+        <ng-container *ngIf="isAdmin$|async">
+          <div class="ml-4">
+            <a routerLink="/admin/courses"
+               class="nav-link text-base">Админка</a>
+          </div>
+        </ng-container>
+
+    <div class="flex justify-start flex-1 md:hidden"></div>
+    <div class="-mr-2 -my-2 md:hidden">
+      <button
+        type="button"
+        class="rounded-md p-2 inline-flex items-center justify-center clr-primary focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gray-500"
+        aria-expanded="false"
+        (click)="menuClosed = false"
+      >
+        <span class="sr-only">Открыть меню</span>
+        <!-- Heroicon name: outline/menu -->
+        <svg
+          class="h-6 w-6"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="2"
+          stroke="currentColor"
+          aria-hidden="true"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M4 6h16M4 12h16M4 18h16"
+          />
+        </svg>
+      </button>
+    </div>
+
+    <nav class="hidden md:flex space-x-10">
+      <a routerLink="/" queryParamsHandling="preserve"
+         class="nav-link  text-base" [ngClass]="{'active':isRootRoute()}">Главная</a>
+      <!--      <a [href]="navService.getUrlWithUtm('/news')" [ngClass]="{'active':isActiveRoute('/news')}"-->
+      <!--         class="nav-link text-base">Новости</a>-->
+
+      <a [href]="exchangeUrl" target="_blank"
+         class="nav-link  text-base" [ngClass]="{'active':isActiveRoute('exchanger')}">Обменник</a>
+      <!--      <app-courses-drop-down></app-courses-drop-down>-->
+      <sp-learning-drop-down></sp-learning-drop-down>
+      <a routerLink="/bonus" queryParamsHandling="preserve" [ngClass]="{'active':isActiveRoute('/bonus')}"
+         class="nav-link text-base">Бонусы</a>
+      <a routerLink="/articles" queryParamsHandling="preserve" [ngClass]="{'active':isActiveRoute('/articles')}"
+         class="nav-link text-base">Блог</a>
+    </nav>
+
+    <button class="profile-circle block md:hidden ml-4" (click)="toggle(true)" (tuiActiveZoneChange)="toggle($event)">
+      <img class="unhovered" src="assets/icons/man.svg"/>
+      <img class="hovered" src="assets/icons/man-hover.svg"/>
+      <div *tuiSidebar="sidebarOpen; direction: 'left'">
+        <div class="h-screen" *ngIf="courses$|async as courses">
+          <sp-courses-sidenav [courses]="courses"/>
+        </div>
+      </div>
+
+    </button>
+
+    <div class="md:flex items-center justify-end  hidden lg:block">
+
+      <div class="ml-2 w-[150px]">
+        <a *ngIf="isLoggedIn$|async;else login" class="btn primary"
+           routerLink="/courses">Кабинет</a>
+        <ng-template #login>
+          <button class="btn primary" (click)="openModal(loginModal)">Вход</button>
+        </ng-template>
+      </div>
+    </div>
+  </nav>
+</nav>
+<!--MOBILE MENU BEGIN-->
+<div
+  class="absolute top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden" style="z-index: 9777"
+  [class.hidden]="menuClosed"
+>
+  <div
+    class="rounded-3xl shadow-lg ring-1 ring-black ring-opacity-5 bg-black-light divide-y-2 divide-gray-50"
+  >
+    <div class="pt-5 pb-6 px-5">
+      <div class="flex items-center justify-between">
+        <div>
+          <img
+            class="h-8 w-auto"
+            src="assets/icons/logo.png"
+            alt="Safe poker"
+          />
+        </div>
+        <div class="-mr-2">
+          <button
+            type="button"
+            (click)="menuClosed = true"
+            class="rounded-md p-2 inline-flex items-center justify-center"
+          >
+            <span class="sr-only">Закрыть меню</span>
+            <!-- Heroicon name: outline/x -->
+            <svg
+              class="h-6 w-6"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="2"
+              stroke="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="mt-6">
+        <nav class="grid gap-y-8">
+          <a routerLink="/" queryParamsHandling="preserve"
+             class="nav-link  text-base" [ngClass]="{'active':isRootRoute()}">Главная</a>
+
+          <!--          <a [href]="navService.getUrlWithUtm('/news')" routerLinkActive="active"-->
+          <!--             class="nav-link  w-fit text-base">Новости</a>-->
+          <a [href]="exchangeUrl" target="_blank"
+             class="nav-link w-fit  text-base">Обменник</a>
+
+          <!--          <a [href]="navService.getUrlWithUtm('/news')" routerLinkActive="active"-->
+          <!--             class="nav-link  w-fit text-base">Новости</a>-->
+
+          <sp-learning-drop-down></sp-learning-drop-down>
+          <a routerLink="/bonus" queryParamsHandling="preserve" routerLinkActive="active"
+             class="nav-link  w-fit text-base">Бонусы</a>
+
+          <a routerLink="/articles" queryParamsHandling="preserve" [ngClass]="{'active':isActiveRoute('/articles')}"
+             class="nav-link text-base">Блог</a>
+        </nav>
+      </div>
+    </div>
+
+  </div>
+
+  <!--MOBILE MENU END-->
+</div>
+
+<ng-template #loginModal>
+  <sp-login-modal/>
+</ng-template>

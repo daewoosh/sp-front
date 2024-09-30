@@ -1,0 +1,28 @@
+.earn-container{
+  background: linear-gradient(107.14deg, #272826 19.83%, rgba(39, 40, 38, 0) 50.7%, #272826 80.37%);
+  @apply py-9 relative overflow-visible;
+}
+
+.earn-content {
+  @apply max-w-6xl  mx-auto px-8 xl:px-0;
+  @apply grid grid-cols-1 lg:grid-cols-[auto_1fr] justify-between gap-4 lg:gap-16;
+}
+
+.img-glow {
+  position: relative;
+  z-index: 10;
+
+  &::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    top: -70px;
+    left: -200px;
+
+    width: 500px; /* Ширина изображения */
+    height: 500px; /* Высота изображения */
+    background: url('/assets/images/analysis/glow-big.png') no-repeat center center;
+    background-size: contain; /* Это сохранит оригинальные пропорции изображения */
+    pointer-events: none; /* Чтобы изображение не перекрывало кнопки */
+  }
+}

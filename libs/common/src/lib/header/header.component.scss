@@ -1,0 +1,39 @@
+.profile-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 0.5px solid var(--clr-primary);
+  box-shadow: 0 0 4px var(--clr-primary),
+  inset 0 0 4px var(--clr-primary);
+  cursor: pointer;
+  position: relative;
+
+  &:hover {
+    & img {
+      &.unhovered {
+        display: none;
+      }
+
+      &.hovered {
+        display: block;
+      }
+    }
+  }
+
+  & img {
+    position: absolute;
+    top: 10px;
+    left: 11px;
+
+    &.unhovered {
+      display: block;
+    }
+
+    &.hovered {
+      display: none;
+    }
+
+  }
+}
+
+

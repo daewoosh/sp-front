@@ -1,15 +1,79 @@
 import { NG_EVENT_PLUGINS } from "@taiga-ui/event-plugins";
 import { provideAnimations } from "@angular/platform-browser/animations";
-import { ApplicationConfig } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import {
+  APP_INITIALIZER,
+  ApplicationConfig,
+  ErrorHandler,
+  Injectable,
+  isDevMode,
+  provideZoneChangeDetection
+} from '@angular/core';
+import {
+  InMemoryScrollingFeature,
+  InMemoryScrollingOptions,
+  provideRouter,
+  withComponentInputBinding,
+  withInMemoryScrolling
+} from '@angular/router';
 import { appRoutes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
-import { provideHttpClient, withFetch, withInterceptorsFromDi } from "@angular/common/http";
+import {
+  HTTP_INTERCEPTORS,
+  HttpClient,
+  provideHttpClient,
+  withFetch,
+  withInterceptorsFromDi
+} from "@angular/common/http";
+import { AdminGuard, AuthGuard, AuthInterceptor, ErrorInterceptor } from "@sp/core/guards";
+import { provideStoreDevtools } from "@ngrx/store-devtools";
+import { provideAnimationsAsync } from "@angular/platform-browser/animations/async";
+import { ClientService } from "./app.resolver";
+import { initializeApplication } from "./applnitializer";
+import { CourseActivationService } from "@sp/core/providers";
+import { CourseAccessGuard } from "@sp/courses-page";
+import { API_PATH, EXCHANGE_URL as EXCHANGE_URL_TOKEN } from "@sp/config";
+import { CoursesStateService } from "@sp/core/providers/courses-state.service";
+
+@Injectable()
+class GlobalErrorHandler implements ErrorHandler {
+  handleError(error: any): void {
+    console.error('Global error handler', error);
+  }
+}
+
+const scrollConfig: InMemoryScrollingOptions = {
+  scrollPositionRestoration: 'top',
+  anchorScrolling: 'enabled',
+
+};
+const inMemoryScrollingFeature: InMemoryScrollingFeature =
+  withInMemoryScrolling(scrollConfig);
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideAnimations(),
+  providers: [
+    provideHttpClient(withInterceptorsFromDi(), withFetch()),
+    provideRouter(appRoutes, inMemoryScrollingFeature, withComponentInputBinding()),
+    provideAnimations(),
     provideClientHydration(),
-    provideRouter(appRoutes),
-    provideHttpClient(withInterceptorsFromDi()),
-    NG_EVENT_PLUGINS],
+    provideZoneChangeDetection({eventCoalescing: true}),
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+    NG_EVENT_PLUGINS,
+    provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
+    provideAnimationsAsync(),
+    {provide: API_PATH, useValue: API_URL},
+    {provide: EXCHANGE_URL_TOKEN, useValue: EXCHANGE_URL},
+    CourseActivationService,
+    AdminGuard,
+    AuthGuard,
+    CourseAccessGuard,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeApplication,
+      multi: true,
+      deps: [ClientService, CoursesStateService, HttpClient],
+    },
+  ],
 };
+
+

@@ -1,0 +1,15 @@
+.bg-logo {
+  background-image: url("/assets/images/club/background_logo.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+
+
+}
+
+@media screen and (min-width: 1024px) {
+  .bg-logo {
+    background-size: 36% 100%;
+    background-position: left 30px top;
+  }
+}

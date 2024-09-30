@@ -1,0 +1,69 @@
+<div class="max-w-6xl pt-12 m-auto px-4 lg:px-0" id="choose-path">
+  <div class="text-[30px] mb-10">Выбери свой путь в покерной вселенной:</div>
+  <div class="flex flex-col gap-3 lg:flex-row lg:gap-12">
+    <div style="flex-basis: 452px;flex-grow: 0">
+      <sp-choose-path-block imgSrc="/assets/images/main/main-cards.png"
+                             header="Лучший обменник игровой валюты в индустрии" [goTo]="exchangeUrl"
+                             name="Обменник">
+        <div class="text-sm mt-4">
+          Наша платформа по обмену игровой валюты SafePoker предлагает удобное, быстрое и доступное решение в сети! Вы
+          без
+          комиссии пополните свой баланс в руме и за несколько кликов выведите выигранные
+          деньги на карту.
+        </div>
+      </sp-choose-path-block>
+      <div class="lg:mt-16">
+        <sp-choose-path-block imgSrc="/assets/images/main/bonus.png"
+                               header="Реферальная бонусная программа" goTo="/bonus"
+                               bottomMargin="28px"
+                               name="Бонусы">
+          <div class="text-sm mt-4 mb-12">
+            Предлагает обучающий материал самого высокого уровня совершенно бесплатно.<br>
+            Это отличная возможность как для новичков, так и для искушённых опытом профессионалов подтянуть свои
+            покерные знания и поднять игру на качественно новый уровень.
+          </div>
+        </sp-choose-path-block>
+      </div>
+    </div>
+    <div style="flex:2">
+      <sp-online-courses></sp-online-courses>
+
+    </div>
+
+  </div>
+  <sp-choose-path-block
+                         maxWidth="1000px"
+                         header="" goTo="/booster"
+                         name="БУСТЕР">
+
+    <div class="grid grid-cols-1 lg:grid-cols-[auto_1fr] gap-6 mt-[21px] lg:-mb-9 lg:px-6">
+      <div class="flex justify-center">
+        <img src="/assets/images/main/booster3.png">
+      </div>
+      <div>
+        <div class="text-[21px] mb-[21px] mt-4">БУСТЕР — новый подход к покерному образованию</div>
+        <sp-text-with-check class="sp-text-with-check"
+                             margin="2"
+                             text="6 открытых тренировок с топовыми наставниками каждый месяц"></sp-text-with-check>
+        <sp-text-with-check class="sp-text-with-check"
+                             margin="2"
+                             text="Индивидуальный разбор базы с каждым участником раз в месяц"></sp-text-with-check>
+        <sp-text-with-check class="sp-text-with-check"
+                             margin="2"
+                             text="Доступ к выделенному серверу с крутым и дорогим софтом"></sp-text-with-check>
+
+        <sp-text-with-check class="sp-text-with-check"
+                             margin="2"
+                             text="Архив индивидуальных и групповых тренировок в видео формате"></sp-text-with-check>
+
+        <sp-text-with-check class="sp-text-with-check"
+                             margin="2"
+                             text="Отсутствие каких-либо требований, которые есть в фондах"></sp-text-with-check>
+
+      </div>
+    </div>
+
+
+  </sp-choose-path-block>
+</div>
+

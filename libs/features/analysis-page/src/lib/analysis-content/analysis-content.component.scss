@@ -1,0 +1,16 @@
+.about-card {
+  background: linear-gradient(107.14deg, #272826 19.83%, rgba(39, 40, 38, 0) 50.7%, #272826 80.37%);
+  border-radius: 8px;
+  height: 100%;
+  @apply p-8 pl-[66px];
+}
+
+.green-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #2BBE16;
+  box-shadow: 0px 0px 6px 0px #2BBE16;
+  border-radius: 100%;
+  margin-top: 10px;
+  flex-shrink: 0;
+}

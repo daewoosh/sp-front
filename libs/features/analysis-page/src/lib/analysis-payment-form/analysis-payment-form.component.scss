@@ -1,0 +1,92 @@
+.bg-1 {
+  background: linear-gradient(180deg, #272826 0%, #2BBE16 100%);
+  border-radius: 25px;
+}
+
+
+.bg-2 {
+  background: linear-gradient(180deg, #2BBE16 0%, #272826 100%);
+  border-radius: 25px;
+}
+
+
+.price {
+  font-size: 36px;
+  text-shadow: 0px 0px 5px #FFFFFF;
+}
+
+.old-price{
+  font-size: 26px;
+  position: relative;
+  &::before{
+    content: "";
+    position: absolute;
+    height: 2px;
+    bottom: 15px;
+    left: -5px;
+    right: -6px;
+    background-color: red;
+    transform: rotate(-10deg);
+  }
+}
+
+:host {
+  --tui-height-m: 42px;
+  --tui-radius-m: 8px;
+  --tui-padding-l: 0;
+  --tui-color: #17836d;
+  --tui-primary-text: #fff;
+  --tui-primary: #fff;
+  --tui-text-01: var(--clr-white);
+}
+
+.form-image {
+  position: absolute;
+  bottom: -25px;
+  right: 5px;
+  display: none;
+  z-index: 2;
+}
+
+
+@media screen and (min-width: 760px) {
+  .form-image {
+    display: flex;
+    height: 400px;
+    bottom: -14px;
+  }
+}
+
+@media screen and (min-width: 792px) {
+  .form-image {
+    height: 445px;
+    bottom: 0px;
+  }
+}
+
+@media screen and (min-width: 916px) {
+  .form-image {
+    height: 600px;
+    bottom: 0px;
+  }
+}
+
+@media screen and (min-width: 1080px) {
+  .form-image {
+    height: 731px;
+    bottom: 0px;
+    right: 23px;
+  }
+}
+
+.margined {
+  margin-top: -50px;
+  justify-content: center;
+}
+
+@media screen and (min-width: 564px) {
+  .margined {
+    //margin-top: -102px;
+    justify-content: start;
+  }
+}

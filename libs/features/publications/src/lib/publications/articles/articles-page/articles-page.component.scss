@@ -1,0 +1,10 @@
+.publication-page{
+  background-image: url("/assets/images/publications/page-bg.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.publication-page-header{
+  color:var(--clr-white);
+  line-height: 58px;
+  @apply font-medium text-[3rem]
+}

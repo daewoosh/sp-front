@@ -1,0 +1,12 @@
+<ng-container *ngIf="courseElement$|async as courseElement">
+  <div class="text-white text-4xl">Курс {{courseElement.courseName}}</div>
+  <div class="mt-8 text-2xl mb-[18px]">
+    {{courseElement.title}}
+  </div>
+  <div #coursesItem>
+    <sp-course-item-video *ngIf="courseElement.type === 0" [courseElement]="videoElement(courseElement)"
+                          [courseProgram]="(courseElements$|async)!"/>
+    <sp-course-item-assignment *ngIf="courseElement.type === 1" [courseElement]="assignmentElement(courseElement)"
+                               [courseProgram]="(courseElements$|async)!"/>
+  </div>
+</ng-container>

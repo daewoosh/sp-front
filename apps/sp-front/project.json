@@ -2,7 +2,7 @@
   "name": "sp-front",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
-  "prefix": "sp-front",
+  "prefix": "app",
   "sourceRoot": "apps/sp-front/src",
   "tags": [],
   "targets": {
@@ -12,6 +12,12 @@
         "{options.outputPath}"
       ],
       "options": {
+        "define": {
+          "API_URL": "\"https://localhost:43802/api/v1\"",
+          "APP_URL": "\"http://localhost:4200\"",
+          "AUTH_BOT_NAME": "\"ppokerTest_bot\"",
+          "EXCHANGE_URL": "\"https://devex.safe-poker.ru\""
+        },
         "outputPath": "dist/apps/sp-front",
         "index": "apps/sp-front/src/index.html",
         "browser": "apps/sp-front/src/main.ts",
@@ -21,8 +27,11 @@
         "tsConfig": "apps/sp-front/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
-          "apps/sp-front/src/favicon.ico",
           "apps/sp-front/src/assets",
+          {
+            "glob": "**/*",
+            "input": "apps/sp-front/public"
+          },
           {
             "glob": "**/*",
             "input": "node_modules/@taiga-ui/icons/src",
@@ -30,10 +39,9 @@
           }
         ],
         "styles": [
+          "node_modules/@videogular/ngx-videogular/fonts/videogular.css",
           "node_modules/@taiga-ui/core/styles/taiga-ui-theme.less",
           "node_modules/@taiga-ui/core/styles/taiga-ui-fonts.less",
-          "node_modules/@taiga-ui/styles/taiga-ui-global.less",
-          "node_modules/@videogular/ngx-videogular/fonts/videogular.css",
           "apps/sp-front/src/styles.scss"
         ],
         "scripts": [ "node_modules/hls.js/dist/hls.min.js"],
@@ -44,12 +52,34 @@
         }
       },
       "configurations": {
+        "dev": {
+          "index": "apps/sp-front/src/index.dev.html",
+          "define": {
+            "API_URL": "\"https://dev.safe-poker.ru/api/v1\"",
+            "APP_URL": "\"https://dev.safe-poker.ru\"",
+            "AUTH_BOT_NAME": "\"pokerLearnDevBot\"",
+            "EXCHANGE_URL": "\"https://devex.safe-poker.ru\""
+          },
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "2mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "outputHashing": "all"
+        },
         "production": {
           "budgets": [
             {
               "type": "initial",
               "maximumWarning": "500kb",
-              "maximumError": "1mb"
+              "maximumError": "2mb"
             },
             {
               "type": "anyComponentStyle",
@@ -86,16 +116,7 @@
       }
     },
     "lint": {
-      "executor": "@nx/eslint:lint",
-      "outputs": [
-        "{options.outputFile}"
-      ],
-      "options": {
-        "lintFilePatterns": [
-          "apps/sp-front/**/*.ts",
-          "apps/sp-front/**/*.html"
-        ]
-      }
+      "executor": "@nx/eslint:lint"
     },
     "test": {
       "executor": "@nx/jest:jest",
@@ -104,6 +125,15 @@
       ],
       "options": {
         "jestConfig": "apps/sp-front/jest.config.ts"
+      }
+    },
+    "serve-static": {
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "sp-front:build",
+        "port": 4200,
+        "staticFilePath": "dist/apps/sp-front/browser",
+        "spa": true
       }
     }
   }

@@ -1,0 +1,9 @@
+.banner-link {
+  text-decoration: none !important;
+  color: white !important;
+
+  &:hover {
+    color: var(--clr-primary) !important;
+  }
+}
+

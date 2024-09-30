@@ -1,0 +1,27 @@
+//.html-display-content{
+//  & ol {
+//    @apply list-decimal;
+//  }
+//
+//  &  ul {
+//    @apply list-disc;
+//  }
+//}
+.editor-socket {
+  & img {
+    display: inline-block;
+  }
+
+  .tui-editor-socket table td {
+    border: 1px solid #2BBE16;
+  }
+
+  .tui-editor-socket table {
+    background: linear-gradient(180deg, #23321E 0%, rgba(39, 40, 38, 0.2) 100%);
+  }
+
+  .tui-editor-socket table th {
+    border: 1px solid #2BBE16;
+    background-color: unset;
+  }
+}

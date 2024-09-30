@@ -1,0 +1,61 @@
+<div class="bg-black-light mt-20 py-10">
+  <div class="max-w-6xl m-auto px-4 lg:px-0 ">
+    <div class="text-[30px]">
+      Отзывы о проекте
+    </div>
+
+    <div
+      tuiCarouselButtons
+      class="flex mt-12"
+    >
+      <button
+
+        (click)="navigate(itemsCount*(-1));"
+      >
+        <svg width="12" height="22" viewBox="0 0 12 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M11.5607 0.146447C11.7559 0.341709 11.7559 0.658291 11.5607 0.853553L1.41421 11L11.5607 21.1464C11.7559 21.3417 11.7559 21.6583 11.5607 21.8536C11.3654 22.0488 11.0488 22.0488 10.8536 21.8536L0 11L10.8536 0.146447C11.0488 -0.0488155 11.3654 -0.0488155 11.5607 0.146447Z"
+                fill="white"/>
+        </svg>
+
+      </button>
+      <div class="overflow-hidden flex flex-col gap-12">
+        <tui-carousel
+          #carousel
+          [(index)]="index"
+          [itemsCount]="itemsCount"
+        >
+          <ng-container *ngFor="let item of reviews">
+            <div *tuiItem>
+              <sp-review-item [review]="item"></sp-review-item>
+            </div>
+          </ng-container>
+        </tui-carousel>
+
+        <div class="mb-4">
+          <tui-pagination
+            size="s"
+            class="pagination"
+            [length]="reviews.length/itemsCount"
+            [index]="rounded"
+            (indexChange)="onIndex($event)"
+
+          ></tui-pagination>
+        </div>
+      </div>
+      <button
+        (click)="navigate(itemsCount*(1));"
+      >
+        <svg width="12" height="22" viewBox="0 0 12 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M0.146371 21.8536C-0.048891 21.6583 -0.048891 21.3417 0.146371 21.1464L10.2928 11L0.146373 0.853553C-0.0488892 0.65829 -0.0488892 0.341708 0.146373 0.146445C0.341636 -0.0488158 0.658217 -0.0488157 0.85348 0.146445L11.707 11L0.853478 21.8536C0.658216 22.0488 0.341634 22.0488 0.146371 21.8536Z"
+                fill="white"/>
+        </svg>
+
+      </button>
+
+
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,11 @@
+.highlighted {
+  position: absolute;
+  left: -116px;
+  bottom: -29px;
+}
+
+@media screen and (min-width: 500px) {
+  .highlighted {
+    bottom: -84px;
+  }
+}

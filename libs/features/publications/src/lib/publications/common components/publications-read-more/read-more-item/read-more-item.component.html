@@ -1,0 +1,19 @@
+<div class="flex flex-col sm:flex-row gap-10 w-full sm:items-center">
+  <div class="flex-grow text-base lg:text-[21px] leading-[25px]">
+    <tui-line-clamp [linesLimit]="2" [content]="publication?.title ?? ''"></tui-line-clamp>
+  </div>
+  <a [href]="link" target="_blank" class="btn w-fit  max-h-[45px]">
+    <div class="flex  items-center justify-center gap-2">
+
+      Читать
+      <svg style="margin-top: 4px" width="13" height="22" viewBox="0 0 13 22" fill="none"
+           xmlns="http://www.w3.org/2000/svg" class="rotate-180">
+        <path fill-rule="evenodd" clip-rule="evenodd"
+              d="M12.1534 0.146447C12.3487 0.341709 12.3487 0.658291 12.1534 0.853553L2.00699 11L12.1534 21.1464C12.3487 21.3417 12.3487 21.6583 12.1534 21.8536C11.9582 22.0488 11.6416 22.0488 11.4463 21.8536L0.592773 11L11.4463 0.146447C11.6416 -0.0488155 11.9582 -0.0488155 12.1534 0.146447Z"
+              fill="white"/>
+      </svg>
+    </div>
+  </a>
+</div>
+
+<div><div>Краткий экскурс в мир турнирного покера! Вы также детальнее поймёте, чего вам следует ожидать от дальнейших блоков, а также подробнее изучите покерную терминологию.</div><div class="mt-5"><a href="https://safe-poker.io/articles/Slovar'_pokernih_terminov" target="_blank" class="btn w-fit  max-h-[45px]"><div class="flex  items-center justify-center gap-2">Покерный словарь<svg width="9" height="15" viewBox="0 0 9 15" fill="none" xmlns="http://www.w3.org/2000/svg"> <path fill-rule="evenodd" clip-rule="evenodd" d="M0.146447 14.8536C-0.0488155 14.6583 -0.0488155 14.3417 0.146447 14.1464L6.79289 7.5L0.146447 0.853554C-0.0488154 0.658291 -0.0488154 0.341709 0.146447 0.146446C0.341709 -0.0488157 0.658291 -0.0488157 0.853554 0.146446L8.20711 7.5L0.853553 14.8536C0.658291 15.0488 0.341709 15.0488 0.146447 14.8536Z" fill="white"/></svg></div></a></div></div>

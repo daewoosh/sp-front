@@ -1,0 +1,145 @@
+<div>
+  <vg-player (onPlayerReady)="onPlayerReady($event)" *ngIf="canShowPlayer">
+    <vg-overlay-play vgFor="myMedia2"></vg-overlay-play>
+
+    <vg-controls *ngIf="bitrates.length" class="h-[70px]" [vgAutohide]="false">
+      <div class="flex-grow pr-5">
+        <vg-scrub-bar class="block h-[20px]">
+          <vg-scrub-bar-current-time vgFor="myMedia2" [vgSlider]="true"></vg-scrub-bar-current-time>
+          <vg-scrub-bar-buffering-time vgFor="myMedia2"></vg-scrub-bar-buffering-time>
+        </vg-scrub-bar>
+        <div class="flex justify-between">
+          <div class="flex gap-2">
+            <vg-play-pause vgFor="myMedia2"></vg-play-pause>
+
+            <div (tuiActiveZoneChange)="onSpeedActiveZone($event)" class="flex relative items-center">
+              <div class="text-ellipsis">
+                {{selectedSpeed?.label ?? ''}}
+              </div>
+
+              <ng-container *ngIf="showSpeed">
+                <div class="dd-container speed"
+                >
+                  <div *ngFor="let item of speeds" class="w-full"
+                  >
+                    <button type="button" class="hover:bg-[var(--clr-primary)] px-2 rounded w-full"
+                            (click)="myMedia.playbackRate = item.value;selectedSpeed = item;showSpeed=false">
+                      {{item.label}}
+                    </button>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+
+            <vg-time-display vgFor="myMedia2" [vgProperty]="'current'" [vgFormat]="'mm:ss'"></vg-time-display>
+          </div>
+          <div class="flex gap-2">
+
+            <div (tuiActiveZoneChange)="onQualityActiveZone($event)" class="flex relative items-center">
+              <div
+                (click)="showQuality = true">
+                {{selectedBitrate?.label ?? ''}}
+              </div>
+
+              <ng-container *ngIf="showQuality">
+                <div class="dd-container"
+                >
+                  <div *ngFor="let item of bitrates" class="w-full"
+                  >
+                    <button type="button" class="hover:bg-[var(--clr-primary)] px-2 rounded w-full"
+                            (click)="vgHls.setBitrate(item);selectedBitrate = item;showQuality=false">
+                      {{item.label}}
+                    </button>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+
+            <vg-mute vgFor="myMedia2"></vg-mute>
+            <vg-volume vgFor="myMedia2" class="hidden sm:inline-flex"></vg-volume>
+            <vg-fullscreen vgFor="myMedia2"></vg-fullscreen>
+          </div>
+        </div>
+      </div>
+    </vg-controls>
+
+    <!--    <vg-controls *ngIf="bitrates.length">-->
+    <!--      <div class="flex-grow">-->
+    <!--        <div>-->
+    <!--          <vg-scrub-bar>-->
+    <!--            <vg-scrub-bar-current-time vgFor="myMedia2" [vgSlider]="true"></vg-scrub-bar-current-time>-->
+    <!--            <vg-scrub-bar-buffering-time vgFor="myMedia2"></vg-scrub-bar-buffering-time>-->
+    <!--          </vg-scrub-bar>-->
+    <!--        </div>-->
+    <!--        <div>-->
+    <!--          <vg-play-pause vgFor="myMedia2"></vg-play-pause>-->
+    <!--          &lt;!&ndash;      <vg-playback-button vgFor="myMedia" [playbackValues]="[ '1.0', '2.0', '4.0' ]"></vg-playback-button>&ndash;&gt;-->
+
+    <!--          <vg-time-display vgFor="myMedia2" [vgProperty]="'current'" [vgFormat]="'mm:ss'"></vg-time-display>-->
+
+    <!--          &lt;!&ndash;      <vg-scrub-bar>&ndash;&gt;-->
+    <!--          &lt;!&ndash;        <vg-scrub-bar-current-time vgFor="myMedia2" [vgSlider]="true"></vg-scrub-bar-current-time>&ndash;&gt;-->
+    <!--          &lt;!&ndash;        <vg-scrub-bar-buffering-time vgFor="myMedia2"></vg-scrub-bar-buffering-time>&ndash;&gt;-->
+    <!--          &lt;!&ndash;      </vg-scrub-bar>&ndash;&gt;-->
+    <!--          <vg-quality-selector [bitrates]="bitrates"-->
+    <!--                               (onBitrateChange)="vgHls.setBitrate($event)">-->
+
+    <!--          </vg-quality-selector>-->
+    <!--          <vg-mute vgFor="myMedia2"></vg-mute>-->
+    <!--          <vg-volume vgFor="myMedia2"></vg-volume>-->
+    <!--          <vg-fullscreen vgFor="myMedia2"></vg-fullscreen>-->
+    <!--        </div>-->
+    <!--      </div>-->
+    <!--    </vg-controls>-->
+
+    <!--    <vg-controls *ngIf="bitrates.length">-->
+
+    <!--      <vg-play-pause vgFor="myMedia2"></vg-play-pause>-->
+    <!--      &lt;!&ndash;      <vg-playback-button vgFor="myMedia" [playbackValues]="[ '1.0', '2.0', '4.0' ]"></vg-playback-button>&ndash;&gt;-->
+
+    <!--      <vg-time-display vgFor="myMedia2" [vgProperty]="'current'" [vgFormat]="'mm:ss'"></vg-time-display>-->
+
+    <!--      <vg-scrub-bar>-->
+    <!--        <vg-scrub-bar-current-time vgFor="myMedia2" [vgSlider]="true"></vg-scrub-bar-current-time>-->
+    <!--        <vg-scrub-bar-buffering-time vgFor="myMedia2"></vg-scrub-bar-buffering-time>-->
+    <!--      </vg-scrub-bar>-->
+    <!--      <vg-quality-selector [bitrates]="bitrates"-->
+    <!--                           (onBitrateChange)="vgHls.setBitrate($event)">-->
+
+    <!--      </vg-quality-selector>-->
+    <!--      <vg-mute vgFor="myMedia2"></vg-mute>-->
+    <!--      <vg-volume vgFor="myMedia2"></vg-volume>-->
+    <!--      <vg-fullscreen vgFor="myMedia2"></vg-fullscreen>-->
+
+    <!--    </vg-controls>-->
+
+
+    <video #myMedia
+           [vgMedia]="aaaa(myMedia)"
+           [vgHls]="getVideoUrl()"
+           #vgHls="vgHls"
+           (onGetBitrates)="getBitrates($event)"
+           id="myMedia2"
+           type="video/mp4"
+           crossorigin
+    >
+    </video>
+  </vg-player>
+</div>
+
+<div class="w-full flex flex-wrap justify-end gap-4 mt-12">
+  <button class="btn"
+          [routerLink]="['../',courseElement.order-1]"
+          [ngClass]="{'hidden':!showPrevBtn}">
+    Предыдущий урок
+  </button>
+  <button class="btn primary" [attr.inert]="!canGoNext || null"
+          [routerLink]="['../',courseElement.order+1]"
+          [ngClass]="{'hidden':!showNextBtn, 'disabled':!canGoNext}">
+    {{nextButtonLabel}}
+  </button>
+</div>
+<div class="mt-14">
+  <div class="text-2xl">Описание</div>
+  <div class="text-base mt-4" [innerHTML]="courseElement.description | dompurify"></div>
+</div>

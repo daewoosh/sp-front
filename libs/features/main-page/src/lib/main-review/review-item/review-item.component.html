@@ -1,0 +1,17 @@
+<div class="flex flex-col items-center">
+  <div class="clr-primary text-2xl">{{review.reviewer}}</div>
+  <div class="max-w-[170px] text-center text-base clr-grey">{{review.position}}</div>
+  <div class="flex with-quotes">
+    <div class="lb text-base max-w-[380px]">
+      <tui-line-clamp [linesLimit]="linesLimit" [content]="review.comment">
+
+      </tui-line-clamp>
+      <div class="flex justify-end">
+
+        <span class="btn text-sm clr-grey mt-2 cursor-pointer absolute z-30" *ngIf="collapsed" (click)="toggle()">Читать дальше</span>
+
+        <span class="text-sm clr-grey mt-2 cursor-pointer absolute z-30" *ngIf="!collapsed" (click)="toggle()">Скрыть</span>
+      </div>
+    </div>
+  </div>
+</div>

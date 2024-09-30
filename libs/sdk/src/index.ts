@@ -1,1 +1,1 @@
-export * from './lib/sdk/sdk.component';
+export * from './common';
