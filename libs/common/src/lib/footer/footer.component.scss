@@ -1,0 +1,12 @@
+.round-icon{
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: .5px solid white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &:hover{
+    box-shadow: 0 0 4px #fff,inset 0 0 4px #fff;
+  }
+}

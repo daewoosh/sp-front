@@ -1,13 +1,18 @@
-vg-controls.hide{
+vg-controls.hide {
   bottom: -70px;
 }
 
-.dd-container{
-  @apply flex gap-1 flex-col p-2  text-white text-base rounded absolute top-[-202px] right-0 z-[500];
+.dd-container {
+  @apply flex gap-1 flex-col p-2  text-white text-base rounded absolute bottom-[43px] right-0 z-[500];
   background-color: rgba(28, 30, 29, 0.8);
 
-  &.speed{
-    top: -120px;
+  &.speed {
     right: -14px;
   }
+}
+
+
+.video-loader {
+  --t-diameter: 15em !important;
+  --tui-background-accent-1: var(--clr-primary);
 }
