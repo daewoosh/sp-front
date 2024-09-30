@@ -103,8 +103,7 @@ export class CourseItemAssignmentComponent implements OnInit {
       );
   }
 
-  resetAnswers(content:any) {
-
+  resetAnswers() {
     this.dialog.subscribe({
       next: (reset) => {
         if (reset){

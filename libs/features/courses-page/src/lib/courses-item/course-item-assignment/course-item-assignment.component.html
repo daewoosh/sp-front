@@ -13,7 +13,7 @@
   </ng-container>
   <div class="flex justify-end">
     <button class="btn primary" (click)="sendAnswers()" *ngIf="!courseElement.isCompleted || isResetMode">Отправить ответы</button>
-    <button class="btn warning" (click)="resetAnswers(confirmation)" *ngIf="courseElement.isCompleted && !isResetMode">Перепройти тест</button>
+    <button class="btn warning" (click)="resetAnswers()" *ngIf="courseElement.isCompleted && !isResetMode">Перепройти тест</button>
   </div>
 </div>
 
@@ -29,9 +29,3 @@
     {{nextButtonLabel}}
   </button>
 </div>
-
-<ng-template #confirmation>
-  <div>
-    Who is hteere?
-  </div>
-</ng-template>
