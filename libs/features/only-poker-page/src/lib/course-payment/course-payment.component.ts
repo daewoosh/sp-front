@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Inject, Input, OnInit, ViewChild } from '@angular/core';
 import { CommonModule, DOCUMENT } from "@angular/common";
 
 @Component({
@@ -9,6 +9,8 @@ import { CommonModule, DOCUMENT } from "@angular/common";
   imports: [CommonModule]
 })
 export class CoursePaymentComponent implements AfterViewInit {
+
+  @Input() showOtherProducts = true;
 
   @ViewChild('formContainer') formContainer!: ElementRef;
 

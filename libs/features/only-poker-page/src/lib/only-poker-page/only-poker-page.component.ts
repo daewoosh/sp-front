@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CourseTopComponent } from "../course-top/course-top.component";
 import { CourseForWhoComponent } from "../course-for-who/course-for-who.component";
@@ -16,4 +16,6 @@ import { CoursePaymentComponent } from "../course-payment/course-payment.compone
   templateUrl: './only-poker-page.component.html',
   styleUrl: './only-poker-page.component.scss',
 })
-export class OnlyPokerPageComponent {}
+export class OnlyPokerPageComponent {
+  @Input() showOtherProducts = true;
+}

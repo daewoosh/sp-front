@@ -1,7 +1,9 @@
-<sp-landing-header/>
-<div class="rad-bg flex-col flex-col">
-  <div class="page-content flex-grow">
-   <sp-only-poker-page
+<tui-root>
+  <sp-landing-header/>
+  <div class="rad-bg flex-col flex-col">
+    <div class="page-content flex-grow">
+      <sp-only-poker-page [showOtherProducts]="false"/>
+    </div>
+    <sp-footer/>
   </div>
-  <sp-footer/>
-</div>
+</tui-root>
