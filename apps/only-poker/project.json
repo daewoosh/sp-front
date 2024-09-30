@@ -20,9 +20,14 @@
           {
             "glob": "**/*",
             "input": "apps/only-poker/public"
+          },
+          {
+            "glob": "**/*",
+            "input": "./libs/shared-assets/",
+            "output": "./assets"
           }
         ],
-        "styles": ["apps/only-poker/src/styles.scss"],
+        "styles": ["./libs/shared-styles/styles.scss","apps/only-poker/src/styles.scss"],
         "scripts": [],
         "server": "apps/only-poker/src/main.server.ts",
         "prerender": true,
