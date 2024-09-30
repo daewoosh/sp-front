@@ -8,3 +8,6 @@
   line-height: 58px;
   @apply font-medium text-[3rem]
 }
+.full-height{
+  min-height: calc(100dvh + var(--sp-header-height));
+}
