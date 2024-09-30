@@ -1,12 +1,4 @@
-import {
-  ActivatedRouteSnapshot,
-  CanActivate,
-  GuardResult,
-  MaybeAsync,
-  Route,
-  Router,
-  RouterStateSnapshot, UrlTree
-} from "@angular/router";
+import { ActivatedRouteSnapshot, CanActivate, Route, Router, RouterStateSnapshot, UrlTree } from "@angular/router";
 import { CoursesResolver } from "./courses-resolver.service";
 import { CourseElementResolver, CourseProgramResolver } from "./course-program-resolver.service";
 import { inject, Injectable, INJECTOR } from "@angular/core";
@@ -22,14 +14,6 @@ export class CourseAccessGuard implements CanActivate {
 
   private readonly dialogs = inject(TuiDialogService);
   private readonly injector = inject(INJECTOR);
-  private readonly dialog = this.dialogs.open<boolean>(
-    new PolymorpheusComponent(CourseNoAccessModalComponent, this.injector),
-    {
-      data: 237,
-      dismissible: true,
-      appearance: 'sp-modal'
-    },
-  );
 
   constructor(
     private router: Router,
@@ -37,6 +21,7 @@ export class CourseAccessGuard implements CanActivate {
     private coursesStateService: CoursesStateService
   ) {
   }
+
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
@@ -83,7 +68,13 @@ export class CourseAccessGuard implements CanActivate {
                 dismissible: true,
                 appearance: 'sp-modal',
               }
-            ).subscribe();
+            ).subscribe(
+              navigate=>{
+                if (navigate){
+                  this.router.navigate(['/courses']);
+                }
+              }
+            );
 
             // Decide what to return based on whether the user navigated from within the app
             if (this.router.navigated) {
