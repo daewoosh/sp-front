@@ -1,4 +1,13 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  inject,
+  Inject,
+  INJECTOR,
+  Input,
+  OnInit
+} from '@angular/core';
 import { Assignment, CourseElementType, CourseProgramItem } from "@sp/core/models";
 import { CommonModule } from "@angular/common";
 import {
@@ -6,8 +15,12 @@ import {
 } from "./course-item-assignment-question/course-item-assignment-question.component";
 import { RouterLink } from "@angular/router";
 import { CoursesApiService } from "@sp/core/providers/courses-api.service";
-import { TuiAlertService } from "@taiga-ui/core";
+import { TuiAlertService, TuiDialogService } from "@taiga-ui/core";
 import { CoursesStateService } from "@sp/core/providers/courses-state.service";
+import { TUI_CONFIRM, TuiConfirmData } from "@taiga-ui/kit";
+import { switchMap } from "rxjs";
+import { PolymorpheusComponent } from "@taiga-ui/polymorpheus";
+import { ResetModalComponent } from "./reset-modal/reset-modal.component";
 
 @Component({
   selector: 'sp-course-item-assignment',
@@ -20,6 +33,17 @@ import { CoursesStateService } from "@sp/core/providers/courses-state.service";
 export class CourseItemAssignmentComponent implements OnInit {
   @Input() courseElement!: Assignment;
   @Input() courseProgram!: CourseProgramItem[];
+
+  private readonly dialogs = inject(TuiDialogService);
+  private readonly injector = inject(INJECTOR);
+
+  private readonly dialog = this.dialogs.open<boolean>(
+    new PolymorpheusComponent(ResetModalComponent, this.injector),
+    {
+      dismissible: true,
+      appearance: 'sp-modal'
+    },
+  );
 
   isResetMode = false;
 
@@ -80,13 +104,19 @@ export class CourseItemAssignmentComponent implements OnInit {
   }
 
   resetAnswers() {
-    this.coursesApiService.clearUserAnswers(this.courseElement.id, this.courseElement.assignmentId)
-      .subscribe(_ => {
-        this.isResetMode = true;
-        this.courseElement.questions.forEach(question => {
-          question.userAnswer = '';
-        });
-        this.cdr.detectChanges();
-      })
+    this.dialog.subscribe({
+      next: (reset) => {
+        if (reset){
+          this.coursesApiService.clearUserAnswers(this.courseElement.id, this.courseElement.assignmentId)
+            .subscribe(_ => {
+              this.isResetMode = true;
+              this.courseElement.questions.forEach(question => {
+                question.userAnswer = '';
+              });
+              this.cdr.detectChanges();
+            });
+        }
+      }
+    });
   }
 }
