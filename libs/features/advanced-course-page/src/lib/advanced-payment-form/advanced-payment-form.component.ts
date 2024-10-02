@@ -10,28 +10,12 @@ import { CommonModule, DOCUMENT } from "@angular/common";
   standalone: true,
   imports:[CommonModule]
 })
-export class AdvancedPaymentFormComponent implements OnInit, AfterViewInit, OnDestroy {
+export class AdvancedPaymentFormComponent implements AfterViewInit, OnDestroy {
   @ViewChild('formContainer') formContainer!: ElementRef;
-  form!: FormGroup;
-  fragment: string | null = '';
   private scriptElements: HTMLScriptElement[] = [];
 
-  constructor(private fb: FormBuilder,
-              private route: ActivatedRoute,
-              @Inject(DOCUMENT) private document: Document) {
+  constructor(@Inject(DOCUMENT) private document: Document) {
 
-  }
-
-  ngOnInit(): void {
-    this.form = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      phone: ['', [Validators.required]],
-      name: ['', [Validators.required, Validators.maxLength(100)]]
-    });
-
-    this.route.fragment.subscribe(fragment => {
-      this.fragment = fragment;
-    });
   }
 
   ngAfterViewInit() {
@@ -46,7 +30,7 @@ export class AdvancedPaymentFormComponent implements OnInit, AfterViewInit, OnDe
     s1.charset = "utf-8";
     s1.src = "https://forms.kommo.com/forms/assets/js/amoforms.js?1683539484";
     this.formContainer.nativeElement.appendChild(s1);
-    this.scriptElements.push(s1);  // Сохраняем ссылку на скрипт
+    this.scriptElements.push(s, s1);  // Сохраняем ссылку на скрипт
   }
 
   ngOnDestroy() {
@@ -56,6 +40,12 @@ export class AdvancedPaymentFormComponent implements OnInit, AfterViewInit, OnDe
         script.parentNode.removeChild(script);
       }
     });
+
     this.scriptElements = [];  // Очищаем массив ссылок на скрипты
+
+    // Clear the form container
+    if (this.formContainer && this.formContainer.nativeElement) {
+      this.formContainer.nativeElement.innerHTML = '';
+    }
   }
 }

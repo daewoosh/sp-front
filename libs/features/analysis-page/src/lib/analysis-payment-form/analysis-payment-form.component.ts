@@ -1,6 +1,5 @@
-import { AfterViewInit, Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { ActivatedRoute, RouterModule } from "@angular/router";
+import { AfterViewInit, Component, ElementRef, Inject, ViewChild } from '@angular/core';
+import { RouterModule } from "@angular/router";
 import { CommonModule, DOCUMENT } from "@angular/common";
 
 @Component({
@@ -10,29 +9,10 @@ import { CommonModule, DOCUMENT } from "@angular/common";
   standalone: true,
   imports: [CommonModule, RouterModule]
 })
-export class AnalysisPaymentFormComponent implements OnInit, AfterViewInit {
-
+export class AnalysisPaymentFormComponent implements AfterViewInit {
   @ViewChild('formContainer') formContainer!: ElementRef;
-  form!: FormGroup;
-  fragment: string | null = '';
 
-
-  constructor(private fb: FormBuilder,
-              private route: ActivatedRoute,
-              @Inject(DOCUMENT) private document: Document) {
-
-  }
-
-  ngOnInit(): void {
-    this.form = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      phone: ['', [Validators.required]],
-      name: ['', [Validators.required, Validators.maxLength(100)]]
-    });
-
-    this.route.fragment.subscribe(fragment => {
-      this.fragment = fragment;
-    });
+  constructor(@Inject(DOCUMENT) private document: Document) {
   }
 
   ngAfterViewInit() {
@@ -47,5 +27,4 @@ export class AnalysisPaymentFormComponent implements OnInit, AfterViewInit {
     s1.src = 'https://forms.kommo.com/forms/assets/js/amoforms.js?1719518336';
     this.formContainer.nativeElement.appendChild(s1);
   }
-
 }

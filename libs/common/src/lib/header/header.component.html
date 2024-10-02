@@ -128,13 +128,10 @@
           <a routerLink="/" queryParamsHandling="preserve"
              class="nav-link  text-base" [ngClass]="{'active':isRootRoute()}">Главная</a>
 
-          <!--          <a [href]="navService.getUrlWithUtm('/news')" routerLinkActive="active"-->
-          <!--             class="nav-link  w-fit text-base">Новости</a>-->
+
           <a [href]="exchangeUrl" target="_blank"
              class="nav-link w-fit  text-base">Обменник</a>
 
-          <!--          <a [href]="navService.getUrlWithUtm('/news')" routerLinkActive="active"-->
-          <!--             class="nav-link  w-fit text-base">Новости</a>-->
 
           <sp-learning-drop-down></sp-learning-drop-down>
           <a routerLink="/bonus" queryParamsHandling="preserve" routerLinkActive="active"

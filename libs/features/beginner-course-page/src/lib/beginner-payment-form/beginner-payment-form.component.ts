@@ -3,35 +3,25 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 import { CommonModule, DOCUMENT } from "@angular/common";
 import { NavigationService } from "@sp/core/providers";
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'sp-beginner-payment-form',
   templateUrl: './beginner-payment-form.component.html',
   styleUrls: ['./beginner-payment-form.component.scss'],
   standalone: true,
-  imports:[CommonModule]
+  imports: [CommonModule, RouterLink]
 })
-export class BeginnerPaymentFormComponent implements OnInit, AfterViewInit {
+export class BeginnerPaymentFormComponent implements AfterViewInit {
 
   @ViewChild('formContainer') formContainer!: ElementRef;
 
-  form!: FormGroup;
 
 
-  constructor(private fb: FormBuilder,
-              private elementRef: ElementRef,
-              public navService: NavigationService,
-              @Inject(DOCUMENT) private document: Document) {
+  constructor(@Inject(DOCUMENT) private document: Document) {
 
   }
 
-  ngOnInit(): void {
-    this.form = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      phone: ['', [Validators.required]],
-      name: ['', [Validators.required, Validators.maxLength(100)]]
-    })
-  }
 
   ngAfterViewInit() {
     const s = this.document.createElement("script");
@@ -46,5 +36,4 @@ export class BeginnerPaymentFormComponent implements OnInit, AfterViewInit {
     s1.src = "https://forms.kommo.com/forms/assets/js/amoforms.js?1683539434";
     this.formContainer.nativeElement.appendChild(s1);
   }
-
 }
