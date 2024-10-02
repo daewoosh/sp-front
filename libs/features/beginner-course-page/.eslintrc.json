@@ -21,7 +21,7 @@
           "error",
           {
             "type": "element",
-            "prefix": "sp-front",
+            "prefix": "sp",
             "style": "kebab-case"
           }
         ]

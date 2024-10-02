@@ -33,9 +33,9 @@ export class CourseItemPageComponent implements OnInit {
         const currentOrder = this.activatedRoute.snapshot.firstChild?.paramMap.get('order');
         if (!currentOrder) {
           const firstIncomplete = program.find(item => !item.isCompleted);
-
+          const orderToNavigate = firstIncomplete ? firstIncomplete.order : 1;
           if (firstIncomplete) {
-            this.router.navigate([firstIncomplete.order], {relativeTo: this.activatedRoute});
+            this.router.navigate([orderToNavigate], {relativeTo: this.activatedRoute});
           }
         }
       })

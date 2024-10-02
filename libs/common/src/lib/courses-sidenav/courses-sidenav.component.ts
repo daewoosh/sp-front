@@ -34,8 +34,9 @@ export class CoursesSidenavComponent implements OnInit {
   supportMenuItem: MenuItem = {
     icon: 'help.svg',
     title: 'Поддержка',
-    url: '/support',
+    url: 'https://t.me/SafePoker_Sales',
     isAvailable: true,
+    isExternal : true
   };
 
   @Input() courses: Course[] = [];

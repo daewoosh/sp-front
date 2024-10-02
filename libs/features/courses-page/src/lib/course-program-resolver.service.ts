@@ -13,23 +13,14 @@ export class CourseProgramResolver implements Resolve<CourseProgramItem[]> {
 
   resolve(route: ActivatedRouteSnapshot): Observable<CourseProgramItem[]> {
     const courseId = route.paramMap.get('id');
-    const currentOrder = route.firstChild?.paramMap.get('order');
 
     return this.coursesApiService.getCourseProgram(courseId!).pipe(
       map(program => {
-        if (!currentOrder) {
           // Находим первый элемент программы, у которого isCompleted = false
           const firstIncomplete = program.find(item => !item.isCompleted);
           if (firstIncomplete) {
             firstIncomplete.isCurrent = true;
           }
-        } else {
-          const currentOrderNumber = Number(currentOrder);
-          const currentItem = program.find(item => item.order === currentOrderNumber);
-          if (currentItem) {
-            currentItem.isCurrent = true;
-          }
-        }
         return program;
       }),
       tap(program => this.coursesStateService.setCourseProgram(program))

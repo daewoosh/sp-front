@@ -17,8 +17,6 @@ import { RouterLink } from "@angular/router";
 import { CoursesApiService } from "@sp/core/providers/courses-api.service";
 import { TuiAlertService, TuiDialogService } from "@taiga-ui/core";
 import { CoursesStateService } from "@sp/core/providers/courses-state.service";
-import { TUI_CONFIRM, TuiConfirmData } from "@taiga-ui/kit";
-import { switchMap } from "rxjs";
 import { PolymorpheusComponent } from "@taiga-ui/polymorpheus";
 import { ResetModalComponent } from "./reset-modal/reset-modal.component";
 

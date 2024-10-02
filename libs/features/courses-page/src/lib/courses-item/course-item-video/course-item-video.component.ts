@@ -230,7 +230,6 @@ export class CourseItemVideoComponent implements OnDestroy {
       case ' ':
         event.stopPropagation();
         event.preventDefault();
-        debugger;
         // video.pause();
         // Toggle play/pause
         if (video.state ==='paused') {

@@ -19,6 +19,7 @@ export class CourseItemAssignmentQuestionComponent {
 
   @Input() question!: Question;
   @Input() courseElement!: Assignment;
+  @Input() isResetMode = false;
 
   isExpanded = false;
 }

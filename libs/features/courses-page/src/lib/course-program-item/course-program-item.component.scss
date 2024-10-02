@@ -12,11 +12,11 @@
     height: 12px;
     border-radius: 99999px;
 
-    &.green {
+    &.success {
       background-color: var(--clr-primary);
     }
 
-    &.orange {
+    &.warning {
       background-color: var(--clr-orange);
     }
   }
