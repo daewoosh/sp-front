@@ -12,7 +12,21 @@ vg-controls.hide {
 }
 
 
-.video-loader {
-  --t-diameter: 15em !important;
-  --tui-background-accent-1: var(--clr-primary);
+.loading {
+  position: absolute;
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+  border: 3px solid rgba(255,255,255,.3);
+  border-radius: 50%;
+  border-top-color: var(--clr-primary);
+  animation: spin 1s ease-in-out infinite;
+
+  top: calc(50% - 40px);
+  left: calc(50% - 40px);
 }
+
+@keyframes spin {
+  to { -webkit-transform: rotate(360deg); }
+}
+
