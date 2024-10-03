@@ -41,6 +41,7 @@
       },
       "configurations": {
         "production": {
+          "index": "apps/booster/src/index.prod.html",
           "budgets": [
             {
               "type": "initial",

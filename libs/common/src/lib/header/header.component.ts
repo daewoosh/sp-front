@@ -1,10 +1,9 @@
-import { Component, inject, Inject, INJECTOR, OnInit, PLATFORM_ID } from '@angular/core';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { Component, inject, Inject, INJECTOR, PLATFORM_ID } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { NavigationEnd, Router, RouterModule } from "@angular/router";
 import { TuiSidebar, TuiSidebarDirective } from '@taiga-ui/addon-mobile';
-// import { EXCHANGE_URL } from "@sp/config";
 import { LearningDropDownComponent } from "../learning-drop-down/learning-drop-down.component";
-import { filter, map, Observable, of, switchMap, take } from "rxjs";
+import { filter, Observable, take } from "rxjs";
 import { AppStateService } from "@sp/core/state/app-state.service";
 import { TuiDialogService } from "@taiga-ui/core";
 import { LoginModalComponent } from "../login-modal/login-modal.component";
@@ -13,14 +12,6 @@ import { TuiActiveZone } from "@taiga-ui/cdk";
 import { CoursesSidenavComponent } from "../courses-sidenav";
 import { CoursesStateService } from "@sp/core/providers/courses-state.service";
 import { Course } from "@sp/core/models";
-import { CoursesApiService } from "@sp/core/providers/courses-api.service";
-
-interface Link {
-  label: string;
-  url: string;
-  links?: Link[];
-}
-
 
 @Component({
   selector: 'sp-header',

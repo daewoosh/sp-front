@@ -4,6 +4,7 @@ import express from 'express';
 import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
 import bootstrap from './src/main.server';
+import 'localstorage-polyfill';
 
 globalThis['localStorage'] = localStorage;
 globalThis['requestAnimationFrame'] = function (callback: FrameRequestCallback): number {
@@ -66,7 +67,7 @@ export function app(): express.Express {
 }
 
 function run(): void {
-  const port = process.env['PORT'] || 4000;
+  const port = process.env['PORT'] || 4001;
 
   // Start up the Node server
   const server = app();

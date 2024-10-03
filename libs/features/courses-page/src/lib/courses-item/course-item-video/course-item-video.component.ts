@@ -149,7 +149,7 @@ export class CourseItemVideoComponent implements OnDestroy {
     this.api!.getMediaById(this.videoId).subscriptions.canPlay
       .pipe(take(1))
       .subscribe(
-        canPlay => {
+        _ => {
           this.api!.getMediaById(this.videoId).currentTime = this.courseElement.lastPosition ?? 0;
         }
       )

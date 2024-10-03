@@ -41,6 +41,7 @@
       },
       "configurations": {
         "production": {
+          "index": "apps/only-poker/src/index.prod.html",
           "budgets": [
             {
               "type": "initial",

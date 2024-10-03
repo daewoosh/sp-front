@@ -6,6 +6,8 @@
     "start": "nx serve sp-front",
     "start:l": "nx serve only-poker",
     "build": "nx build sp-front --skip-nx-cache --configuration=production",
+    "build:only": "nx build only-poker --skip-nx-cache --configuration=production",
+    "build:booster": "nx build booster --skip-nx-cache --configuration=production",
     "build:dev": "nx build sp-front --skip-nx-cache --configuration=dev",
     "serve:ssr": "node dist/apps/server/server.mjs"
   },
