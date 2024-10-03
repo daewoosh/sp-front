@@ -81,6 +81,13 @@
           "outputHashing": "all"
         },
         "production": {
+          "index": "apps/sp-front/src/index.prod.html",
+          "define": {
+            "API_URL": "\"https://safe-poker.io/api/v1\"",
+            "APP_URL": "\"https://safe-poker.io\"",
+            "AUTH_BOT_NAME": "\"SPokerAccountLogin\"",
+            "EXCHANGE_URL": "\"https://exchange.safe-poker.io\""
+          },
           "budgets": [
             {
               "type": "initial",
