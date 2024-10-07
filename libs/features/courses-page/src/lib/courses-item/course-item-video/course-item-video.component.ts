@@ -20,7 +20,6 @@ import { BehaviorSubject, filter, map, Subject, switchMap, take, takeUntil, thro
 import { VgHlsDirective, VgStreamingModule } from "@videogular/ngx-videogular/streaming";
 import { VgBufferingModule } from "@videogular/ngx-videogular/buffering";
 import { RouterLink } from "@angular/router";
-import { API_PATH } from "@sp/config";
 import { CoursesApiService } from "@sp/core/providers/courses-api.service";
 import { CoursesStateService } from "@sp/core/providers/courses-state.service";
 import {
@@ -34,6 +33,8 @@ import {
 import { TuiComboBoxModule, TuiSelectModule } from '@taiga-ui/legacy';
 import { TuiActiveZone } from "@taiga-ui/cdk";
 import { NgDompurifyPipe } from "@taiga-ui/dompurify";
+import { LocalStorageService } from "@sp/core/providers";
+import { USER_VOLUME_TOKEN_NAME } from "@sp/core";
 
 
 @Component({
@@ -76,8 +77,8 @@ export class CourseItemVideoComponent implements OnDestroy {
   showQuality = false;
   showSpeed = false;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: string,
-              @Inject(API_PATH) private apiPath: string,
+  constructor(@Inject(PLATFORM_ID) platformId: string,
+              private localStorage: LocalStorageService,
               private cdr: ChangeDetectorRef,
               private coursesApiService: CoursesApiService,
               private coursesStateService: CoursesStateService) {
@@ -136,7 +137,7 @@ export class CourseItemVideoComponent implements OnDestroy {
     this.vgHls.setBitrate($event[4] ?? $event[0]);
   }
 
-  aaaa(myMedia: HTMLVideoElement): IMediaElement {
+  htmlAsMediaElement(myMedia: HTMLVideoElement): IMediaElement {
     return myMedia as unknown as IMediaElement;
   }
 
@@ -151,8 +152,25 @@ export class CourseItemVideoComponent implements OnDestroy {
       .subscribe(
         _ => {
           this.api!.getMediaById(this.videoId).currentTime = this.courseElement.lastPosition ?? 0;
+          const savedVolume = this.localStorage.get(USER_VOLUME_TOKEN_NAME);
+          if (savedVolume != null) {
+            // @ts-ignore
+            this.api!.getMediaById(this.videoId).volume = savedVolume;
+          }
         }
-      )
+      );
+
+    this.api!.getMediaById(this.videoId).subscriptions.volumeChange
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        res => {
+          const savedVolume = this.localStorage.get(USER_VOLUME_TOKEN_NAME);
+          if (savedVolume !== res.target.volume) {
+            this.localStorage.set(USER_VOLUME_TOKEN_NAME, res.target.volume);
+          }
+
+        }
+      );
 
     this.api!.getMediaById(this.videoId).subscriptions.seeking
       .pipe(takeUntil(this.destroy$))
@@ -169,7 +187,7 @@ export class CourseItemVideoComponent implements OnDestroy {
     this.api!.getMediaById(this.videoId).subscriptions.seeked
       .pipe(takeUntil(this.destroy$))
       .subscribe(
-        seeking => {
+        _ => {
           this.videoLoading$.next(false);
           return false;
         }
@@ -223,7 +241,7 @@ export class CourseItemVideoComponent implements OnDestroy {
   @HostListener('window:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
     const video = this.api!.getMediaById(this.videoId);
-    ;
+
 
     switch (event.key) {
       case 'ArrowLeft':
@@ -242,7 +260,6 @@ export class CourseItemVideoComponent implements OnDestroy {
         } else {
           video.pause();
         }
-        console.log('space');
         break;
       // Add more cases as needed
     }
@@ -259,8 +276,6 @@ export class CourseItemVideoComponent implements OnDestroy {
   }
 
   toggleFullScreen() {
-    console.log('toggleFullScreen');
-    console.log(this.myMedia);
     const videoElement = this.myMedia.nativeElement;
     if (!document.fullscreenElement) {
       if (videoElement.requestFullscreen) {

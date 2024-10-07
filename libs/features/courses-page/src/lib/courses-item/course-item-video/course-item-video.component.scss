@@ -3,8 +3,11 @@ vg-controls.hide {
 }
 
 .dd-container {
-  @apply flex gap-1 flex-col p-2  text-white text-base rounded absolute bottom-[43px] right-0 z-[500];
+  @apply flex gap-[2px] sm:gap-1 flex-col p-1 sm:p-2  text-white text-sm sm:text-base rounded absolute bottom-0 sm:bottom-[43px] right-0 z-[500];
   background-color: rgba(28, 30, 29, 0.8);
+
+  line-height: 1.5;
+
 
   &.speed {
     right: -14px;

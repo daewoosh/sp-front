@@ -64,7 +64,7 @@
       </vg-controls>
 
       <video #myMedia
-             [vgMedia]="aaaa(myMedia)"
+             [vgMedia]="htmlAsMediaElement(myMedia)"
              [vgHls]="getVideoUrl()"
              #vgHls="vgHls"
              (onGetBitrates)="getBitrates($event)"

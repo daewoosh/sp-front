@@ -552,9 +552,17 @@ select, input, textarea {
 .text-black {
   color: black;
 }
+
+// для цвета скрол бара.
 tui-root{
   color: white !important;
 }
+
+// для кнопки закрытия модалки.
+[tuiAppearance][data-appearance=icon]{
+  color: #7e7c7c !important;
+}
+
 
 //.t-thumb{
 //  background: white !important;

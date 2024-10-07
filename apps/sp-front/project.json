@@ -85,7 +85,7 @@
           "define": {
             "API_URL": "\"https://safe-poker.io/api/v1\"",
             "APP_URL": "\"https://safe-poker.io\"",
-            "AUTH_BOT_NAME": "\"SPokerAccountLogin\"",
+            "AUTH_BOT_NAME": "\"SPokerAccountLogin_bot\"",
             "EXCHANGE_URL": "\"https://exchange.safe-poker.io\""
           },
           "budgets": [

@@ -6,12 +6,12 @@
       /></a>
     </div>
 
-        <ng-container *ngIf="isAdmin$|async">
-          <div class="ml-4">
-            <a routerLink="/admin/courses"
-               class="nav-link text-base">Админка</a>
-          </div>
-        </ng-container>
+    <ng-container *ngIf="isAdmin$|async">
+      <div class="ml-4">
+        <a routerLink="/admin/courses"
+           class="nav-link text-base">Админка</a>
+      </div>
+    </ng-container>
 
     <div class="flex justify-start flex-1 md:hidden"></div>
     <div class="-mr-2 -my-2 md:hidden">
@@ -57,24 +57,39 @@
          class="nav-link text-base">Блог</a>
     </nav>
 
-    <button class="profile-circle block md:hidden ml-4" (click)="toggle(true)" (tuiActiveZoneChange)="toggle($event)">
-      <img class="unhovered" src="assets/icons/man.svg"/>
-      <img class="hovered" src="assets/icons/man-hover.svg"/>
-      <div *tuiSidebar="sidebarOpen; direction: 'left'">
-        <div class="h-screen" *ngIf="courses$|async as courses">
-          <sp-courses-sidenav [courses]="courses"/>
+    <ng-container *ngIf="isLoggedIn$|async;else loginModal">
+      <button type="button" class="profile-circle block xl:hidden ml-4 flex-shrink-0"
+              (tuiActiveZoneChange)="toggle($event)">
+        <img class="unhovered" src="assets/icons/man.svg"/>
+        <img class="hovered" src="assets/icons/man-hover.svg"/>
+        <div *tuiSidebar="sidebarOpen; direction: 'left'">
+          <div class="h-screen" *ngIf="courses$|async as courses">
+            <sp-courses-sidenav [courses]="courses"/>
+          </div>
         </div>
-      </div>
+      </button>
+    </ng-container>
+    <ng-template #loginModal>
+      <button type="button" class="profile-circle block xl:hidden ml-4 flex-shrink-0"
+              (click)="openModal()">
+        <img class="unhovered" src="assets/icons/man.svg"/>
+        <img class="hovered" src="assets/icons/man-hover.svg"/>
+      </button>
+    </ng-template>
 
-    </button>
+    <!--    <div>-->
+    <!--      <div>Dialog Open:{{isModalOpen}}</div>-->
+    <!--      <div>SideBar Open:{{sidebarOpen}}</div>-->
+    <!--    </div>-->
 
-    <div class="md:flex items-center justify-end  hidden lg:block">
+
+    <div class="items-center justify-end  hidden xl:flex">
 
       <div class="ml-2 w-[150px]">
         <a *ngIf="isLoggedIn$|async;else login" class="btn primary"
            routerLink="/courses">Кабинет</a>
         <ng-template #login>
-          <button class="btn primary" (click)="openModal(loginModal)">Вход</button>
+          <button class="btn primary" (click)="openModal()">Вход</button>
         </ng-template>
       </div>
     </div>
@@ -147,7 +162,3 @@
 
   <!--MOBILE MENU END-->
 </div>
-
-<ng-template #loginModal>
-  <sp-login-modal/>
-</ng-template>
