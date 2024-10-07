@@ -34,6 +34,11 @@
           },
           {
             "glob": "**/*",
+            "input": "./libs/shared-assets/",
+            "output": "./assets"
+          },
+          {
+            "glob": "**/*",
             "input": "node_modules/@taiga-ui/icons/src",
             "output": "assets/taiga-ui/icons"
           }
@@ -42,6 +47,7 @@
           "node_modules/@videogular/ngx-videogular/fonts/videogular.css",
           "node_modules/@taiga-ui/core/styles/taiga-ui-theme.less",
           "node_modules/@taiga-ui/core/styles/taiga-ui-fonts.less",
+          "./libs/shared-styles/styles.scss",
           "apps/sp-front/src/styles.scss"
         ],
         "scripts": [ "node_modules/hls.js/dist/hls.min.js"],
@@ -75,6 +81,13 @@
           "outputHashing": "all"
         },
         "production": {
+          "index": "apps/sp-front/src/index.prod.html",
+          "define": {
+            "API_URL": "\"https://safe-poker.io/api/v1\"",
+            "APP_URL": "\"https://safe-poker.io\"",
+            "AUTH_BOT_NAME": "\"SPokerAccountLogin_bot\"",
+            "EXCHANGE_URL": "\"https://exchange.safe-poker.io\""
+          },
           "budgets": [
             {
               "type": "initial",

@@ -1,12 +1,15 @@
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  Component, ElementRef, HostListener,
+  Component,
+  ElementRef,
+  HostListener,
   Inject,
   Input,
   OnDestroy,
   PLATFORM_ID,
-  SimpleChanges, ViewChild
+  SimpleChanges,
+  ViewChild
 } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from "@angular/common";
 import { CourseElementType, CourseProgramItem, VideoCourseElement } from "@sp/core/models";
@@ -14,10 +17,9 @@ import { VgControlsModule } from "@videogular/ngx-videogular/controls";
 import { BitrateOptions, IMediaElement, VgApiService, VgCoreModule } from "@videogular/ngx-videogular/core";
 import { VgOverlayPlayModule } from "@videogular/ngx-videogular/overlay-play";
 import { BehaviorSubject, filter, map, Subject, switchMap, take, takeUntil, throttleTime } from "rxjs";
-import { VgStreamingModule } from "@videogular/ngx-videogular/streaming";
+import { VgHlsDirective, VgStreamingModule } from "@videogular/ngx-videogular/streaming";
 import { VgBufferingModule } from "@videogular/ngx-videogular/buffering";
 import { RouterLink } from "@angular/router";
-import { API_PATH } from "@sp/config";
 import { CoursesApiService } from "@sp/core/providers/courses-api.service";
 import { CoursesStateService } from "@sp/core/providers/courses-state.service";
 import {
@@ -25,12 +27,14 @@ import {
   TuiDataListComponent,
   TuiDataListDirective,
   TuiDropdownDirective,
-  TuiDropdownOpen, TuiLoader,
+  TuiDropdownOpen,
   TuiOptGroup
 } from "@taiga-ui/core";
 import { TuiComboBoxModule, TuiSelectModule } from '@taiga-ui/legacy';
 import { TuiActiveZone } from "@taiga-ui/cdk";
 import { NgDompurifyPipe } from "@taiga-ui/dompurify";
+import { LocalStorageService } from "@sp/core/providers";
+import { USER_VOLUME_TOKEN_NAME } from "@sp/core";
 
 
 @Component({
@@ -41,13 +45,14 @@ import { NgDompurifyPipe } from "@taiga-ui/dompurify";
     VgOverlayPlayModule,
     VgBufferingModule,
     VgStreamingModule, RouterLink, TuiDropdownDirective, TuiDropdownOpen, TuiDataListComponent, TuiOptGroup, TuiDataList,
-    TuiComboBoxModule, TuiDataListDirective, TuiSelectModule, TuiActiveZone, NgDompurifyPipe, TuiLoader],
+    TuiComboBoxModule, TuiDataListDirective, TuiSelectModule, TuiActiveZone, NgDompurifyPipe],
   templateUrl: './course-item-video.component.html',
   styleUrl: './course-item-video.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CourseItemVideoComponent implements OnDestroy {
-  @ViewChild('myMedia', { static: false }) myMedia!: ElementRef<HTMLVideoElement>;
+  @ViewChild('myMedia', {static: false}) myMedia!: ElementRef<HTMLVideoElement>;
+  @ViewChild('vgHls', {static: false}) vgHls!: VgHlsDirective;
 
   @Input() courseElement!: VideoCourseElement;
   @Input() courseProgram!: CourseProgramItem[];
@@ -72,8 +77,8 @@ export class CourseItemVideoComponent implements OnDestroy {
   showQuality = false;
   showSpeed = false;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: string,
-              @Inject(API_PATH) private apiPath: string,
+  constructor(@Inject(PLATFORM_ID) platformId: string,
+              private localStorage: LocalStorageService,
               private cdr: ChangeDetectorRef,
               private coursesApiService: CoursesApiService,
               private coursesStateService: CoursesStateService) {
@@ -128,10 +133,11 @@ export class CourseItemVideoComponent implements OnDestroy {
 
   getBitrates($event: BitrateOptions[]) {
     this.bitrates = $event;
-    this.selectedBitrate = $event[0];
+    this.selectedBitrate = $event[4] ?? $event[0];
+    this.vgHls.setBitrate($event[4] ?? $event[0]);
   }
 
-  aaaa(myMedia: HTMLVideoElement): IMediaElement {
+  htmlAsMediaElement(myMedia: HTMLVideoElement): IMediaElement {
     return myMedia as unknown as IMediaElement;
   }
 
@@ -141,14 +147,30 @@ export class CourseItemVideoComponent implements OnDestroy {
 
   onPlayerReady($event: VgApiService) {
     this.api = $event;
-    console.log("onPlayerReady");
     this.api!.getMediaById(this.videoId).subscriptions.canPlay
       .pipe(take(1))
       .subscribe(
-        canPlay => {
+        _ => {
           this.api!.getMediaById(this.videoId).currentTime = this.courseElement.lastPosition ?? 0;
+          const savedVolume = this.localStorage.get(USER_VOLUME_TOKEN_NAME);
+          if (savedVolume != null) {
+            // @ts-ignore
+            this.api!.getMediaById(this.videoId).volume = savedVolume;
+          }
         }
-      )
+      );
+
+    this.api!.getMediaById(this.videoId).subscriptions.volumeChange
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        res => {
+          const savedVolume = this.localStorage.get(USER_VOLUME_TOKEN_NAME);
+          if (savedVolume !== res.target.volume) {
+            this.localStorage.set(USER_VOLUME_TOKEN_NAME, res.target.volume);
+          }
+
+        }
+      );
 
     this.api!.getMediaById(this.videoId).subscriptions.seeking
       .pipe(takeUntil(this.destroy$))
@@ -165,7 +187,7 @@ export class CourseItemVideoComponent implements OnDestroy {
     this.api!.getMediaById(this.videoId).subscriptions.seeked
       .pipe(takeUntil(this.destroy$))
       .subscribe(
-        seeking => {
+        _ => {
           this.videoLoading$.next(false);
           return false;
         }
@@ -218,7 +240,8 @@ export class CourseItemVideoComponent implements OnDestroy {
 
   @HostListener('window:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
-    const video = this.api!.getMediaById(this.videoId);;
+    const video = this.api!.getMediaById(this.videoId);
+
 
     switch (event.key) {
       case 'ArrowLeft':
@@ -230,33 +253,29 @@ export class CourseItemVideoComponent implements OnDestroy {
       case ' ':
         event.stopPropagation();
         event.preventDefault();
-        debugger;
         // video.pause();
         // Toggle play/pause
-        if (video.state ==='paused') {
+        if (video.state === 'paused') {
           video.play();
         } else {
           video.pause();
         }
-        console.log('space');
         break;
       // Add more cases as needed
     }
   }
 
   rewindVideo(seconds: number) {
-    const media= this.api!.getMediaById(this.videoId);
+    const media = this.api!.getMediaById(this.videoId);
     media.currentTime = Math.max(0, media.currentTime - seconds);
   }
 
   fastForwardVideo(seconds: number) {
-    const media= this.api!.getMediaById(this.videoId);
+    const media = this.api!.getMediaById(this.videoId);
     this.api!.getMediaById(this.videoId).currentTime = Math.min(media.duration, media.currentTime + seconds);
   }
 
   toggleFullScreen() {
-    console.log('toggleFullScreen');
-    console.log(this.myMedia);
     const videoElement = this.myMedia.nativeElement;
     if (!document.fullscreenElement) {
       if (videoElement.requestFullscreen) {

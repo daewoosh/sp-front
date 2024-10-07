@@ -1,0 +1,569 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'Golos';
+  src: url('/assets/fonts/Golos-UI_Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Golos';
+  src: url('/assets/fonts/Golos-UI_Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Golos';
+  src: url('/assets/fonts/Golos-UI_Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+:root {
+  --clr-black: #1C1E1D;
+  --clr-black-light: #272826;
+  --clr-primary: #2BBE16;
+  --clr-primary-disabled: #227317;
+  --clr-danger: #A80F0F;
+  --clr-white: #F6F2E1;
+  --clr-grey: #808080;
+  --clr-orange: #F5911E;
+  --clr-border: #847F6B;
+  --tui-text-01: #F6F2E1;
+
+  --sp-header-height: 105px;
+}
+
+html, body {
+  height: 100%;
+  font-family: 'Golos' !important;
+  color: var(--clr-white) !important;
+  font-weight: 400;
+  line-height: 1.25 !important;
+  scroll-behavior: smooth;
+}
+
+.clr-white {
+  color: var(--clr-white);
+}
+
+.clr-primary {
+  color: var(--clr-primary);
+}
+
+.clr-grey {
+  color: var(--clr-grey);
+}
+
+.clr-orange {
+  color: var(--clr-orange);
+}
+
+.clr-danger {
+  color: var(--clr-danger);
+}
+
+.clr-black-light {
+  color: var(--clr-black-light);
+}
+
+.bg-black-light {
+  background-color: var(--clr-black-light);
+}
+
+.bg-black-sp {
+  background-color: var(--clr-black);
+}
+
+.bg-primary {
+  background-color: var(--clr-primary);
+}
+
+.clr-white-tooltip {
+  color: var(--clr-white) !important;
+  margin-top: -3px;
+}
+
+body {
+  color: var(--clr-white);
+  font-weight: 400;
+}
+
+.page-content {
+  min-height: calc(100dvh - var(--sp-header-height));
+}
+
+[type="email"]:focus,
+[type="url"]:focus,
+[type="password"]:focus,
+[type="number"]:focus,
+[type="date"]:focus,
+[type="datetime-local"]:focus,
+[type="month"]:focus,
+[type="search"]:focus,
+[type="tel"]:focus,
+[type="time"]:focus,
+[type="week"]:focus,
+[multiple]:focus,
+textarea:focus,
+[type="text"]:focus, select:focus {
+  --tw-ring-color: var(--clr-primary);
+  border: 0.5px solid var(--clr-primary);
+  caret-color: var(--clr-primary);
+}
+
+select:focus > option:checked {
+  background: #000 !important;
+}
+
+.max-w-6xl {
+  max-width: 1160px;
+}
+
+button.btn,
+a.btn {
+  background: transparent;
+  border-radius: 25px;
+  color: white;
+  font-size: 1rem;
+  border: 1px solid var(--clr-grey);
+  min-width: 150px;
+  min-height: 45px;
+  font-weight: 400;
+  text-align: center;
+  cursor: pointer;
+  padding-right: 1rem;
+  padding-left: 1rem;
+  line-height: 1;
+  text-decoration: none;
+
+  &:hover:not([disabled]) {
+    border-color: var(--clr-primary); // TODO взять зеленый цвет из палитры
+    color: var(--clr-primary);
+
+    & path {
+      fill: var(--clr-primary);
+    }
+  }
+
+  &:focus:not([disabled]) {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    pointer-events: none;
+    cursor: default;
+    color: var(--clr-grey);
+  }
+
+  &.danger {
+    color: white;
+    border-color: var(--clr-danger);
+    background: var(--clr-danger);
+
+    &:hover:not([disabled]) {
+      color: white;
+      border-color: var(--clr-danger);
+      box-shadow: 0px 0px 7px var(--clr-danger);
+    }
+  }
+
+  &.warning {
+    color: white;
+    border-color: #DF8316;
+    background: #DF8316;
+
+    &:hover:not([disabled]) {
+      color: white;
+      border-color: #DF8316;
+      box-shadow: 0px 0px 7px #DF8316;
+    }
+  }
+
+  &.primary {
+    color: white;
+    border-color: var(--clr-primary);
+    background: var(--clr-primary);
+
+    &:hover:not([disabled]) {
+      color: white;
+      box-shadow: 0px 0px 7px var(--clr-primary);
+      text-decoration: none;
+    }
+
+    &:disabled, &.disabled {
+      border-color: var(--clr-primary-disabled);
+      background: var(--clr-primary-disabled);
+      color: var(--clr-grey);
+    }
+
+  }
+}
+
+a.btn {
+  display: flex;
+  line-height: 1;
+  align-items: center;
+  justify-content: center;
+  //padding-top: 12px;
+}
+
+select, input, textarea {
+  background-color: #242625 !important;
+  color: var(--clr-gray) !important;
+
+
+  & option {
+    color: var(--clr-primary);
+  }
+
+  &:disabled {
+    border-color: #4D4D4D;
+  }
+
+}
+
+select {
+  margin-top: 0 !important;
+}
+
+
+select, input[type=text], textarea {
+  border-radius: 8px !important;
+}
+
+select:hover {
+  box-shadow: 0 0 2px white,
+  inset 0 0 2px white;
+  cursor: pointer;
+}
+
+.t-button.t-button.t-button_small {
+  width: 0.75rem !important;
+  height: 0.75rem !important;
+  margin-bottom: 3px;
+  //box-shadow: 0px 0px 7px white !important;
+}
+
+[tuiWrapper][data-appearance='secondary'] {
+  background: var(--clr-grey) !important;
+}
+
+.nav-link {
+  color: white;
+  position: relative;
+
+
+  &.active {
+
+    &::before {
+      width: calc(100% + 2px);
+      height: 1px;
+      background: var(--clr-primary);
+      position: absolute;
+      left: -2px;
+      top: calc(100% + 1px);
+      content: "";
+      z-index: 5;
+
+      box-shadow: 0 0 4px var(--clr-primary),
+      inset 0 0 4px var(--clr-primary);
+    }
+  }
+
+  &:hover {
+
+    &::before {
+      width: calc(100% + 2px);
+      height: 1px;
+      background: var(--clr-primary);
+      position: absolute;
+      left: -2px;
+      top: calc(100% + 1px);
+      content: "";
+      z-index: 5;
+
+      box-shadow: 0 0 4px var(--clr-primary),
+      inset 0 0 4px var(--clr-primary);
+    }
+  }
+}
+
+/* You can add global styles to this file, and also import other style files */
+vg-quality-selector select.quality-selector {
+  border: none;
+  outline: none;
+
+  &:focus-visible {
+    outline: none;
+    border: none;
+  }
+}
+
+
+tui-dialog[data-appearance='sp-modal'] {
+  border: none;
+  --tui-background-elevation-1: #1C1E1D;
+  color: white;
+  font-family: 'Golos';
+  max-width: 540px;
+}
+
+[tuiProgressBar][data-size=s] {
+  --t-height: 6px !important;
+  --tui-background-accent-1: var(--clr-primary) !important;
+  --tui-background-neutral-1: #272826CC;
+}
+
+
+select, input, textarea {
+  background-color: #242625 !important;
+  color: var(--clr-gray) !important;
+
+
+  & option {
+    color: var(--clr-primary);
+
+    & .name {
+      font-size: 1rem !important;
+    }
+
+    & .description {
+      font-size: 0.5rem !important;
+    }
+  }
+
+  &:disabled {
+    border-color: #4D4D4D;
+  }
+
+}
+
+[tuiAppearance][data-appearance=primary] {
+  --t-bg: white;
+  background: var(--t-bg);
+  color: var(--tui-text-primary-on-accent-1);
+}
+
+[tuiAppearance][data-appearance=secondary] {
+  background: var(--clr-grey);
+}
+
+
+.amoforms__fields__submit {
+  max-width: 50px;
+}
+
+
+.bonus-item {
+  &__container {
+    background: linear-gradient(107.14deg, #272826 19.83%, rgba(39, 40, 38, 0) 50.7%, #272826 80.37%);
+    @apply flex flex-col lg:flex-row p-4 md:p-11 gap-6 lg:gap-16 items-center;
+    border-radius: 25px;
+  }
+
+  &__image {
+    flex-shrink: 0;
+    @apply lg:w-[328px];
+
+    & img {
+      @apply scale-75 md:scale-100;
+    }
+  }
+
+  &__title {
+    font-size: 1.5rem;
+    margin-left: 26px;
+  }
+
+  &__items {
+    @apply grid grid-cols-1 md:grid-cols-2 gap-x-11 gap-y-6 mt-11;
+  }
+}
+
+.orange-wrapper {
+  background: linear-gradient(107.14deg, rgba(255, 0, 0, 0.1) 19.83%, rgba(255, 122, 0, 0.5) 50.4%, #DF8316 80.37%);
+  @apply py-[15px] px-10;
+  border-radius: 40px;
+  text-align: center;
+
+  &.resizable {
+    @apply px-3 md:px-10 py-[5px] md:py-[15px];
+  }
+}
+
+
+.blured-display-container {
+  background: linear-gradient(180deg, #272826 0%, rgba(39, 40, 38, 0.2) 100%);
+  //backdrop-filter: blur(15px);
+
+  /* Note: backdrop-filter has minimal browser support */
+  border-radius: 25px;
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    bottom: 0;
+    right: 0;
+    filter: blur(20px);
+    opacity: 0.2;
+
+  }
+
+
+}
+
+.publication-filter-tag {
+  min-width: 214px;
+  @apply px-8 text-base font-bold py-[14px];
+  border: 1px solid #F6F2E1;
+  border-radius: 22px;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 1rem;
+  cursor: pointer;
+
+  &.min-w {
+    @apply min-w-0;
+  }
+
+  &:hover {
+    border-color: var(--clr-primary);
+  }
+
+  &.selected {
+    background: var(--clr-primary);
+    border: none;
+  }
+}
+
+
+.editor {
+
+  //p {
+  //  display: inline-flex;
+  //  gap: 1rem;
+  //}
+
+  & tui-data-list {
+    background-color: var(--clr-black) !important;
+  }
+
+  .tui-editor-socket table td {
+    border: 1px solid #2BBE16;
+  }
+
+  .tui-editor-socket table {
+    background: linear-gradient(180deg, #23321E 0%, rgba(39, 40, 38, 0.2) 100%);
+  }
+
+  .tui-editor-socket table th {
+    border: 1px solid #2BBE16;
+    background-color: unset;
+  }
+
+  .tui-editor-socket ul > li:before {
+    background-color: white;
+  }
+
+  & img {
+    display: unset;
+  }
+
+  & .mediaLeft {
+    @apply lg:inline-flex lg:flex-row flex flex-col gap-6;
+    & img {
+      @apply w-full lg:w-[40%];
+    }
+
+    & video {
+      @apply w-full lg:w-[40%];
+    }
+  }
+
+  & .mediaRight {
+    @apply lg:w-full lg:inline-flex lg:flex-row lg:flex-row-reverse flex flex-col gap-6;
+
+    & img {
+      @apply w-full lg:w-[40%];
+    }
+
+    & video {
+      @apply w-full lg:w-[40%];
+    }
+  }
+}
+
+.tui-editor-socket {
+  --tui-text-primary: #F6F2E1;
+  --tui-background-accent-1: #F6F2E1;
+  --tui-text-action-hover: var(--clr-primary);
+
+  & .banner-link {
+    --tui-text-action: #F6F2E1 !important;
+  }
+}
+
+.tui-editor-socket a:not([data-type=jump-anchor]) {
+  --tui-text-action: var(--clr-primary);
+
+  &:hover {
+    text-decoration: none !important;
+  }
+
+}
+
+.banner-container {
+  background: linear-gradient(180deg, #23321E 0%, rgba(39, 40, 38, 0.2) 100%);
+  @apply py-6 px-10;
+  border-radius: 25px;
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    bottom: 0;
+    right: 0;
+    filter: blur(20px);
+    opacity: 0.2;
+
+  }
+}
+.text-red-700, .text-red {
+  color: red;
+}
+
+.text-black {
+  color: black;
+}
+
+// для цвета скрол бара.
+tui-root{
+  color: white !important;
+}
+
+// для кнопки закрытия модалки.
+[tuiAppearance][data-appearance=icon]{
+  color: #7e7c7c !important;
+}
+
+
+//.t-thumb{
+//  background: white !important;
+//}

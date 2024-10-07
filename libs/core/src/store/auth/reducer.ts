@@ -1,5 +1,5 @@
-import { createReducer, on } from "@ngrx/store";
-import { AppUser, UserRole } from "@forty-thirty/core/models";
+import { createReducer } from '@ngrx/store';
+import { AppUser, UserRole } from '../../models';
 
 export const AUTH_STORE_FEATURE_KEY = 'auth-store';
 

@@ -34,4 +34,8 @@ export class LearningDropDownComponent {
   isActiveRoute(route: string) {
     return this.router.url.includes(route);
   }
+
+  navigateTo(s: string) {
+    window.location.href = s;
+  }
 }

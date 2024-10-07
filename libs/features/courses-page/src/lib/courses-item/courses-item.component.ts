@@ -36,7 +36,6 @@ export class CoursesItemComponent implements OnInit {
       tap(_ => {
         setTimeout(() => {
           const height = this.coursesItemElement.nativeElement.offsetHeight;
-          console.log(height);
           this.coursesStateService.setCourseItemHeight(height);
         }, 500);
       }),

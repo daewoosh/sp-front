@@ -58,6 +58,10 @@ export const appRoutes: Route[] = [
         loadComponent: () => import('@sp/common').then(mod => mod.OneTimeLoginComponent),
       },
       {
+        path:"agreement",
+        loadComponent: () => import('@sp/agreement-page').then(mod => mod.AgreementPageComponent),
+      },
+      {
         path:"articles",
         children:publicationsRoutes,
       },

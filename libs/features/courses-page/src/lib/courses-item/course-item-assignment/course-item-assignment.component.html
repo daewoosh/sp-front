@@ -9,7 +9,7 @@
 
 <div class="assignment">
   <ng-container *ngFor="let question of courseElement.questions">
-    <sp-course-item-assignment-question [courseElement]="courseElement" [question]="question"/>
+    <sp-course-item-assignment-question [courseElement]="courseElement" [question]="question" [isResetMode]="isResetMode"/>
   </ng-container>
   <div class="flex justify-end">
     <button class="btn primary" (click)="sendAnswers()" *ngIf="!courseElement.isCompleted || isResetMode">Отправить ответы</button>

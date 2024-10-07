@@ -1,0 +1,105 @@
+{
+  "name": "booster",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "app",
+  "sourceRoot": "apps/booster/src",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:application",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/booster",
+        "index": "apps/booster/src/index.html",
+        "browser": "apps/booster/src/main.ts",
+        "polyfills": ["zone.js"],
+        "tsConfig": "apps/booster/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": [
+          {
+            "glob": "**/*",
+            "input": "./libs/shared-assets/",
+            "output": "./assets"
+          },
+          {
+            "glob": "**/*",
+            "input": "apps/booster/public"
+          }
+        ],
+        "styles": [
+          "node_modules/@taiga-ui/core/styles/taiga-ui-theme.less",
+          "node_modules/@taiga-ui/core/styles/taiga-ui-fonts.less",
+          "./libs/shared-styles/styles.scss",
+          "apps/booster/src/styles.scss"],
+        "scripts": [],
+        "server": "apps/booster/src/main.server.ts",
+        "prerender": true,
+        "ssr": {
+          "entry": "apps/booster/server.ts"
+        }
+      },
+      "configurations": {
+        "production": {
+          "index": "apps/booster/src/index.prod.html",
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "optimization": false,
+          "extractLicenses": false,
+          "sourceMap": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "configurations": {
+        "production": {
+          "buildTarget": "booster:build:production"
+        },
+        "development": {
+          "buildTarget": "booster:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "buildTarget": "booster:build"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/booster/jest.config.ts"
+      }
+    },
+    "serve-static": {
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "booster:build",
+        "port": 4200,
+        "staticFilePath": "dist/apps/booster/browser",
+        "spa": true
+      }
+    }
+  }
+}

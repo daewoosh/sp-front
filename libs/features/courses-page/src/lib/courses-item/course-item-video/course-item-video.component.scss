@@ -3,8 +3,11 @@ vg-controls.hide {
 }
 
 .dd-container {
-  @apply flex gap-1 flex-col p-2  text-white text-base rounded absolute bottom-[43px] right-0 z-[500];
+  @apply flex gap-[2px] sm:gap-1 flex-col p-1 sm:p-2  text-white text-sm sm:text-base rounded absolute bottom-0 sm:bottom-[43px] right-0 z-[500];
   background-color: rgba(28, 30, 29, 0.8);
+
+  line-height: 1.5;
+
 
   &.speed {
     right: -14px;
@@ -12,7 +15,21 @@ vg-controls.hide {
 }
 
 
-.video-loader {
-  --t-diameter: 15em !important;
-  --tui-background-accent-1: var(--clr-primary);
+.loading {
+  position: absolute;
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+  border: 3px solid rgba(255,255,255,.3);
+  border-radius: 50%;
+  border-top-color: var(--clr-primary);
+  animation: spin 1s ease-in-out infinite;
+
+  top: calc(50% - 40px);
+  left: calc(50% - 40px);
 }
+
+@keyframes spin {
+  to { -webkit-transform: rotate(360deg); }
+}
+

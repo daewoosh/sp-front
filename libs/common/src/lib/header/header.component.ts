@@ -1,31 +1,36 @@
-import { Component, inject, Inject, INJECTOR, OnInit, PLATFORM_ID } from '@angular/core';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { NavigationEnd, Router, RouterModule } from "@angular/router";
+import {
+  Component,
+  inject,
+  Inject,
+  INJECTOR,
+  PLATFORM_ID,
+} from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { TuiSidebar, TuiSidebarDirective } from '@taiga-ui/addon-mobile';
-// import { EXCHANGE_URL } from "@sp/config";
-import { LearningDropDownComponent } from "../learning-drop-down/learning-drop-down.component";
-import { filter, map, Observable, of, switchMap, take } from "rxjs";
-import { AppStateService } from "@sp/core/state/app-state.service";
-import { TuiDialogService } from "@taiga-ui/core";
-import { LoginModalComponent } from "../login-modal/login-modal.component";
+import { LearningDropDownComponent } from '../learning-drop-down/learning-drop-down.component';
+import { filter, Observable, take } from 'rxjs';
+import { AppStateService } from '@sp/core/state/app-state.service';
+import { TuiDialogService } from '@taiga-ui/core';
+import { LoginModalComponent } from '../login-modal/login-modal.component';
 import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
-import { TuiActiveZone } from "@taiga-ui/cdk";
-import { CoursesSidenavComponent } from "../courses-sidenav";
-import { CoursesStateService } from "@sp/core/providers/courses-state.service";
-import { Course } from "@sp/core/models";
-import { CoursesApiService } from "@sp/core/providers/courses-api.service";
-
-interface Link {
-  label: string;
-  url: string;
-  links?: Link[];
-}
-
+import { TuiActiveZone } from '@taiga-ui/cdk';
+import { CoursesSidenavComponent } from '../courses-sidenav';
+import { CoursesStateService } from '@sp/core/providers/courses-state.service';
+import { Course } from '@sp/core/models';
 
 @Component({
   selector: 'sp-header',
   standalone: true,
-  imports: [CommonModule, LearningDropDownComponent, RouterModule, LoginModalComponent, TuiSidebar, TuiSidebarDirective, TuiActiveZone, CoursesSidenavComponent],
+  imports: [CommonModule,
+    LearningDropDownComponent,
+    RouterModule,
+    LoginModalComponent,
+    TuiSidebar,
+    TuiSidebarDirective,
+    TuiActiveZone,
+    CoursesSidenavComponent,
+  ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
@@ -34,10 +39,8 @@ export class HeaderComponent {
   sidebarOpen = false;
   courses$: Observable<Course[]>;
 
-
-  showHeader = true;
   public menuClosed = true;
-  exchangeUrl = "";
+  exchangeUrl = EXCHANGE_URL;
   isLoggedIn$: Observable<boolean>;
   isAdmin$: Observable<boolean>;
   links = [{
@@ -63,13 +66,11 @@ export class HeaderComponent {
       appearance: 'sp-modal'
     },
   );
+  public isModalOpen = false;
 
   constructor(private router: Router,
-              @Inject(PLATFORM_ID) private platformId: string,
-              private appStateService: AppStateService,
-              private dialogs2: TuiDialogService,
+              appStateService: AppStateService,
               private coursesStateService: CoursesStateService) {
-    // this.showHeader = isPlatformBrowser(platformId);
     this.isLoggedIn$ = appStateService.isLoggedIn$;
     this.isAdmin$ = appStateService.isAdmin$;
     this.courses$ = this.coursesStateService.selectCourses;
@@ -89,28 +90,73 @@ export class HeaderComponent {
     return this.router.url === '/';
   }
 
-  openModal(content: any) {
-    this.dialog.subscribe({
-      next: (data) => {
-        // console.info(`Dialog emitted data = ${data}`);
-      },
-      complete: () => {
-        // console.info('Dialog closed');
-      },
-    });
+  openModal() {
+    this.dialog.pipe(take(1)).subscribe({
+        next: (result) => {
+          console.log('closing modal');
+          this.isModalOpen = false;
+        },
+        complete: () => {
+          console.log('modal closed');
+          this.isModalOpen = false;
+        },
+      }
+    );
+
+    // this.modalDialogService
+    //   .fromComponent(LoginModalComponent)
+    //   .subscribe((result?: any) => {
+    //     if (result) {
+    //
+    //       // this.router.navigate(['./account/orders']);
+    //     }
+    //   });
   }
 
+
   protected toggle(open: boolean): void {
+
+
+    if (this.isModalOpen) {
+      return;
+    }
+    console.log({open});
     if (open) {
-      this.isLoggedIn$.pipe(take(1)).subscribe(isLoggedIn => {
+      this.isLoggedIn$.pipe(take(1)).subscribe((isLoggedIn) => {
         if (isLoggedIn) {
           this.sidebarOpen = true;
         } else {
-          this.openModal(LoginModalComponent);
+          this.isModalOpen = true;
+          this.openModal();
         }
       });
     } else {
       this.sidebarOpen = false;
     }
+  }
+
+  // protected toggle(open: boolean): void {
+  //   console.log({open});
+  //   // if (open === this.sidebarOpen) {
+  //   //   // Если состояние не меняется, просто выходим
+  //   //   return;
+  //   // }
+  //
+  //   if (open) {
+  //     // this.sidebarOpen = true;
+  //     this.isLoggedIn$.pipe(take(1)).subscribe(isLoggedIn => {
+  //       if (isLoggedIn) {
+  //         this.sidebarOpen = true;
+  //       } else {
+  //         setTimeout(() => {this.openModal();},50)
+  //
+  //       }
+  //     });
+  //   } else {
+  //     this.sidebarOpen = false;
+  //   }
+  // }
+  aa() {
+    alert('clicked');
   }
 }

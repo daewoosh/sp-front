@@ -1,6 +1,5 @@
 <div>
-  <tui-loader size="xxl" [showLoader]="(videoLoading$|async)!" class="video-loader">
-    <vg-player (onPlayerReady)="onPlayerReady($event)" *ngIf="canShowPlayer">
+    <vg-player (onPlayerReady)="onPlayerReady($event)" *ngIf="canShowPlayer" class="relative">
       <vg-overlay-play [vgFor]="videoId" (dblclick)="toggleFullScreen()"></vg-overlay-play>
 
       <vg-controls *ngIf="bitrates.length" class="h-[70px]" [vgAutohide]="true">
@@ -65,7 +64,7 @@
       </vg-controls>
 
       <video #myMedia
-             [vgMedia]="aaaa(myMedia)"
+             [vgMedia]="htmlAsMediaElement(myMedia)"
              [vgHls]="getVideoUrl()"
              #vgHls="vgHls"
              (onGetBitrates)="getBitrates($event)"
@@ -76,8 +75,9 @@
              (dblclick)="toggleFullScreen()"
       >
       </video>
+
+      <div class="loading" *ngIf="videoLoading$|async"></div>
     </vg-player>
-  </tui-loader>
 </div>
 
 <div class="w-full flex flex-wrap justify-end gap-4 mt-12">
