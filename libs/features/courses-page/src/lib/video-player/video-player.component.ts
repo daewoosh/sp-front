@@ -53,14 +53,6 @@ export class VideoPlayerComponent {
 
   onPlayerReady($event: VgApiService) {
     this.api = $event;
-    console.log(this.api?.isCompleted);
-    // this.api!.getDefaultMedia().subscriptions.progress.subscribe(
-    //   (res) => {
-    //     console.log(res);
-    //     // Set the video to the beginning
-    //     // this.api.getDefaultMedia().currentTime = 0;
-    //   }
-    // );
 
     this.api!.getDefaultMedia().subscriptions.canPlay
       .pipe(take(1))

@@ -1,19 +1,19 @@
-import { NG_EVENT_PLUGINS } from "@taiga-ui/event-plugins";
-import { provideAnimations } from "@angular/platform-browser/animations";
+import { NG_EVENT_PLUGINS } from '@taiga-ui/event-plugins';
+import { provideAnimations } from '@angular/platform-browser/animations';
 import {
   APP_INITIALIZER,
   ApplicationConfig,
   ErrorHandler,
   Injectable,
   isDevMode,
-  provideZoneChangeDetection
+  provideZoneChangeDetection,
 } from '@angular/core';
 import {
   InMemoryScrollingFeature,
   InMemoryScrollingOptions,
   provideRouter,
   withComponentInputBinding,
-  withInMemoryScrolling
+  withInMemoryScrolling,
 } from '@angular/router';
 import { appRoutes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
@@ -22,17 +22,22 @@ import {
   HttpClient,
   provideHttpClient,
   withFetch,
-  withInterceptorsFromDi
-} from "@angular/common/http";
-import { AdminGuard, AuthGuard, AuthInterceptor, ErrorInterceptor } from "@sp/core/guards";
-import { provideStoreDevtools } from "@ngrx/store-devtools";
-import { provideAnimationsAsync } from "@angular/platform-browser/animations/async";
-import { ClientService } from "./app.resolver";
-import { initializeApplication } from "./applnitializer";
-import { CourseActivationService } from "@sp/core/providers";
-import { CourseAccessGuard } from "@sp/courses-page";
-import { API_PATH, EXCHANGE_URL as EXCHANGE_URL_TOKEN } from "@sp/config";
-import { CoursesStateService } from "@sp/core/providers/courses-state.service";
+  withInterceptorsFromDi,
+} from '@angular/common/http';
+import {
+  AdminGuard,
+  AuthGuard,
+  AuthInterceptor,
+  ErrorInterceptor,
+} from '@sp/core/guards';
+import { provideStoreDevtools } from '@ngrx/store-devtools';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { CourseActivationService } from '@sp/core/providers';
+import { CourseAccessGuard } from '@sp/courses-page';
+import { ClientService } from './app.resolver';
+import { API_PATH, EXCHANGE_URL as EXCHANGE_URL_TOKEN } from '@sp/config';
+import { CoursesStateService } from '@sp/core/providers/courses-state.service';
+import { initializeApplication } from './applnitializer';
 
 @Injectable()
 class GlobalErrorHandler implements ErrorHandler {

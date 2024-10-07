@@ -1,6 +1,6 @@
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 
-import { AUTH_HASH_NAME, AUTH_TOKEN_NAME, REFRESH_TOKEN_NAME } from '../constants';
+import { AUTH_HASH_NAME, AUTH_TOKEN_NAME, REFRESH_TOKEN_NAME, USER_VOLUME_TOKEN_NAME } from '../constants';
 import { isPlatformBrowser } from "@angular/common";
 
 const PREFIX = 'sp_';
@@ -11,6 +11,7 @@ export type LocalStorageTypeMap = {
   appPass: string;
   utm: any;
   [AUTH_HASH_NAME]:string;
+  [USER_VOLUME_TOKEN_NAME]: number;
 };
 export type Maybe<T> = T | null;
 

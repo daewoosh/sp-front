@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { catchError, debounceTime, delay, filter, map, of, startWith, Subject, switchMap } from "rxjs";
 import { WINDOW } from "@sp/sdk/common";
@@ -23,8 +23,7 @@ const AUTH_REQUEST_INTERVAL = 2000;
   templateUrl: './login-modal.component.html',
   styleUrl: './login-modal.component.scss',
 })
-export class LoginModalComponent {
-
+export class LoginModalComponent implements OnDestroy, OnInit{
   private token = '';
   private ticker: Subject<boolean> = new Subject();
 
@@ -52,7 +51,6 @@ export class LoginModalComponent {
         debounceTime(FORM_CLOSE_TIMEOUT)
       )
       .subscribe(() => this.context.completeWith(undefined));
-
     this.ticker
       .pipe(
         switchMap(() =>
@@ -97,7 +95,6 @@ export class LoginModalComponent {
 
           this.router.navigate(['/courses']);
           this.context.completeWith(result);
-
         } else {
           this.ticker.next(false);
         }
