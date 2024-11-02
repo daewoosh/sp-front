@@ -1,0 +1,45 @@
+.lead-form {
+  max-width: 458px;
+  margin-top: 40px;
+}
+
+.lead-submit {
+  background: transparent !important;
+}
+
+.lead-form-input-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+
+  &::after {
+    content: '*';
+    color: var(--clr-danger);
+    position: absolute;
+    top: 12px;
+    right: 10px;
+    font-size: 22px;
+  }
+}
+
+.lead-form-input {
+  outline: 0.5px solid #808080;
+  background-color: #242625;
+  color: #808080;
+  font-size: 1rem;
+  padding: 12px 40px 12px 14px;
+  border-radius: 10px;
+  width: 100%;
+
+}
+
+
+.invalid-outline {
+  outline: 0.5px solid var(--clr-danger); /* Красная рамка для невалидных полей */
+}
+
+.error-message {
+  font-size: 0.875rem;
+  color: #700000;
+  height:17px; /* Резервирование места для сообщения */
+}
