@@ -8,6 +8,7 @@ import { AdvancedProgramComponent } from "../advanced-programm/advanced-program.
 import { AdvancedResultsComponent } from "../advanced-results/advanced-results.component";
 import { AdvancedBonusesComponent } from "../advanced-bonuses/advanced-bonuses.component";
 import { AdvancedPaymentFormComponent } from "../advanced-payment-form/advanced-payment-form.component";
+import { LEAD_FORM_NAME } from '@sp/config';
 
 @Component({
   selector: 'sp-front-advanced-course-page',
@@ -15,6 +16,9 @@ import { AdvancedPaymentFormComponent } from "../advanced-payment-form/advanced-
   imports: [CommonModule, AdvancedTopComponent, AdvancedAboutComponent, AdvancedWhyComponent, AdvancedCardsComponent, AdvancedProgramComponent, AdvancedResultsComponent, AdvancedBonusesComponent, AdvancedPaymentFormComponent],
   templateUrl: './advanced-course-page.component.html',
   styleUrl: './advanced-course-page.component.scss',
-
+  providers: [{
+    provide: LEAD_FORM_NAME,
+    useValue: 'advanced'
+  }]
 })
 export class AdvancedCoursePageComponent {}

@@ -7,6 +7,10 @@ import {
 } from '@angular/router';
 import { appRoutes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
+import { provideHttpClient, withFetch, withInterceptorsFromDi } from '@angular/common/http';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { NG_EVENT_PLUGINS } from '@taiga-ui/event-plugins';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 const scrollConfig: InMemoryScrollingOptions = {
   scrollPositionRestoration: 'top',
@@ -19,7 +23,12 @@ const inMemoryScrollingFeature: InMemoryScrollingFeature =
 export const appConfig: ApplicationConfig = {
   providers: [
     provideClientHydration(),
+    provideHttpClient(withInterceptorsFromDi(), withFetch()),
+    provideAnimations(),
+    provideZoneChangeDetection({eventCoalescing: true}),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(appRoutes, inMemoryScrollingFeature),
+    NG_EVENT_PLUGINS,
+    provideAnimationsAsync(),
   ],
 };

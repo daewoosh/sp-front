@@ -7,6 +7,7 @@ import { BeginnerDiagramComponent } from "../beginner-diagram/beginner-diagram.c
 import { BeginnerProgramComponent } from "../beginner-program/beginner-program.component";
 import { BeginnerBonusesComponent } from "../beginner-bonuses/beginner-bonuses.component";
 import { BeginnerPaymentFormComponent } from "../beginner-payment-form/beginner-payment-form.component";
+import { LEAD_FORM_NAME } from '@sp/config';
 
 @Component({
   selector: 'sp-front-beginner-course-page',
@@ -14,5 +15,9 @@ import { BeginnerPaymentFormComponent } from "../beginner-payment-form/beginner-
   imports: [CommonModule, BeginnerTopComponent, WhyCourseComponent, ResultComponent, BeginnerDiagramComponent, BeginnerProgramComponent, BeginnerBonusesComponent, BeginnerPaymentFormComponent],
   templateUrl: './beginner-course-page.component.html',
   styleUrl: './beginner-course-page.component.scss',
+  providers: [{
+    provide: LEAD_FORM_NAME,
+    useValue: 'beginner'
+  }]
 })
 export class BeginnerCoursePageComponent {}

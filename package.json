@@ -44,6 +44,7 @@
     "hls.js": "^1.5.15",
     "localstorage-polyfill": "^1.0.1",
     "ng-morph": "^4.8.1",
+    "ng-packagr": "^18.2.1",
     "ngx-clipboard": "^16.0.0",
     "ngx-cookie-service-ssr": "^18.0.0",
     "ngx-infinite-scroll": "^18.0.0",

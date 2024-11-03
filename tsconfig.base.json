@@ -35,7 +35,8 @@
       "@sp/main-page": ["libs/features/main-page/src/index.ts"],
       "@sp/only-poker-page": ["libs/features/only-poker-page/src/index.ts"],
       "@sp/publications": ["libs/features/publications/src/index.ts"],
-      "@sp/sdk/*": ["libs/sdk/src/*"]
+      "@sp/sdk/*": ["libs/sdk/src/*"],
+      "@sp/mask": ["libs/mask/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

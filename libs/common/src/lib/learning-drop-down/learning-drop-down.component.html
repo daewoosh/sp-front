@@ -21,25 +21,24 @@
                      class="z-10 text-white font-normal bg-black-sp p-6 rounded divide-y divide-gray-100 shadow">
             <ul class="py-1 text-sm text-gray-700 dark:text-gray-400">
                <li class="mb-4" (click)="learningOpen=false">
-                <a [href]="'/beginner'" class="nav-link text-base" (click)="navigateTo('/beginner')">Осознанное
-                  начало</a>
+                <a routerLink="/beginner" class="nav-link text-base">Осознанное начало</a>
               </li>
               <li class="mb-4" (click)="learningOpen=false">
-                <a href="/advanced" class="nav-link text-base" (click)="navigateTo('/advanced')">Продвинутый
+                <a routerLink="/advanced" class="nav-link text-base">Продвинутый
                   курс</a>
               </li>
               <li class="mb-4" (click)="learningOpen=false">
-                <a href="/booster"  class="nav-link text-base" (click)="navigateTo('/booster')">БУСТЕР</a>
+                <a routerLink="/booster" class="nav-link text-base">БУСТЕР</a>
 
               </li>
                <li class="mb-4" (click)="learningOpen=false">
-                <a href="/analysis"  class="nav-link text-base" (click)="navigateTo('/analysis')">Разбор базы</a>
+                <a routerLink="/analysis" class="nav-link text-base">Разбор базы</a>
 
               </li>
 
                <li (click)="learningOpen=false">
-                <a href="/only-poker"
-                   class="nav-link text-base flex gap-2" (click)="navigateTo('/only-poker')"><span class="green-glow">Новинка</span> <span>Only Poker</span></a>
+                <a routerLink="/only-poker"
+                   class="nav-link text-base flex gap-2"><span class="green-glow">Новинка</span> <span>Only Poker</span></a>
 
               </li>
             </ul>

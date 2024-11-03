@@ -8,6 +8,7 @@ import { CoursePaymentComponent } from "../course-payment/course-payment.compone
 import { CoursePriceComponent } from "../course-price/course-price.component";
 import { CourseProgramComponent } from "../course-program/course-program.component";
 import { CourseTopComponent } from "../course-top/course-top.component";
+import { LEAD_FORM_NAME } from '@sp/config';
 
 @Component({
   selector: 'sp-course-landing-page',
@@ -15,5 +16,9 @@ import { CourseTopComponent } from "../course-top/course-top.component";
     imports: [CommonModule, CourseCabinetComponent, CourseCoachComponent, CourseEarnComponent, CourseForWhoComponent, CoursePaymentComponent, CoursePriceComponent, CourseProgramComponent, CourseTopComponent],
   templateUrl: './course-landing-page.component.html',
   styleUrl: './course-landing-page.component.scss',
+  providers: [{
+    provide: LEAD_FORM_NAME,
+    useValue: 'onlypokerpromo'
+  }]
 })
 export class CourseLandingPageComponent {}
