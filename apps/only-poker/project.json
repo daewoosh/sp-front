@@ -10,6 +10,12 @@
       "executor": "@angular-devkit/build-angular:application",
       "outputs": ["{options.outputPath}"],
       "options": {
+        "define": {
+          "API_URL": "\"https://localhost:43802/api/v1\"",
+          "APP_URL": "\"http://localhost:4200\"",
+          "AUTH_BOT_NAME": "\"ppokerTest_bot\"",
+          "EXCHANGE_URL": "\"https://devex.safe-poker.ru\""
+        },
         "outputPath": "dist/apps/only-poker",
         "index": "apps/only-poker/src/index.html",
         "browser": "apps/only-poker/src/main.ts",
@@ -42,6 +48,12 @@
       "configurations": {
         "production": {
           "index": "apps/only-poker/src/index.prod.html",
+          "define": {
+            "API_URL": "\"https://safe-poker.io/api/v1\"",
+            "APP_URL": "\"https://safe-poker.io\"",
+            "AUTH_BOT_NAME": "\"SPokerAccountLogin_bot\"",
+            "EXCHANGE_URL": "\"https://exchange.safe-poker.io\""
+          },
           "budgets": [
             {
               "type": "initial",

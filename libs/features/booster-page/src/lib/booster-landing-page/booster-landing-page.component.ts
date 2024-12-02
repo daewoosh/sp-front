@@ -6,6 +6,7 @@ import { BoosterMiddleComponent } from "../booster-middle/booster-middle.compone
 import { BoosterPaymentComponent } from "../booster-payment/booster-payment.component";
 import { BoosterPlanComponent } from "../booster-plan/booster-plan.component";
 import { BoosterTopComponent } from "../booster-top/booster-top.component";
+import { LEAD_FORM_NAME } from '@sp/config';
 
 @Component({
   selector: 'sp-booster-landing-page',
@@ -13,5 +14,9 @@ import { BoosterTopComponent } from "../booster-top/booster-top.component";
     imports: [CommonModule, BoosterAccordionComponent, BoosterGraphComponent, BoosterMiddleComponent, BoosterPaymentComponent, BoosterPlanComponent, BoosterTopComponent],
   templateUrl: './booster-landing-page.component.html',
   styleUrl: './booster-landing-page.component.scss',
+  providers: [{
+    provide: LEAD_FORM_NAME,
+    useValue: 'boosterpromo'
+  }]
 })
 export class BoosterLandingPageComponent {}

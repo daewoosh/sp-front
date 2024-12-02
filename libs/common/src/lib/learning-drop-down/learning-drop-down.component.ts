@@ -31,11 +31,8 @@ export class LearningDropDownComponent {
   onLearningActiveZone(active: boolean) {
     this.learningOpen = active && this.learningOpen;
   }
+
   isActiveRoute(route: string) {
     return this.router.url.includes(route);
-  }
-
-  navigateTo(s: string) {
-    window.location.href = s;
   }
 }
