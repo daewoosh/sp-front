@@ -15,7 +15,7 @@
         "define": {
           "API_URL": "\"https://localhost:43802/api/v1\"",
           "APP_URL": "\"http://localhost:4200\"",
-          "AUTH_BOT_NAME": "\"ppokerTest_bot\"",
+          "AUTH_BOT_NAME": "\"pLeaarnLocal_bot\"",
           "EXCHANGE_URL": "\"https://devex.safe-poker.ru\""
         },
         "outputPath": "dist/apps/sp-front",
