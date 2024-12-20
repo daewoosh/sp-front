@@ -32,10 +32,22 @@ export class CourseItemPageComponent implements OnInit {
       tap(program => {
         const currentOrder = this.activatedRoute.snapshot.firstChild?.paramMap.get('order');
         if (!currentOrder) {
-          const firstIncomplete = program.find(item => !item.isCompleted);
-          const orderToNavigate = firstIncomplete ? firstIncomplete.order : 1;
+          let orderToNavigate = 1; // По умолчанию, если программа завершена или не найдены подходящие элементы
 
-          this.router.navigate([orderToNavigate], {relativeTo: this.activatedRoute});
+          const firstIncompletePurchased = program.find(item => !item.isCompleted && item.purchased);
+          if (firstIncompletePurchased) {
+            // Если есть незавершённый элемент, который приобретён
+            orderToNavigate = firstIncompletePurchased.order;
+          } else {
+            // Если нет незавершённых приобретённых элементов, ищем последний завершённый
+            const lastCompleted = [...program].reverse().find(item => item.isCompleted);
+            if (lastCompleted && lastCompleted.order !== program.length) {
+              orderToNavigate = lastCompleted.order;
+            }
+          }
+
+          // Навигация к вычисленному order
+          this.router.navigate([orderToNavigate], { relativeTo: this.activatedRoute });
 
         }
       })

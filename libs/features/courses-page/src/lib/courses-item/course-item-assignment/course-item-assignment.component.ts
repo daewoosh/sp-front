@@ -61,15 +61,17 @@ export class CourseItemAssignmentComponent implements OnInit {
   }
 
   get canGoNext() {
-    return this.courseElement.isCompleted;
+    const nextElement = this.courseProgram[this.courseElement.order];
+    return this.courseElement.isCompleted && nextElement?.purchased;
   }
 
   get nextButtonLabel(){
     //order идет с 1 поэтому используем order
-    if (this.courseProgram[this.courseElement.order] && this.courseProgram[this.courseElement.order].type === CourseElementType.Video){
+    const nextElement = this.courseProgram[this.courseElement.order];
+    if (nextElement && nextElement.type === CourseElementType.Video){
       return 'Перейти к следующему уроку';
     }
-    if (this.courseProgram[this.courseElement.order] && this.courseProgram[this.courseElement.order].type === CourseElementType.Assignment){
+    if (nextElement && nextElement.type === CourseElementType.Assignment){
       return 'Перейти к домашнему заданию';
     }
     return 'Далее';

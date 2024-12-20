@@ -11,30 +11,22 @@ import {
   SimpleChanges,
   ViewChild
 } from '@angular/core';
-import { CommonModule, isPlatformBrowser } from "@angular/common";
-import { CourseElementType, CourseProgramItem, VideoCourseElement } from "@sp/core/models";
-import { VgControlsModule } from "@videogular/ngx-videogular/controls";
-import { BitrateOptions, IMediaElement, VgApiService, VgCoreModule } from "@videogular/ngx-videogular/core";
-import { VgOverlayPlayModule } from "@videogular/ngx-videogular/overlay-play";
-import { BehaviorSubject, filter, map, Subject, switchMap, take, takeUntil, throttleTime } from "rxjs";
-import { VgHlsDirective, VgStreamingModule } from "@videogular/ngx-videogular/streaming";
-import { VgBufferingModule } from "@videogular/ngx-videogular/buffering";
-import { RouterLink } from "@angular/router";
-import { CoursesApiService } from "@sp/core/providers/courses-api.service";
-import { CoursesStateService } from "@sp/core/providers/courses-state.service";
-import {
-  TuiDataList,
-  TuiDataListComponent,
-  TuiDataListDirective,
-  TuiDropdownDirective,
-  TuiDropdownOpen,
-  TuiOptGroup
-} from "@taiga-ui/core";
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { CourseElementType, CourseProgramItem, VideoCourseElement } from '@sp/core/models';
+import { VgControlsModule } from '@videogular/ngx-videogular/controls';
+import { BitrateOptions, IMediaElement, VgApiService, VgCoreModule } from '@videogular/ngx-videogular/core';
+import { VgOverlayPlayModule } from '@videogular/ngx-videogular/overlay-play';
+import { BehaviorSubject, filter, map, Subject, switchMap, take, takeUntil, throttleTime } from 'rxjs';
+import { VgHlsDirective, VgStreamingModule } from '@videogular/ngx-videogular/streaming';
+import { VgBufferingModule } from '@videogular/ngx-videogular/buffering';
+import { RouterLink } from '@angular/router';
+import { CoursesApiService } from '@sp/core/providers/courses-api.service';
+import { CoursesStateService } from '@sp/core/providers/courses-state.service';
 import { TuiComboBoxModule, TuiSelectModule } from '@taiga-ui/legacy';
-import { TuiActiveZone } from "@taiga-ui/cdk";
-import { NgDompurifyPipe } from "@taiga-ui/dompurify";
-import { LocalStorageService } from "@sp/core/providers";
-import { USER_VOLUME_TOKEN_NAME } from "@sp/core";
+import { TuiActiveZone } from '@taiga-ui/cdk';
+import { NgDompurifyPipe } from '@taiga-ui/dompurify';
+import { LocalStorageService } from '@sp/core/providers';
+import { USER_VOLUME_TOKEN_NAME } from '@sp/core';
 
 
 @Component({
@@ -44,8 +36,7 @@ import { USER_VOLUME_TOKEN_NAME } from "@sp/core";
     VgControlsModule,
     VgOverlayPlayModule,
     VgBufferingModule,
-    VgStreamingModule, RouterLink, TuiDropdownDirective, TuiDropdownOpen, TuiDataListComponent, TuiOptGroup, TuiDataList,
-    TuiComboBoxModule, TuiDataListDirective, TuiSelectModule, TuiActiveZone, NgDompurifyPipe],
+    VgStreamingModule, RouterLink, TuiComboBoxModule, TuiSelectModule, TuiActiveZone, NgDompurifyPipe],
   templateUrl: './course-item-video.component.html',
   styleUrl: './course-item-video.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -96,15 +87,20 @@ export class CourseItemVideoComponent implements OnDestroy {
   }
 
   get canGoNext() {
-    return this.courseElement.isCompleted;
+    const nextElement = this.courseProgram[this.courseElement.order];
+    if (!nextElement) {
+      return false;
+    }
+    return this.courseElement.isCompleted && nextElement.purchased;
   }
 
   get nextButtonLabel() {
     //order идет с 1 поэтому используем order
-    if (this.courseProgram[this.courseElement.order] && this.courseProgram[this.courseElement.order].type === CourseElementType.Video) {
+    const nextElement = this.courseProgram[this.courseElement.order];
+    if (nextElement && nextElement.type === CourseElementType.Video) {
       return 'Перейти к следующему уроку';
     }
-    if (this.courseProgram[this.courseElement.order] && this.courseProgram[this.courseElement.order].type === CourseElementType.Assignment) {
+    if (nextElement && nextElement.type === CourseElementType.Assignment) {
       return 'Перейти к домашнему заданию';
     }
     return 'Далее';

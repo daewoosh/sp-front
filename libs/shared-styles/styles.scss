@@ -32,6 +32,7 @@
   --clr-white: #F6F2E1;
   --clr-grey: #808080;
   --clr-orange: #F5911E;
+  --clr-warning: #F5911E;
   --clr-border: #847F6B;
   --tui-text-01: #F6F2E1;
 
@@ -95,6 +96,19 @@ body {
 
 .page-content {
   min-height: calc(100dvh - var(--sp-header-height));
+}
+
+[type=text],[type=email],[type=url],[type=password],[type=number],[type=date],[type=datetime-local],[type=month],[type=search],[type=tel],[type=time],[type=week],[multiple],textarea,select {
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: #fff;
+  border-color: #6b7280;
+  border-width: 1px;
+  border-radius: 0;
+  padding: .5rem .75rem;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  --tw-shadow: 0 0 #0000
 }
 
 [type="email"]:focus,

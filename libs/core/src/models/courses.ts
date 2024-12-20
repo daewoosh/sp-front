@@ -7,12 +7,23 @@ export interface Course {
   image: string;
   purchased: boolean;
   isAvailable: boolean;
+  accessState: UserCourseAccessState;
 }
 
 
 export enum CourseElementType {
   Video,
   Assignment
+}
+
+/// <summary>
+/// Определяет доступ пользователя к курсу уже после покупки.
+/// </summary>
+export enum UserCourseAccessState
+{
+  Unknown = 0,
+  Available = 1,
+  Blocked = 2,
 }
 
 export interface CourseProgramItem {
@@ -23,6 +34,7 @@ export interface CourseProgramItem {
   progress?: number;
   isCurrent?: boolean;
   isAvailable?: boolean;
+  purchased?: boolean;
 }
 
 export interface CourseElement {

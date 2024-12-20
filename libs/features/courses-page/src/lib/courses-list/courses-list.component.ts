@@ -2,7 +2,6 @@ import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Course, UserProfile } from "@sp/core/models";
 import { CourseCardComponent } from "../course-card/course-card.component";
-import { COURSES } from "../courses-mock";
 import { AppStateService } from "@sp/core/state";
 import { Observable } from "rxjs";
 import { CoursesStateService } from "@sp/core/providers/courses-state.service";

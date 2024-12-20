@@ -1,17 +1,34 @@
 <div class="item-card" [ngClass]="{'completed':item.isCompleted}">
   <div class="flex items-center justify-between gap-2">
     <span class="text-white text-base">{{item.title}}</span>
-    <a class="btn primary" *ngIf="!item.isCurrent"
+    <a class="btn primary" *ngIf="!item.isCurrent && item.purchased"
        [attr.inert]="!item.isCompleted || null"
        [ngClass]="{'disabled': !item.isCompleted}"
        [routerLink]="'./'+item.order">
       Смотреть
     </a>
-    <a class="btn warning" *ngIf="item.isCurrent" [routerLink]="'./'+item.order">Вы тут</a>
-<!--    <a class="btn primary block md:hidden" [routerLink]="'./'+item.order"> > </a>-->
+    <a class="btn primary w-[150px]" *ngIf="!item.purchased"
+       href="https://t.me/SafePoker_Sales" target="_blank">
+      Написать менеджеру
+    </a>
+    <a class="btn warning" *ngIf="item.isCurrent && item.purchased" [routerLink]="'./'+item.order">Вы тут</a>
   </div>
 
-  <div class="flex gap-2 justify-between items-center mt-[10px] text-sm">
+  <div class="flex gap-2 justify-between items-center mt-[10px] text-sm" *ngIf="!item.purchased">
+
+      <div class="flex gap-2 items-center">
+        <svg width="9" height="12" viewBox="0 0 9 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M8.47059 12H0V5.45455H8.47059V12ZM2.11765 5.45455V3.27273C2.11765 2.06836 3.06741 1.09091 4.23529 1.09091C5.40318 1.09091 6.35294 2.06836 6.35294 3.27273V5.45455H7.41177V3.27273C7.41177 1.46618 5.98977 0 4.23529 0C2.48082 0 1.05882 1.46618 1.05882 3.27273V5.45455H2.11765Z"
+            fill="#F5911E"/>
+        </svg>
+
+        <div class="text-[var(--clr-warning)]">Завершите оплату и разблокируйте вторую часть курса!</div>
+      </div>
+  </div>
+
+
+  <div class="flex gap-2 justify-between items-center mt-[10px] text-sm" *ngIf="item.purchased">
     <div class="flex gap-2 items-center">
       <span class="clr-grey ">Прогресс</span>
       <div class="flex gap-2 items-center" *ngIf="item.isCompleted">
@@ -40,7 +57,7 @@
 
   </div>
 
-  <progress *ngIf="item.type===elementTypes.Video"
+  <progress *ngIf="item.type===elementTypes.Video && item.purchased"
             tuiProgressBar
             size="s"
             [value]="item.progress??0"

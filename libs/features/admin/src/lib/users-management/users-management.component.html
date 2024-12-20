@@ -1,0 +1,33 @@
+<input [(ngModel)]="query" type="text" />
+<button class="btn primary" (click)="search()">Поиск</button>
+<div class="mt-4 border border-green-500 p-8 text-base" *ngIf="user">
+  <div><span>Telegram Name: </span><span>{{ user.telegramName }}</span></div>
+  <div><span>InternalId: </span><span>{{ user.internalId }}</span></div>
+  <div><span>Дата регистрации: </span><span>{{ user.creationDate| date:'dd.MM.yyyy h:mm' }}</span></div>
+  <h1 class="clr-primary text-2xl">Курсы:</h1>
+  <div *ngFor="let course of user.courses" class="mt-4 border border-green-500 p-8 text-base">
+    <div class="clr-primary text-2xl">{{ course.title }}</div>
+    <div>Дата активации {{ course.activationDate| date:'dd.MM.yyyy h:mm' }}</div>
+    <div *ngIf="!course.availableCourseItemsCount" class="clr-primary">
+      Имеет доступ ко всем урокам
+    </div>
+    <div *ngIf="course.availableCourseItemsCount" class="clr-orange">
+      <div>Пользователю доступно {{ course.availableCourseItemsCount }} уроков</div>
+      <div class="flex gap-3 items-center">
+        <button class="btn primary mt-2" (click)="grantFullAccess(course.id)">Выдать полный доступ</button>
+        ИЛИ
+        <button class="btn primary mt-2" (click)="grantAccess(course.id, itemsCount.value)">Расширить доступ</button>
+        <input #itemsCount type="number">
+      </div>
+    </div>
+
+    <div class="mt-4">
+      <button *ngIf="course.accessState === 1" class="btn warning" (click)="toggleAccessState(course.id)">Заблокировать
+        доступ
+      </button>
+      <button *ngIf="course.accessState === 2" class="btn primary" (click)="toggleAccessState(course.id)">
+        Разблокировать
+      </button>
+    </div>
+  </div>
+</div>

@@ -5,6 +5,7 @@ export type AppUser = {
   id: string;
   telegramName: string;
   displayName: string;
+  internalId: string;
 };
 
 export enum UserRole {

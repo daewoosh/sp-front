@@ -1,7 +1,7 @@
 import { Inject, Injectable, PLATFORM_ID } from "@angular/core";
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
 import { TuiAlertService } from "@taiga-ui/core";
-import { catchError, Observable, tap, throwError } from "rxjs";
+import { catchError, EMPTY, Observable, tap, throwError } from 'rxjs';
 import { isPlatformBrowser } from "@angular/common";
 
 @Injectable()

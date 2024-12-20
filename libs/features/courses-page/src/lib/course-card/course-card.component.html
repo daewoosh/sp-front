@@ -9,15 +9,16 @@
     {{course.description}}
   </div>
   <div class="flex justify-end mt-auto">
-    <a class="btn primary font-bold" *ngIf="course.purchased" [routerLink]="'./'+course.slug">К обучению</a>
-    <a [routerLink]="['/',course.slug]" class="btn warning font-bold" *ngIf="!course.purchased || !course.isAvailable">
+    <a class="btn primary font-bold" *ngIf="course.purchased && course.accessState !== states.Blocked" [routerLink]="'./'+course.slug">К обучению</a>
+    <a [routerLink]="['/',course.slug]" class="btn warning font-bold" *ngIf="(!course.purchased || !course.isAvailable) && course.accessState !== states.Blocked">
       <span *ngIf="course.isAvailable">Открыть доступ</span>
       <span *ngIf="!course.isAvailable">Узнать больше</span>
     </a>
+    <button class="btn danger font-bold" *ngIf="course.accessState === states.Blocked">Доступ заблокирован</button>
   </div>
 
   <div class="absolute top-[22px] right-[28px]">
-    <ng-container *ngIf="course.purchased;else locked">
+    <ng-container *ngIf="course.purchased && course.accessState !== states.Blocked;else locked">
       <img src="/assets/icons/available.svg">
     </ng-container>
     <ng-template #locked>

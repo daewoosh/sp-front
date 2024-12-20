@@ -15,13 +15,6 @@ import { map, Observable } from "rxjs";
   styleUrl: './courses-sidenav.component.scss',
 })
 export class CoursesSidenavComponent implements OnInit {
-  profile: UserProfile = {
-    telegramName: '@',
-    role: 1,
-    displayName: '',
-    id: '-1',
-  }
-
   profile$: Observable<UserProfile>;
 
   menuItems: MenuItem[] = [];
@@ -47,7 +40,8 @@ export class CoursesSidenavComponent implements OnInit {
         map(user => {
           return {
             ...user,
-            telegramName: '@' + user.telegramName || '@',
+            telegramName:user.telegramName?  ('@' + user.telegramName) : null,
+
           }
         })
       );

@@ -11,8 +11,8 @@ import { RouterOutlet } from "@angular/router";
 import { Course } from "@sp/core/models";
 import { FooterComponent } from "@sp/common/footer";
 import { CoursesStateService } from "@sp/core/providers/courses-state.service";
-import { CourseAccessGuard } from "../courses-routes";
 import { CoursesSidenavComponent } from "@sp/common/courses-sidenav";
+import { CourseAccessGuard } from '../course-access-guard.service';
 
 @Component({
   selector: 'sp-front-courses-page',

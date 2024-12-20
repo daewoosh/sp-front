@@ -26,7 +26,7 @@ const initialState: AppState = {
 })
 export class AppStateService extends StateService<AppState> {
   public selectUser: Observable<UserProfile> = this.select(
-    ({userState}: AppState) => userState.user ?? {displayName:'Аноним', telegramName: 'telegram', role: UserRole.User, id: '-1'}
+    ({userState}: AppState) => userState.user ?? {displayName:'Аноним', telegramName: 'telegram', role: UserRole.User, id: '-1', internalId: '-1'}
   );
 
   public role: Observable<UserRole | undefined> = this.select(
