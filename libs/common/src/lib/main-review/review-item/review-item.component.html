@@ -1,9 +1,9 @@
 <div class="flex flex-col items-center">
   <div class="clr-primary text-2xl">{{review.reviewer}}</div>
-  <div class="max-w-[170px] text-center text-base clr-grey">{{review.position}}</div>
+  <div class="text-center text-base clr-grey" *ngIf="review.position">{{review.position}}</div>
   <div class="flex with-quotes">
     <div class="lb text-base max-w-[380px]">
-      <tui-line-clamp [linesLimit]="linesLimit" [content]="review.comment">
+      <tui-line-clamp [linesLimit]="linesLimit" [content]="content">
 
       </tui-line-clamp>
       <div class="flex justify-end">
@@ -15,3 +15,6 @@
     </div>
   </div>
 </div>
+<ng-template #content>
+  <span [innerHTML]="review.comment"></span>
+</ng-template>
