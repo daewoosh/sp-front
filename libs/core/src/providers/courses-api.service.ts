@@ -1,9 +1,15 @@
-import { Inject, Injectable } from "@angular/core";
-import { map, Observable } from "rxjs";
-import { Course, CourseElement, CourseProgramItem, PagingResult, Question } from "../models";
-import { API_PATH } from "@sp/config";
-import { HttpClient } from "@angular/common/http";
-import { CourseActivationService } from ".";
+import { Inject, Injectable } from '@angular/core';
+import { map, Observable } from 'rxjs';
+import {
+  Course,
+  CourseElement,
+  CourseProgramItem,
+  PagingResult,
+  Question,
+} from '../models';
+import { API_PATH } from '@sp/config';
+import { HttpClient } from '@angular/common/http';
+import { CourseActivationService } from '.';
 
 @Injectable({providedIn: 'root'})
 export class CoursesApiService extends CourseActivationService{

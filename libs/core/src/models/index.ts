@@ -5,3 +5,4 @@ export * from "./login-result";
 export * from "./paging-result";
 export * from "./publication-short-dto";
 export * from "./leads";
+export * from "./ranges";

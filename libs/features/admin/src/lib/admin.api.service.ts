@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from "rxjs";
 import { CoursePurchaseRequest, UserCourseInfo } from './models';
-import { PagingResult } from '@sp/core/models';
+import { PagingResult, RangeTableData } from '@sp/core/models';
 
 @Injectable()
 export class AdminApiService{
@@ -37,5 +37,9 @@ export class AdminApiService{
   // Переключение состояния доступа к курсу
   toggleCourseAccess(courseId: number, userId: number): Observable<void> {
     return this.http.post<void>(`${API_URL}/admin/users/toggleCourseAccess`, { courseId, userId  });
+  }
+
+  getTableForEdit(actionId: number):Observable<RangeTableData>{
+    return this.http.get<RangeTableData>(`${API_URL}/admin/ranges/table?actionId=${actionId}`);
   }
 }

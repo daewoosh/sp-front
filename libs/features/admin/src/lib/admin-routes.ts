@@ -1,20 +1,50 @@
-import { Route } from "@angular/router";
-import { AdminPageComponent } from "./admin-page/admin-page.component";
-import { UsersManagementComponent } from './users-management/users-management.component';
+import { Route } from '@angular/router';
+import { AdminPageComponent } from './admin-page/admin-page.component';
+import { RangesCategoriesResolver } from './ranges-management/range-categories.resolver';
+import { RangeTableResolver } from './ranges-management/range-table-resolver.service';
+import { AdminApiService } from './admin.api.service';
+
+export const manageRangesRoutes: Route[] = [
+  {
+    path: '',
+    loadComponent: () =>
+      import('./ranges-management/ranges-management.component').then(
+        (mod) => mod.RangesManagementComponent
+      ),
+    resolve: { categories: RangesCategoriesResolver },
+    children: [
+      {
+        path: ':actionId',
+        loadComponent: () =>
+          import('./ranges-management/ranges-table-management/ranges-table-management.component').then(
+            (mod) => mod.RangesTableManagementComponent
+          ),
+        providers: [AdminApiService, RangeTableResolver],
+        resolve: { tableData: RangeTableResolver },
+      }
+    ]
+  },
+];
 
 export const adminRoutes: Route[] = [
   {
-    path:"",
+    path: '',
     component: AdminPageComponent,
-    children:[
+    children: [
       {
-        path:'courses',
-        loadComponent: () => import('./courses-management/courses-management.component').then(mod => mod.CoursesManagementComponent),
+        path: 'courses',
+        loadComponent: () =>
+          import('./courses-management/courses-management.component').then(
+            (mod) => mod.CoursesManagementComponent
+          ),
       },
       {
-        path:'users',
-        loadComponent: () => import('./users-management/users-management.component').then(mod => mod.UsersManagementComponent),
-      }
-    ]
-  }
+        path: 'users',
+        loadComponent: () =>
+          import('./users-management/users-management.component').then(
+            (mod) => mod.UsersManagementComponent
+          ),
+      },
+    ],
+  },
 ];

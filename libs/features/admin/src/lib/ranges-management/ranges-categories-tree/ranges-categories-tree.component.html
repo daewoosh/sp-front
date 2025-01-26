@@ -1,0 +1,16 @@
+<tui-tree
+  *ngFor="let item of categories"
+  [childrenHandler]="handler"
+  [content]="content"
+  [tuiTreeController]="true"
+  [value]="item"
+  [map]="map"
+  [trackBy]="trackById"
+/>
+
+<ng-template
+  #content
+  let-item
+>
+  <span (click)="selectAction(item)">{{ item.name }}</span>
+</ng-template>

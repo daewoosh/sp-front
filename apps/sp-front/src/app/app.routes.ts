@@ -2,7 +2,7 @@ import { Route } from '@angular/router';
 import { PageLayoutComponent } from "@sp/common";
 import { coursesRoutes } from "@sp/courses-page";
 import { AdminGuard, AuthGuard } from "@sp/core/guards";
-import { adminRoutes } from "@sp/admin";
+import { adminRoutes, manageRangesRoutes } from '@sp/admin';
 import { publicationsRoutes } from "@sp/publications";
 
 export const appRoutes: Route[] = [
@@ -40,6 +40,11 @@ export const appRoutes: Route[] = [
         path: "admin",
         canActivate: [AdminGuard],
         children: adminRoutes,
+      },
+      {
+        path: "manageRanges",
+        canActivate: [AdminGuard],
+        children: manageRangesRoutes,
       },
       {
         path: "booster",
