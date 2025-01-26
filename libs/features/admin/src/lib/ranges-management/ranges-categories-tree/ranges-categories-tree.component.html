@@ -12,5 +12,12 @@
   #content
   let-item
 >
-  <span (click)="selectAction(item)">{{ item.name }}</span>
+  <span class="text-base" (click)="selectAction(item)"
+        [ngClass]="
+        {
+        'clr-primary text-lg':item.level===3 && item.id === selectedActionId,
+        'cursor-pointer':item.level===3
+        }">
+    {{ item.name }}
+  </span>
 </ng-template>

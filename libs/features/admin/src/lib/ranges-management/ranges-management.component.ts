@@ -5,14 +5,20 @@ import { RangeCategoryDto } from '@sp/core/models';
 import { ActivatedRoute, RouterOutlet } from '@angular/router';
 import { RangesCategoriesTreeComponent } from './ranges-categories-tree/ranges-categories-tree.component';
 import { AdminApiService } from '../admin.api.service';
+import { TuiScrollbar } from '@taiga-ui/core';
 
 @Component({
   selector: 'sp-ranges-management',
   standalone: true,
-  imports: [CommonModule, RangesCategoriesTreeComponent, RouterOutlet],
+  imports: [
+    CommonModule,
+    RangesCategoriesTreeComponent,
+    RouterOutlet,
+    TuiScrollbar,
+  ],
   templateUrl: './ranges-management.component.html',
   styleUrl: './ranges-management.component.scss',
-  providers: [AdminApiService]
+  providers: [AdminApiService],
 })
 export class RangesManagementComponent {
   public categories$: Observable<RangeCategoryDto[]>;

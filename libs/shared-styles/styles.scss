@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import "nouislider/dist/nouislider.css";
 
 @font-face {
   font-family: 'Golos';
@@ -577,7 +578,11 @@ tui-root{
   color: #7e7c7c !important;
 }
 
-
+.color-container{
+  width: 32px;
+  height: 32px;
+  border-radius: 0.5rem;
+}
 //.t-thumb{
 //  background: white !important;
 //}

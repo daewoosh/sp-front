@@ -29,8 +29,8 @@ export interface RangeTableCellConfiguration {
 
 export interface CellMulticolorConfiguration {
   id: string;
-  cellColor: CellColor;
-  percent: number;
+  cellColors: CellColor[];
+  percent: number[];
   order: number;
 }
 

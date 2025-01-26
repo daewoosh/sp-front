@@ -1,32 +1,40 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
 import {
-  CellColor,
+  CellColor, CellMulticolorConfiguration,
   RangeTableCellConfiguration,
-  RangeTableData,
+  RangeTableData
 } from '@sp/core/models';
-import { NgForOf } from '@angular/common';
+import { CommonModule, NgForOf } from '@angular/common';
 import { TuiColorSelectorModule } from '@taiga-ui/legacy';
 import { DomSanitizer } from '@angular/platform-browser';
 import {
   FormArray,
   FormBuilder, FormControl,
-  FormGroup,
+  FormGroup, FormsModule,
   ReactiveFormsModule,
   Validators
 } from '@angular/forms';
 import { RangeTableColorSelectorComponent } from '../../range-table-color-selector/range-table-color-selector.component';
 import { v4 as uuid } from 'uuid';
 import { TuiIcon } from '@taiga-ui/core';
+import { RangeMulticolorSelectorComponent } from '../../range-multicolor-selector/range-multicolor-selector.component';
+import { TuiRadio, TuiRadioList } from '@taiga-ui/kit';
+import { RangeTableDisplayComponent } from '../../range-table-display/range-table-display.component';
 
 @Component({
   selector: 'sp-ranges-table-edit',
   standalone: true,
   imports: [
-    NgForOf,
+    CommonModule,
     TuiColorSelectorModule,
     ReactiveFormsModule,
     RangeTableColorSelectorComponent,
     TuiIcon,
+    RangeMulticolorSelectorComponent,
+    TuiRadioList,
+    FormsModule,
+    TuiRadio,
+    RangeTableDisplayComponent,
   ],
   templateUrl: './ranges-table-edit.component.html',
   styleUrl: './ranges-table-edit.component.scss',
@@ -37,10 +45,12 @@ export class RangesTableEditComponent implements OnInit {
 
   form: FormGroup;
 
+  public selectedColorEntity = '';
+
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
-      cellColors: this.fb.array([]),
-      multiColors: this.fb.array([]),
+      cellColors: this.fb.array<FormControl<CellColor>>([]),
+      multiColors: this.fb.array<FormGroup<any>>([]),
     });
   }
 
@@ -49,12 +59,16 @@ export class RangesTableEditComponent implements OnInit {
       this.initializeForm(this.tableData.config);
     } else {
       // Инициализация с пустыми массивами или данными по умолчанию
-      this.addCellColor(); // Добавляем одну cellColor по умолчанию
+      // this.addCellColor(); // Добавляем одну cellColor по умолчанию
       // this.addMultiColor(); // Добавляем одну multiColor по умолчанию
     }
 
     this.form.valueChanges.subscribe((value) => {
-      console.log('Измененное значение формы:', value);
+      console.log(value);
+    });
+
+    this.cellColors.valueChanges.subscribe(() => {
+      this.syncMultiColorsWithCellColors();
     });
   }
 
@@ -68,16 +82,20 @@ export class RangesTableEditComponent implements OnInit {
     }
 
     // Инициализация multiColors
-    // if (data.multiColors && data.multiColors.length) {
-    //   data.multiColors.forEach((multiColor, index) => {
-    //     this.addMultiColor(multiColor);
-    //   });
-    // }
+    if (data.multiColors && data.multiColors.length) {
+      data.multiColors.forEach((multiColor) => {
+        this.addMultiColor(multiColor);
+      });
+    }
   }
 
   // Методы для управления cellColors
   get cellColors(): FormArray<FormControl<CellColor>> {
     return this.form.get('cellColors') as FormArray<FormControl<CellColor>>;
+  }
+
+  get multiColors(): FormArray<FormControl<any>> {
+    return this.form.get('multiColors') as FormArray<FormControl<any>>;
   }
 
   addCellColor(cellColor?: CellColor): void {
@@ -96,8 +114,73 @@ export class RangesTableEditComponent implements OnInit {
   }
 
   removeCellColor(index: number): void {
+    const removedColor = this.cellColors.at(index).value;
     this.cellColors.removeAt(index);
     this.updateOrders();
+
+    this.multiColors.controls.forEach((group) => {
+      const colorsArray = group.get('cellColors') as FormArray<
+        FormControl<CellColor>
+      >;
+      const colorToRemove = colorsArray.controls.find(
+        (ctrl) => ctrl.value.id === removedColor.id
+      );
+      if (colorToRemove) {
+        const colorIndex = colorsArray.controls.indexOf(colorToRemove);
+        colorsArray.removeAt(colorIndex);
+      }
+    });
+  }
+
+  // Методы для управления multiColors
+  addMultiColor(multiColor?: CellMulticolorConfiguration): void {
+    const newOrder = this.multiColors.length;
+    const mc: CellMulticolorConfiguration = multiColor || {
+      id: uuid(),
+      cellColors: [this.cellColors.value[0],this.cellColors.value[1]],
+      percent: [50,100],
+      order: newOrder + 1,
+    };
+
+    const multiColorGroup = this.fb.control<CellMulticolorConfiguration>(mc, {
+      validators: Validators.required,
+      nonNullable: true,
+    });
+
+    this.multiColors.push(multiColorGroup);
+    this.updateMultiOrders();
+  }
+
+  private syncMultiColorsWithCellColors(): void {
+    const currentCellColors = this.cellColors.value;
+
+    // this.multiColors.controls.forEach((group) => {
+    //   const colorsArray = group.get('cellColors') as FormArray<FormControl<CellColor>>;
+    //   const percentArray = group.get('percent') as FormArray<FormControl<number>>;
+    //
+    //   // Добавить новые цвета, если их больше в cellColors
+    //   if (colorsArray.length < currentCellColors.length) {
+    //     const newColors = currentCellColors.slice(colorsArray.length);
+    //     newColors.forEach((color) => {
+    //       colorsArray.push(this.fb.control<CellColor>(color, { nonNullable: true }));
+    //       percentArray.push(this.fb.control<number>(0, [Validators.required, Validators.min(0), Validators.max(100)]));
+    //     });
+    //   }
+    //
+    //   // Удалить лишние цвета, если их меньше в cellColors
+    //   if (colorsArray.length > currentCellColors.length) {
+    //     const removeCount = colorsArray.length - currentCellColors.length;
+    //     for (let i = 0; i < removeCount; i++) {
+    //       colorsArray.removeAt(colorsArray.length - 1);
+    //       percentArray.removeAt(percentArray.length - 1);
+    //     }
+    //   }
+    // });
+  }
+
+  removeMultiColor(index: number): void {
+    this.multiColors.removeAt(index);
+    this.updateMultiOrders();
   }
 
   onSubmit(): void {
@@ -114,6 +197,12 @@ export class RangesTableEditComponent implements OnInit {
   private updateOrders(): void {
     this.cellColors.controls.forEach((control, index) => {
       control.get('order')?.setValue(index, { emitEvent: true });
+    });
+  }
+
+  private updateMultiOrders(): void {
+    this.multiColors.controls.forEach((control, index) => {
+      control.get('order')?.setValue(index, { emitEvent: false });
     });
   }
 }

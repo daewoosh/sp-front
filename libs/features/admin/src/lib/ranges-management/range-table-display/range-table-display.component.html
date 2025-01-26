@@ -1,0 +1,12 @@
+<div class="range-table">
+  <div
+    *ngFor="let cell of tableData.cells"
+    class="cell"
+    [ngStyle]="getCellStyle(cell)"
+    (mousedown)="onMouseDown(cell)"
+    (mouseover)="onMouseOver(cell)"
+    (mouseup)="onMouseUp()"
+  >
+    {{ cell.key }}
+  </div>
+</div>

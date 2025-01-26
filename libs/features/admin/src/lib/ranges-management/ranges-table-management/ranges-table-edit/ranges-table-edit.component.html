@@ -1,14 +1,32 @@
 <div class="flex gap-4">
-  <div class="range-table">
-    <div *ngFor="let cell of tableData.cells" class="cell">
-      {{ cell.key }}
-    </div>
-  </div>
-  <form [formGroup]="form" tuiTheme="dark" (ngSubmit)="onSubmit()">
-    <h2>Cell Colors</h2>
-    <div formArrayName="cellColors" class="form-section">
+<!--  <div class="range-table">-->
+<!--    <div *ngFor="let cell of tableData.cells" class="cell">-->
+<!--      {{ cell.key }}-->
+<!--    </div>-->
+<!--  </div>-->
+  <sp-range-table-display [selectedColorId]="selectedColorEntity"
+  [tableData]="tableData" [config]="form.value"/>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div>
+    <p class="text-lg">Базовые цвета</p>
+    <div formArrayName="cellColors" class="flex flex-col gap-4 mb-2">
       <div *ngFor="let cellColor of cellColors.controls; let i = index" [formGroupName]="i"
            class="flex gap-3 items-center">
+        <tui-icon
+          type="button"
+          icon="@tui.circle"
+          *ngIf="selectedColorEntity!==cellColor.value.id"
+          class="cursor-pointer"
+          (click)="selectedColorEntity=cellColor.value.id"
+        />
+        <tui-icon
+          type="button"
+          icon="@tui.circle-check"
+          *ngIf="selectedColorEntity===cellColor.value.id"
+          class="clr-primary"
+
+        />
         <sp-range-table-color-selector [formControl]="cellColor"></sp-range-table-color-selector>
         <tui-icon
           type="button" (click)="removeCellColor(i)"
@@ -26,5 +44,42 @@
       />
         Добавить цвет
       </span>
+    </div>
+
+    <div class="mt-12">
+      <p class="text-lg">Смешанные цвета</p>
+      <div formArrayName="multiColors" class="flex flex-col gap-5 mb-2">
+        <div *ngFor="let multiColor of multiColors.controls; let i = index" [formGroupName]="i" class="flex gap-3 items-center">
+          <tui-icon
+            type="button"
+            icon="@tui.circle"
+            *ngIf="selectedColorEntity!==multiColor.value.id"
+            class="cursor-pointer"
+            (click)="selectedColorEntity=multiColor.value.id"
+          />
+          <tui-icon
+            type="button"
+            icon="@tui.circle-check"
+            *ngIf="selectedColorEntity===multiColor.value.id"
+            class="clr-primary"
+
+          />
+          <sp-range-multicolor-selector [formControl]="multiColor" [colors]="cellColors.value"/>
+          <tui-icon
+            type="button" (click)="removeMultiColor(i)"
+            icon="@tui.x"
+            class="cursor-pointer clr-danger"
+          />
+        </div>
+      </div>
+      <span class="cursor-pointer clr-primary" (click)="addMultiColor()">
+      <tui-icon
+        type="button"
+        icon="@tui.circle-plus"
+
+      />
+        Добавить смешанный цвет
+      </span>
+    </div>
   </form>
 </div>
