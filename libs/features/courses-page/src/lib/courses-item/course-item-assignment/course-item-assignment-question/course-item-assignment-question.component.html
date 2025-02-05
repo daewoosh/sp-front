@@ -1,31 +1,47 @@
 <div class="flex gap-3 items-center">
   <span class="text-2xl font-bold">Задание</span>
   <div
-    class="text-base font-bold rounded-[40px] bg-[#DF8316] w-[68px] h-[26px] flex items-center justify-center">{{question.order}}
-    /{{courseElement.questions.length}}</div>
+    class="text-base font-bold rounded-[40px] bg-[#DF8316] w-[68px] h-[26px] flex items-center justify-center">{{ question.order }}
+    /{{ courseElement.questions.length }}
+  </div>
 </div>
-<div [innerHTML]="question.text" class="mt-2 text-base text-white"></div>
+<div *ngIf="(!courseElement.isCompleted || courseElement.isResetMode) && question.type === questionTypes.MultipleChoice"
+class="clr-grey">
+  Выберите несколько правильных вариантов ответа:
+</div>
+<div *ngIf="question.type === questionTypes.Text"
+     [innerHTML]="question.text|dompurify" class="mt-2 text-base text-white" [ngClass]="{'pointer-events-none':courseElement.answersSaved}"></div>
 
-<div class="mt-[30px] flex gap-3 flex-wrap items-center mb-3">
+<sp-single-choice-question [question]="question"
+                           [ngClass]="{'pointer-events-none':courseElement.answersSaved}"
+                           *ngIf="question.type !== questionTypes.Text"></sp-single-choice-question>
+
+
+<div class="mt-[30px] flex gap-3 flex-wrap items-center mb-3" *ngIf="question.type === questionTypes.Text">
   <div class="text-2xl font-bold">
     Ваш ответ
   </div>
-  <button class="btn primary check-self" (click)="isExpanded = !isExpanded" *ngIf="courseElement.isCompleted && !isResetMode">
+  <button class="btn primary check-self" (click)="isExpanded = !isExpanded"
+          *ngIf="courseElement.isCompleted ">
     Проверить себя
     <div [ngClass]="{'rotate-180':isExpanded}">
       <img src="/assets/icons/arrow-up.svg">
     </div>
   </button>
 </div>
-<div class="text-base clr-grey" *ngIf="!courseElement.isCompleted">
+<div class="text-base clr-grey" *ngIf="!courseElement.isCompleted && question.type === questionTypes.Text">
   Заполните ответ в текстовом поле ниже
 </div>
-<textarea placeholder="Ответ" class="w-full resize-none" rows="7" [(ngModel)]="question.userAnswer"></textarea>
-<ng-container *ngIf="isExpanded">
+<textarea *ngIf="question.type === questionTypes.Text"
+          placeholder="Ответ" class="w-full resize-none" rows="7" [(ngModel)]="question.userAnswer"></textarea>
+
+<ng-container *ngIf="isExpanded && question.type === questionTypes.Text">
   <div class="text-2xl clr-primary font-bold my-4">
     Правильный ответ
   </div>
-  <div [innerHTML]="question.answer|dompurify" class="answer">
 
+  <div
+       [innerHTML]="question.answer|dompurify" class="answer">
   </div>
+
 </ng-container>
