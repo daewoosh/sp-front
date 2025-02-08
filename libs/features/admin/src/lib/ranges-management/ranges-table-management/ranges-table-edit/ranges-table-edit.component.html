@@ -8,6 +8,7 @@
   [tableData]="tableData" [config]="form.value"/>
 
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <button type="submit" class="btn primary">Сохранить</button>
     <div>
     <p class="text-lg">Базовые цвета</p>
     <div formArrayName="cellColors" class="flex flex-col gap-4 mb-2">

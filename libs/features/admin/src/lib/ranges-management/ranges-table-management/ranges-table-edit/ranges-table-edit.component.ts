@@ -1,25 +1,26 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
-import {
-  CellColor, CellMulticolorConfiguration,
-  RangeTableCellConfiguration,
-  RangeTableData
-} from '@sp/core/models';
-import { CommonModule, NgForOf } from '@angular/common';
+import { CellColor, CellMulticolorConfiguration, RangeTableCellConfiguration, RangeTableData } from '@sp/core/models';
+import { CommonModule } from '@angular/common';
 import { TuiColorSelectorModule } from '@taiga-ui/legacy';
 import { DomSanitizer } from '@angular/platform-browser';
 import {
   FormArray,
-  FormBuilder, FormControl,
-  FormGroup, FormsModule,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  FormsModule,
   ReactiveFormsModule,
   Validators
 } from '@angular/forms';
-import { RangeTableColorSelectorComponent } from '../../range-table-color-selector/range-table-color-selector.component';
+import {
+  RangeTableColorSelectorComponent
+} from '../../range-table-color-selector/range-table-color-selector.component';
 import { v4 as uuid } from 'uuid';
 import { TuiIcon } from '@taiga-ui/core';
 import { RangeMulticolorSelectorComponent } from '../../range-multicolor-selector/range-multicolor-selector.component';
-import { TuiRadio, TuiRadioList } from '@taiga-ui/kit';
 import { RangeTableDisplayComponent } from '../../range-table-display/range-table-display.component';
+import { AdminApiService } from '../../../admin.api.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'sp-ranges-table-edit',
@@ -31,27 +32,38 @@ import { RangeTableDisplayComponent } from '../../range-table-display/range-tabl
     RangeTableColorSelectorComponent,
     TuiIcon,
     RangeMulticolorSelectorComponent,
-    TuiRadioList,
     FormsModule,
-    TuiRadio,
-    RangeTableDisplayComponent,
+    RangeTableDisplayComponent
   ],
   templateUrl: './ranges-table-edit.component.html',
-  styleUrl: './ranges-table-edit.component.scss',
+  styleUrl: './ranges-table-edit.component.scss'
 })
 export class RangesTableEditComponent implements OnInit {
   @Input() public tableData!: RangeTableData;
+  actionId: number = -1;
+  form: FormGroup;
+  public selectedColorEntity = '';
   private readonly sanitizer = inject(DomSanitizer);
 
-  form: FormGroup;
-
-  public selectedColorEntity = '';
-
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,
+              private adminApiService: AdminApiService,
+              private activatedRoute: ActivatedRoute) {
     this.form = this.fb.group({
       cellColors: this.fb.array<FormControl<CellColor>>([]),
-      multiColors: this.fb.array<FormGroup<any>>([]),
+      multiColors: this.fb.array<FormGroup<any>>([])
     });
+    this.activatedRoute.paramMap.subscribe((params) => {
+      this.actionId = +params.get('actionId')!;
+    });
+  }
+
+  // Методы для управления cellColors
+  get cellColors(): FormArray<FormControl<CellColor>> {
+    return this.form.get('cellColors') as FormArray<FormControl<CellColor>>;
+  }
+
+  get multiColors(): FormArray<FormControl<any>> {
+    return this.form.get('multiColors') as FormArray<FormControl<any>>;
   }
 
   ngOnInit(): void {
@@ -72,42 +84,16 @@ export class RangesTableEditComponent implements OnInit {
     });
   }
 
-  // Инициализация формы на основе входных данных
-  private initializeForm(data: RangeTableCellConfiguration): void {
-    // Инициализация cellColors
-    if (data.cellColors && data.cellColors.length) {
-      data.cellColors.forEach((cellColor, index) => {
-        this.addCellColor(cellColor);
-      });
-    }
-
-    // Инициализация multiColors
-    if (data.multiColors && data.multiColors.length) {
-      data.multiColors.forEach((multiColor) => {
-        this.addMultiColor(multiColor);
-      });
-    }
-  }
-
-  // Методы для управления cellColors
-  get cellColors(): FormArray<FormControl<CellColor>> {
-    return this.form.get('cellColors') as FormArray<FormControl<CellColor>>;
-  }
-
-  get multiColors(): FormArray<FormControl<any>> {
-    return this.form.get('multiColors') as FormArray<FormControl<any>>;
-  }
-
   addCellColor(cellColor?: CellColor): void {
     const color: CellColor = cellColor || {
       id: uuid(),
       color: '#0b4324',
       text: 'New Color',
-      order: this.cellColors.length, // Автоматическое назначение порядка
+      order: this.cellColors.length // Автоматическое назначение порядка
     };
     const cellColorControl = this.fb.control<CellColor>(color, {
       validators: Validators.required,
-      nonNullable: true,
+      nonNullable: true
     });
     this.cellColors.push(cellColorControl);
     this.updateOrders();
@@ -137,18 +123,52 @@ export class RangesTableEditComponent implements OnInit {
     const newOrder = this.multiColors.length;
     const mc: CellMulticolorConfiguration = multiColor || {
       id: uuid(),
-      cellColors: [this.cellColors.value[0],this.cellColors.value[1]],
-      percent: [50,100],
-      order: newOrder + 1,
+      cellColors: [this.cellColors.value[0], this.cellColors.value[1]],
+      percent: [50, 100],
+      order: newOrder + 1
     };
 
     const multiColorGroup = this.fb.control<CellMulticolorConfiguration>(mc, {
       validators: Validators.required,
-      nonNullable: true,
+      nonNullable: true
     });
 
     this.multiColors.push(multiColorGroup);
     this.updateMultiOrders();
+  }
+
+  removeMultiColor(index: number): void {
+    this.multiColors.removeAt(index);
+    this.updateMultiOrders();
+  }
+
+  onSubmit(): void {
+    if (this.form.valid) {
+      const config: RangeTableCellConfiguration = this.form.value;
+      console.log({ config, tableData: this.tableData });
+      this.adminApiService.saveTable(this.actionId, { ...this.tableData, config }).subscribe();
+      // Здесь можно обработать данные, например, отправить на сервер
+    } else {
+      console.log('Форма не валидна');
+      this.form.markAllAsTouched();
+    }
+  }
+
+  // Инициализация формы на основе входных данных
+  private initializeForm(data: RangeTableCellConfiguration): void {
+    // Инициализация cellColors
+    if (data.cellColors && data.cellColors.length) {
+      data.cellColors.forEach((cellColor, index) => {
+        this.addCellColor(cellColor);
+      });
+    }
+
+    // Инициализация multiColors
+    if (data.multiColors && data.multiColors.length) {
+      data.multiColors.forEach((multiColor) => {
+        this.addMultiColor(multiColor);
+      });
+    }
   }
 
   private syncMultiColorsWithCellColors(): void {
@@ -176,22 +196,6 @@ export class RangesTableEditComponent implements OnInit {
     //     }
     //   }
     // });
-  }
-
-  removeMultiColor(index: number): void {
-    this.multiColors.removeAt(index);
-    this.updateMultiOrders();
-  }
-
-  onSubmit(): void {
-    if (this.form.valid) {
-      const config: RangeTableCellConfiguration = this.form.value;
-      console.log('Сохраненная конфигурация:', config);
-      // Здесь можно обработать данные, например, отправить на сервер
-    } else {
-      console.log('Форма не валидна');
-      this.form.markAllAsTouched();
-    }
   }
 
   private updateOrders(): void {

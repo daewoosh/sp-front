@@ -42,4 +42,8 @@ export class AdminApiService{
   getTableForEdit(actionId: number):Observable<RangeTableData>{
     return this.http.get<RangeTableData>(`${API_URL}/admin/ranges/table?actionId=${actionId}`);
   }
+
+  saveTable(actionId:number, tableData: RangeTableData):Observable<void>{
+    return this.http.post<void>(`${API_URL}/admin/ranges/table`, {data: tableData,actionId});
+  }
 }
