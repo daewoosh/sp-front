@@ -1,6 +1,6 @@
 import { Route } from '@angular/router';
 import { AdminPageComponent } from './admin-page/admin-page.component';
-import { RangesCategoriesResolver } from './ranges-management/range-categories.resolver';
+import { RangesCategoriesResolver } from '@sp/core/providers';
 import { RangeTableResolver } from './ranges-management/range-table-resolver.service';
 import { AdminApiService } from './admin.api.service';
 

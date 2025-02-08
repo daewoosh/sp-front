@@ -13,6 +13,15 @@ export const coursesRoutes: Route[] = [
     data: { hideFooter: true },
     children: [
       {
+        path: 'ranges',  // Новый маршрут для ranges
+        loadComponent: () =>
+          import('@sp/features/ranges').then(
+            (mod) => mod.RangesComponent
+          ),
+        data: { hideFooter: true, id: 'ranges' },
+        canActivate: [CourseAccessGuard],
+      },
+      {
         path: ':id',
         loadComponent: () =>
           import('./course-item-page/course-item-page.component').then(

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
-import { RangeCategoryDto } from '@sp/core/models';
-import { RangesApiService } from '@sp/core/providers';
+import { RangeCategoryDto } from '../models';
+import { RangesApiService } from '../providers';
 import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })

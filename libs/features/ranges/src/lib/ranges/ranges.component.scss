@@ -1,0 +1,45 @@
+.grid-container {
+  display: grid;
+  gap: 16px; // Отступы между элементами
+
+  // Настройки для малых экранов (по умолчанию)
+  grid-template-areas:
+    "blinds-count range-action"
+    "range-position range-position"
+    "ranges-table ranges-table";
+  grid-template-columns: 1fr 1fr; // Два столбца равной ширины
+
+  // Настройки для экранов от 576px
+  @media (min-width: 576px) {
+    max-width: 516px; // Максимальная ширина сетки
+    margin: 0 auto; // Центрирование сетки
+    grid-template-areas:
+      "blinds-count range-action range-position"
+      "ranges-table ranges-table ranges-table";
+    grid-template-columns: 1fr 1fr 1fr; // Три столбца равной ширины
+  }
+
+  // Настройки для экранов от 992px
+  @media (min-width: 992px) {
+    max-width: 908px; // Максимальная ширина сетки
+    grid-template-areas:
+      "range-action range-action range-action"
+      "blinds-count ranges-table range-position";
+    grid-template-columns: 162px 1fr 162px; // Фиксированная ширина для blinds-count и range-position, остальное для ranges-table
+
+    // Условие для растягивания range-position вправо
+    &.stretch-range-position {
+      grid-template-columns: 162px 1fr auto; // range-position растягивается по содержимому
+    }
+  }
+
+  & div{
+    border: 1px solid red;
+  }
+}
+
+// Стили для элементов сетки
+.blinds-count { grid-area: blinds-count; }
+.range-action { grid-area: range-action; }
+.range-position { grid-area: range-position; }
+.ranges-table { grid-area: ranges-table; }

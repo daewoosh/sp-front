@@ -30,7 +30,7 @@ export class CourseAccessGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> {
-    const id = route.params['id'];
+    const id = route.data['id'] ?? route.params['id'];
     if (!id) {
       // No course ID provided, redirect to home
       return of(this.router.createUrlTree(['/']));
@@ -49,6 +49,7 @@ export class CourseAccessGuard implements CanActivate {
         return this.coursesStateService.selectCourses.pipe(
           take(1),
           map((courses) => {
+            debugger;
             const course = courses.find(
               (course) =>
                 course.slug === id &&
