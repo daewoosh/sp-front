@@ -1,0 +1,37 @@
+<p class="py-3 text-base question-text" [innerHTML]="questionModel.text|dompurify"></p>
+
+<!-- Одиночный выбор (Радио-кнопки) -->
+<ng-container *ngIf="!isMultipleChoice">
+  <div *ngFor="let option of options" class="mb-2">
+    <label tuiLabel [ngClass]="{'correct-answer': option.value.isCorrect, 'wrong-answer': option.value.isSelected && option.value.isCorrect === false}">
+      <input
+        [name]="question.id.toString()"
+        tuiRadio
+        type="radio"
+        [value]="option.key"
+        [(ngModel)]="question.userAnswer[0]"
+        (change)="toggleAnswer(option.key)"
+      />
+      {{ option.value.text }}
+    </label>
+  </div>
+</ng-container>
+
+<!-- Множественный выбор (Чекбоксы) -->
+<ng-container *ngIf="isMultipleChoice">
+  <div *ngFor="let option of options" class="mb-2">
+    <label
+      tuiLabel
+      [ngClass]="{'correct-answer': option.value.isCorrect, 'wrong-answer': option.value.isSelected && option.value.isCorrect === false}"
+      (click)="toggleAnswer(option.key)">
+      <input
+        tuiCheckbox
+        type="checkbox"
+        [value]="option.key"
+        [checked]="question.userAnswer?.includes(option.key)"
+
+      />
+      {{ option.value.text }}
+    </label>
+  </div>
+</ng-container>

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterOutlet } from "@angular/router";
 import { CourseProgramItem } from "@sp/core/models";
-import { Observable, of, tap } from "rxjs";
+import { delay, Observable, of, tap } from 'rxjs';
 import { CourseProgramItemComponent } from "../course-program-item/course-program-item.component";
 import { CourseProgramListComponent } from "../course-program-list/course-program-list.component";
 import { TuiScrollbar } from "@taiga-ui/core";
@@ -29,7 +29,9 @@ export class CourseItemPageComponent implements OnInit {
 
   ngOnInit() {
     this.courseProgram$ = this.coursesStateService.selectCourseProgram.pipe(
+      delay(200),
       tap(program => {
+        // debugger;
         const currentOrder = this.activatedRoute.snapshot.firstChild?.paramMap.get('order');
         if (!currentOrder) {
           let orderToNavigate = 1; // По умолчанию, если программа завершена или не найдены подходящие элементы

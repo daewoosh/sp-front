@@ -1,9 +1,8 @@
 import { Component, Inject } from '@angular/core';
-import { CommonModule, LocationStrategy } from '@angular/common';
-import { AdminApiService } from "../admin.api.service";
-import { ClipboardModule } from "ngx-clipboard";
-import { TuiAlertService, TuiDataList } from "@taiga-ui/core";
-import { TuiDataListWrapper } from "@taiga-ui/kit";
+import { CommonModule } from '@angular/common';
+import { AdminApiService } from '../admin.api.service';
+import { ClipboardModule } from 'ngx-clipboard';
+import { TuiAlertService } from '@taiga-ui/core';
 import { FormsModule } from '@angular/forms';
 
 interface Course {
@@ -14,21 +13,19 @@ interface Course {
 @Component({
   selector: 'sp-courses-management',
   standalone: true,
-  imports: [
-    CommonModule,
-    ClipboardModule,
-    TuiDataList,
-    TuiDataListWrapper,
-    FormsModule,
-  ],
+  imports: [CommonModule, ClipboardModule, FormsModule],
   templateUrl: './courses-management.component.html',
   styleUrl: './courses-management.component.scss',
 })
 export class CoursesManagementComponent {
-  courses: Course[] = [{ id: 1, name: 'Only Poker' }];
+  courses: Course[] = [
+    { id: 1, name: 'Only Poker' },
+    { id: 2, name: 'Осознанное начало' },
+  ];
 
   createdLink = '';
   availableCourseItemsCount: number | null = null;
+  selectedCourseId = 1;
 
   constructor(
     private adminApiService: AdminApiService,
@@ -37,12 +34,14 @@ export class CoursesManagementComponent {
   ) {}
 
   createAccessLink() {
-    this.adminApiService.createCoursePurchaseRequest(1, this.availableCourseItemsCount).subscribe((res) => {
-      if (res) {
-        this.createdLink = `${APP_URL}/activateCourse/${res.token}`;
-        this.availableCourseItemsCount = null;
-      }
-    });
+    this.adminApiService
+      .createCoursePurchaseRequest(this.selectedCourseId, this.availableCourseItemsCount)
+      .subscribe((res) => {
+        if (res) {
+          this.createdLink = `${APP_URL}/activateCourse/${res.token}`;
+          this.availableCourseItemsCount = null;
+        }
+      });
   }
 
   copied() {

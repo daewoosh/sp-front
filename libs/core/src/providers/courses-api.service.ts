@@ -1,15 +1,9 @@
-import { Inject, Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
-import {
-  Course,
-  CourseElement,
-  CourseProgramItem,
-  PagingResult,
-  Question,
-} from '../models';
-import { API_PATH } from '@sp/config';
-import { HttpClient } from '@angular/common/http';
-import { CourseActivationService } from '.';
+import { Inject, Injectable } from "@angular/core";
+import { map, Observable } from "rxjs";
+import { Assignment, Course, CourseElement, CourseProgramItem, PagingResult, Question } from '../models';
+import { API_PATH } from "@sp/config";
+import { HttpClient } from "@angular/common/http";
+import { CourseActivationService } from ".";
 
 @Injectable({providedIn: 'root'})
 export class CoursesApiService extends CourseActivationService{
@@ -52,8 +46,8 @@ export class CoursesApiService extends CourseActivationService{
     return this.http.post(`${API_URL}/courseElements/${courseElementId}/assignments/${assignmentId}/createUserAnswers`, request);
   }
 
-  clearUserAnswers(courseElementId: number, assignmentId: number): Observable<any> {
-    return this.http.delete(`${API_URL}/courseElements/${courseElementId}/assignments/${assignmentId}/clearUserAnswers`);
+  clearUserAnswers(courseElementId: number, assignmentId: number): Observable<Assignment> {
+    return this.http.post<Assignment>(`${API_URL}/courseElements/${courseElementId}/assignments/${assignmentId}/clearUserAnswers`,{});
   }
 }
 

@@ -1,8 +1,11 @@
 import { Component, Input } from '@angular/core';
-import { Assignment, Question } from "@sp/core/models";
+import { Assignment, Question, QuestionType } from '@sp/core/models';
 import { FormsModule } from "@angular/forms";
 import { CommonModule } from "@angular/common";
 import { NgDompurifyPipe } from "@taiga-ui/dompurify";
+import {
+  SingleChoiceQuestionComponent
+} from '../../../questions/single-choice/single-choice-question/single-choice-question.component';
 
 @Component({
   selector: 'sp-course-item-assignment-question',
@@ -10,16 +13,17 @@ import { NgDompurifyPipe } from "@taiga-ui/dompurify";
   imports: [
     CommonModule,
     FormsModule,
-    NgDompurifyPipe
+    NgDompurifyPipe,
+    SingleChoiceQuestionComponent,
   ],
   templateUrl: './course-item-assignment-question.component.html',
-  styleUrl: './course-item-assignment-question.component.scss'
+  styleUrl: './course-item-assignment-question.component.scss',
 })
 export class CourseItemAssignmentQuestionComponent {
-
   @Input() question!: Question;
   @Input() courseElement!: Assignment;
-  @Input() isResetMode = false;
+
+  questionTypes = QuestionType;
 
   isExpanded = false;
 }

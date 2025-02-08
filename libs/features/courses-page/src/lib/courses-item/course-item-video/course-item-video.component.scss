@@ -20,7 +20,7 @@ vg-controls.hide {
   display: inline-block;
   width: 80px;
   height: 80px;
-  border: 3px solid rgba(255,255,255,.3);
+  border: 3px solid rgba(255, 255, 255, .3);
   border-radius: 50%;
   border-top-color: var(--clr-primary);
   animation: spin 1s ease-in-out infinite;
@@ -30,6 +30,17 @@ vg-controls.hide {
 }
 
 @keyframes spin {
-  to { -webkit-transform: rotate(360deg); }
+  to {
+    -webkit-transform: rotate(360deg);
+  }
 }
 
+::ng-deep .video-description {
+  & p {
+    margin-bottom: 1rem !important;
+  }
+
+  & a{
+    color: var(--clr-primary);
+  }
+}

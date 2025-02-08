@@ -1,0 +1,47 @@
+.correct-answer {
+  color: var(--clr-primary);
+}
+
+.wrong-answer {
+  color: #EB1C24;
+
+  input[type=radio][tuiAppearance][data-appearance=primary] {
+    border: 0.0625rem solid #EB1C24 !important;
+  }
+
+  input[type=checkbox][tuiAppearance][data-appearance=primary] {
+    border: 0.0625rem solid #EB1C24 !important;
+  }
+
+  [tuiRadio]:before, [tuiCheckbox]:before {
+    background: #EB1C24 !important;
+  }
+}
+
+:host {
+
+
+  [tuiRadio], [tuiCheckbox] {
+    --t-bs: #808080;
+  }
+
+  [tuiRadio]:before, [tuiCheckbox]:before {
+    background: var(--clr-primary) !important;
+  }
+
+  input[type=radio][tuiAppearance][data-appearance=primary] {
+    border: 0.0625rem solid var(--clr-primary) !important;
+  }
+
+  input[type=checkbox][tuiAppearance][data-appearance=primary] {
+    border: 0.0625rem solid var(--clr-primary) !important;
+  }
+
+
+}
+
+::ng-deep .question-text {
+  & img {
+    max-width: 700px;
+  }
+}
