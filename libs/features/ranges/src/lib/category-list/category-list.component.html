@@ -1,0 +1,62 @@
+<div class="category-list">
+  <div class="order">
+    <div class="number">{{ levelInfo.order }}</div>
+  </div>
+  <div class="clr-white text-xs text-center">{{ levelInfo.title }}</div>
+
+  @if (selectedCategory && isMobile) {
+    <div class="flex justify-center">
+      <button class="btn w-fit primary mx-auto mt-2 btn-category">{{ selectedCategory?.name }}</button>
+    </div>
+
+  }
+  @if (!isMobile) {
+    <tui-scrollbar [style.max-height.px]="420">
+      <div class="flex gap-3 justify-center items-center"
+           [ngClass]="
+           {
+           'flex-row mt-3':levelInfo.order === 2 ,
+           'flex-col mt-6':levelInfo.order !== 2,
+           'range-position': levelInfo.order === 3
+           }">
+        <button
+          class="btn w-full btn-category"
+          *ngFor="let category of categories"
+          [ngClass]="{'disabled': !selectedParentId}"
+          [class.primary]="isSelected(category)"
+          (click)="selectCategory(category)"
+        >
+          {{ category.name }}
+        </button>
+      </div>
+    </tui-scrollbar>
+  }
+  @if (isMobile) {
+    <div class="expander" [ngClass]="{'disabled': !selectedParentId}"
+         [tuiDropdown]="content"
+         [(tuiDropdownOpen)]="expanded"
+         tuiDropdownMobile="Выберите"
+    >
+      <svg width="32" height="20" viewBox="0 0 32 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0 0H32V10C32 15.5228 27.5228 20 22 20H10C4.47715 20 0 15.5228 0 10V0Z" fill="#2BBE16" />
+        <path fill-rule="evenodd" clip-rule="evenodd"
+              d="M9.14645 6.14645C9.34171 5.95118 9.65829 5.95118 9.85355 6.14645L16.5 12.7929L23.1464 6.14645C23.3417 5.95118 23.6583 5.95118 23.8536 6.14645C24.0488 6.34171 24.0488 6.65829 23.8536 6.85355L16.5 14.2071L9.14645 6.85355C8.95118 6.65829 8.95118 6.34171 9.14645 6.14645Z"
+              fill="white" />
+      </svg>
+    </div>
+    <ng-template  #content>
+        <div class="flex gap-3 flex-wrap my-6 justify-center items-center" tuiTheme="dark">
+          <button
+            class="btn w-full btn-category"
+            *ngFor="let category of categories"
+            [ngClass]="{'disabled': !selectedParentId}"
+            [class.primary]="isSelected(category)"
+            (click)="selectCategory(category)"
+          >
+            {{ category.name }}
+          </button>
+        </div>
+    </ng-template>
+  }
+
+</div>

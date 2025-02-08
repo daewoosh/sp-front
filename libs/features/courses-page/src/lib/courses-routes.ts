@@ -5,6 +5,7 @@ import {
   CourseProgramResolver,
 } from './course-program-resolver.service';
 import { CourseAccessGuard } from './course-access-guard.service';
+import { RangesCategoriesResolver } from '@sp/core/providers';
 
 export const coursesRoutes: Route[] = [
   {
@@ -20,6 +21,7 @@ export const coursesRoutes: Route[] = [
           ),
         data: { hideFooter: true, id: 'ranges' },
         canActivate: [CourseAccessGuard],
+        resolve: { categories: RangesCategoriesResolver },
       },
       {
         path: ':id',

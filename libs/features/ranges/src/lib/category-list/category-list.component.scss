@@ -1,0 +1,85 @@
+.category-list {
+  min-width: fit-content;
+  border-radius: 10px;
+  padding: 30px 10px 10px 10px;
+  background: #1C1E1D;
+  position: relative;
+
+  .expander {
+    position: absolute;
+    bottom: -20px;
+    cursor: pointer;
+    left: calc(50% - 16px);
+
+    &.disabled {
+      pointer-events: none;
+      opacity: 0.5;
+    }
+  }
+
+  .expanded{
+    position: absolute;
+    bottom: 0;
+    max-height: 500px;
+    transition: max-height 0.25s ease-in;
+
+    &.collapsed{
+      max-height: 0;
+      transition: max-height 0.15s ease-out;
+      overflow: hidden;
+    }
+  }
+
+  & .order {
+    position: absolute;
+    top: -15px;
+    left: 0;
+    right: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    & .number {
+      text-align: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 100%;
+      background: #F6F2E1;
+      font-size: 20px;
+      line-height: 24px;
+      color: black;
+    }
+  }
+}
+
+.btn-category {
+  font-size: 0.75rem !important;
+  border-radius: 10px !important;
+  width: 120px !important;
+  min-width: 120px !important;
+
+  &.disabled{
+    pointer-events: none;
+    border-color: #808080 !important;
+    color: #808080 !important;
+  }
+}
+
+.range-position {
+  @media screen and (min-width: 1298px) {
+    width: 100%; // Занимаем всю доступную ширину
+    max-width: 558px; // Ограничиваем максимальную ширину
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  @media screen and (min-width: 1460px) {
+    grid-template-columns: 1fr 1fr;
+  }
+  @media screen and (min-width: 1540px) {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  @media screen and (min-width: 1650px) {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+}
