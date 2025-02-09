@@ -40,3 +40,21 @@ export interface CellColor {
   text: string;
   order: number;
 }
+
+export interface RangeTableDto {
+  cells: RangeTableCellDto[];
+  usedColors?: RangeTableColor[] | null;
+  position: string;
+  openPercent: number | null;
+}
+
+export interface RangeTableCellDto {
+  key: string;
+  colorData: RangeTableColor[] | null;
+}
+
+export interface RangeTableColor {
+  color: string;
+  text: string;
+  percent: number | null;
+}

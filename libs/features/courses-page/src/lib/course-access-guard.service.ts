@@ -49,7 +49,6 @@ export class CourseAccessGuard implements CanActivate {
         return this.coursesStateService.selectCourses.pipe(
           take(1),
           map((courses) => {
-            debugger;
             const course = courses.find(
               (course) =>
                 course.slug === id &&

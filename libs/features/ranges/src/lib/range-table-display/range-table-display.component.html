@@ -1,0 +1,53 @@
+<div class="range-table">
+  <div
+    *ngFor="let cell of tableToDisplay.cells"
+    class="cell"
+    tuiHint
+  >
+    <span class="z-10">{{ cell.key }}</span>
+    @if (cell.colorData?.length){
+      <div class="color-overlay">
+        <div
+          *ngFor="let color of cell.colorData"
+          class="color-layer"
+          [style.background-color]="color.color"
+          [style.height.%]="color.percent"
+        ></div>
+      </div>
+      <tui-hint
+        *tuiHint
+        class="hint flex gap-3 flex-wrap"
+        [@.disabled]="true"
+      >
+        <div *ngFor="let color of cell.colorData" class="flex gap-2 items-center">
+          <div class="w-[8px] h-[8px] " [style.background-color]="color.color"></div>
+          <div class="font-bold">{{ color.percent }}%</div>
+        </div>
+      </tui-hint>
+    }
+
+  </div>
+</div>
+<div class="rounded-[10px] flex items-center gap-4 font-bold text-white text-sm w-full h-[32px] bg-[#394038] mt-5 px-5">
+
+  @if (rangeTable?.position){
+    <span>{{rangeTable!.position}}</span>
+  }
+  <div class="ml-auto">
+    Процент рук оупена
+  </div>
+  @if (rangeTable?.openPercent){
+    <span class="clr-primary">{{rangeTable!.openPercent}}%</span>
+  }
+
+</div>
+@if (tableToDisplay.usedColors?.length) {
+  <div class="flex gap-6 flex-wrap w-full justify-center mt-7">
+    <div *ngFor="let color of tableToDisplay.usedColors"
+         [style.background-color]="color.color"
+         class="min-w-[76px] px-3 h-[36px] text-center rounded-[10px] flex items-center justify-center">
+      {{ color.text }}
+    </div>
+  </div>
+}
+

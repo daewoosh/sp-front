@@ -5,3 +5,4 @@ export * from "./publications-api.service";
 export * from './leads-api.service';
 export * from './ranges-api.service';
 export * from './range-categories.resolver';
+export * from './default-range-table-resolver.service';

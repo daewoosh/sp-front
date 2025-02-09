@@ -38,6 +38,6 @@
 
   <!-- Ranges Table -->
   <div class="ranges-table">
-    <!-- Здесь будет таблица с диапазонами -->
+    <sp-range-table-display [defaultRangeTable]="(defaultRangeTable$|async)!" [rangeTable]="selectedRangeTable$|async"></sp-range-table-display>
   </div>
 </div>
