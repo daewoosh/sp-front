@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, forwardRef, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, forwardRef, Input, OnInit, SimpleChanges } from '@angular/core';
 import {
   ControlValueAccessor,
   FormArray,
@@ -93,6 +93,12 @@ export class RangeMulticolorSelectorComponent
     });
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['colors'] && !changes['colors'].firstChange) {
+      this.resetSlider();
+    }
+  }
+
   // Методы ControlValueAccessor
   onChange: any = () => {};
 
@@ -172,12 +178,15 @@ export class RangeMulticolorSelectorComponent
     this.cellColors.setValue(addedColors , {emitEvent: false});
     const percent = this.form.get('percent')?.value as number[];
     percent?.splice(i,1);
-    this.showSlider= false;
+   this.resetSlider();
+  }
+
+  private resetSlider(): void {
+    this.showSlider = false;
     this.cdr.detectChanges();
     setTimeout(() => {
-      this.form.get('percent')?.patchValue(percent);
-      this.showSlider= true;
+      this.showSlider = true;
       this.cdr.detectChanges();
-    },10);
+    }, 10);
   }
 }

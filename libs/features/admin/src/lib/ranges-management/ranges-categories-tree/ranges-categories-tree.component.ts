@@ -27,9 +27,9 @@ export class RangesCategoriesTreeComponent implements OnInit {
   ngOnInit() {
     this.addCategoriesToMap(this.categories);
     this.activatedRoute.firstChild?.params.subscribe((params) => {
-      const {actionId} = params;
-      if (actionId) {
-        this.selectedActionId = +actionId;
+      const {positionId} = params;
+      if (positionId) {
+        this.selectedActionId = +positionId;
         this.expandTreeForSelectedAction(this.selectedActionId);
       }
     });

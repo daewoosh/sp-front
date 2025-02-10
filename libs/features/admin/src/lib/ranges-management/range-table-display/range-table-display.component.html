@@ -6,13 +6,13 @@
     (mouseover)="onMouseOver(cell)"
     (mouseup)="onMouseUp()"
     tuiHint
-    
+
   >
     <span class="z-10">{{ cell.key }}</span>
     @if (cell.colorEntityId) {
       <div class="color-overlay">
         <div
-          *ngFor="let color of getColorData(cell)"
+          *ngFor="let color of getColorData(cell).reverse()"
           class="color-layer"
           [style.background-color]="color.color"
           [style.height.%]="color.percent"

@@ -82,11 +82,22 @@ export class RangeTableDisplayComponent {
       (mc) => mc.id === cell.colorEntityId
     );
     if (multiColor) {
-      return multiColor.cellColors.map((color, index) => ({
+      // Создаем массив цветов с процентами
+      const colorData = multiColor.cellColors.map((color, index) => ({
         color: color.color,
         text: color.text,
         percent: multiColor.percent[index],
       }));
+
+      // Сортируем по убыванию процентов
+      const sortedColorData = colorData.slice();
+
+      // Пересчитываем проценты
+      for (let i = 1; i < sortedColorData.length; i++) {
+        sortedColorData[i].percent -= sortedColorData[i - 1].percent;
+      }
+
+      return sortedColorData;
     }
 
     return [];

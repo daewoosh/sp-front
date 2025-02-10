@@ -70,10 +70,6 @@ export class RangesTableEditComponent implements OnInit {
   ngOnInit(): void {
     if (this.tableData) {
       this.initializeForm(this.tableData.config);
-    } else {
-      // Инициализация с пустыми массивами или данными по умолчанию
-      // this.addCellColor(); // Добавляем одну cellColor по умолчанию
-      // this.addMultiColor(); // Добавляем одну multiColor по умолчанию
     }
 
     this.form.valueChanges.subscribe((value) => {
@@ -105,19 +101,21 @@ export class RangesTableEditComponent implements OnInit {
     this.cellColors.removeAt(index);
     this.updateOrders();
 
-    this.multiColors.controls.forEach((group) => {
-      const colorsArray = group.get('cellColors') as FormArray<
-        FormControl<CellColor>
-      >;
-      const colorToRemove = colorsArray.controls.find(
-        (ctrl) => ctrl.value.id === removedColor.id
-      );
-      if (colorToRemove) {
-        const colorIndex = colorsArray.controls.indexOf(colorToRemove);
-        colorsArray.removeAt(colorIndex);
-      }
-    });
+    // this.multiColors.controls.forEach((group) => {
+    //   const colorsArray = group.get('cellColors') as FormArray<FormControl<CellColor>>;
+    //   const colorToRemove = colorsArray.controls.find(
+    //     (ctrl) => ctrl.value.id === removedColor.id
+    //   );
+    //   if (colorToRemove) {
+    //     const colorIndex = colorsArray.controls.indexOf(colorToRemove);
+    //     colorsArray.removeAt(colorIndex);
+    //   }
+    // });
+
+    // Добавляем вызов для синхронизации (опционально)
+    this.syncMultiColorsWithCellColors();
   }
+
 
   // Методы для управления multiColors
   addMultiColor(multiColor?: CellMulticolorConfiguration): void {
@@ -177,7 +175,29 @@ export class RangesTableEditComponent implements OnInit {
   }
 
   private syncMultiColorsWithCellColors(): void {
-    const currentCellColors = this.cellColors.value;
+    const updatedBaseColors = this.cellColors.value;
+
+    this.multiColors.controls.forEach(control => {
+      const multiConfig = control.value as CellMulticolorConfiguration;
+
+      // Собираем новые массивы, оставляя только те базовые цвета, которые ещё существуют,
+      // и корректно выравниваем массив percent по тем же индексам.
+      const newCellColors: CellColor[] = [];
+      const newPercents: number[] = [];
+      multiConfig.cellColors.forEach((color, index) => {
+        const found = updatedBaseColors.find(bc => bc.id === color.id);
+        if (found) {
+          newCellColors.push(found);
+          newPercents.push(multiConfig.percent[index]);
+        }
+      });
+
+      control.setValue({
+        ...multiConfig,
+        cellColors: newCellColors,
+        percent: newPercents
+      });
+    });
 
     // this.multiColors.controls.forEach((group) => {
     //   const colorsArray = group.get('cellColors') as FormArray<FormControl<CellColor>>;
