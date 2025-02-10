@@ -40,7 +40,8 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class RangesTableEditComponent implements OnInit {
   @Input() public tableData!: RangeTableData;
-  actionId: number = -1;
+  @Input() public editPath = '';
+  positionId = -1;
   form: FormGroup;
   public selectedColorEntity = '';
   private readonly sanitizer = inject(DomSanitizer);
@@ -53,7 +54,7 @@ export class RangesTableEditComponent implements OnInit {
       multiColors: this.fb.array<FormGroup<any>>([])
     });
     this.activatedRoute.paramMap.subscribe((params) => {
-      this.actionId = +params.get('actionId')!;
+      this.positionId = +params.get('positionId')!;
     });
   }
 
@@ -120,11 +121,15 @@ export class RangesTableEditComponent implements OnInit {
 
   // Методы для управления multiColors
   addMultiColor(multiColor?: CellMulticolorConfiguration): void {
+    if (this.cellColors.value.length<1){
+      alert('Необходимо задать хотя бы один базовый цвет');
+      return;
+    }
     const newOrder = this.multiColors.length;
     const mc: CellMulticolorConfiguration = multiColor || {
       id: uuid(),
-      cellColors: [this.cellColors.value[0], this.cellColors.value[1]],
-      percent: [50, 100],
+      cellColors: [this.cellColors.value[0]],
+      percent: [50],
       order: newOrder + 1
     };
 
@@ -146,7 +151,7 @@ export class RangesTableEditComponent implements OnInit {
     if (this.form.valid) {
       const config: RangeTableCellConfiguration = this.form.value;
       console.log({ config, tableData: this.tableData });
-      this.adminApiService.saveTable(this.actionId, { ...this.tableData, config }).subscribe();
+      this.adminApiService.saveTable(this.positionId, { ...this.tableData, config }).subscribe();
       // Здесь можно обработать данные, например, отправить на сервер
     } else {
       console.log('Форма не валидна');

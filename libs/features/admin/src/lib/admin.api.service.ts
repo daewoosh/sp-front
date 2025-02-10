@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from "rxjs";
 import { CoursePurchaseRequest, UserCourseInfo } from './models';
-import { PagingResult, RangeTableData } from '@sp/core/models';
+import { EditTableData, PagingResult, RangeTableData } from '@sp/core/models';
 
 @Injectable()
 export class AdminApiService{
@@ -39,11 +39,11 @@ export class AdminApiService{
     return this.http.post<void>(`${API_URL}/admin/users/toggleCourseAccess`, { courseId, userId  });
   }
 
-  getTableForEdit(actionId: number):Observable<RangeTableData>{
-    return this.http.get<RangeTableData>(`${API_URL}/admin/ranges/table?actionId=${actionId}`);
+  getTableForEdit(positionId: number):Observable<EditTableData>{
+    return this.http.get<EditTableData>(`${API_URL}/admin/ranges/table?actionId=${positionId}`);
   }
 
-  saveTable(actionId:number, tableData: RangeTableData):Observable<void>{
-    return this.http.post<void>(`${API_URL}/admin/ranges/table`, {data: tableData,actionId});
+  saveTable(positionId:number, tableData: RangeTableData):Observable<void>{
+    return this.http.post<void>(`${API_URL}/admin/ranges/table`, {data: tableData,positionId});
   }
 }

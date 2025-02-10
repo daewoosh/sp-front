@@ -14,7 +14,7 @@ export const manageRangesRoutes: Route[] = [
     resolve: { categories: RangesCategoriesResolver },
     children: [
       {
-        path: ':actionId',
+        path: ':positionId',
         loadComponent: () =>
           import('./ranges-management/ranges-table-management/ranges-table-management.component').then(
             (mod) => mod.RangesTableManagementComponent

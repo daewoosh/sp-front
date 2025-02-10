@@ -1,8 +1,12 @@
 <div class="flex gap-2" [formGroup]="form">
 
   <div class="flex items-center justify-center gap-3">
-    <div *ngFor="let colorControl of cellColors.value" class="color-container" [style.background-color]="colorControl.color">
-
+    <div *ngFor="let colorControl of cellColors.value; let i = index" class="color-container" [style.background-color]="colorControl.color">
+      <tui-icon
+        type="button" (click)="removeMultiColor(i)"
+        icon="@tui.circle-x"
+        class="absolute top-[-4px] right-[-4px] cursor-pointer text-base clr-warning"
+      />
     </div>
 
 

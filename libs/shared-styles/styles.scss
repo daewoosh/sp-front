@@ -69,6 +69,10 @@ html, body {
   color: var(--clr-danger);
 }
 
+.clr-warning {
+  color: var(--clr-orange);
+}
+
 .clr-black-light {
   color: var(--clr-black-light);
 }
@@ -582,6 +586,7 @@ tui-root{
   width: 32px;
   height: 32px;
   border-radius: 0.5rem;
+  position: relative;
 }
 //.t-thumb{
 //  background: white !important;

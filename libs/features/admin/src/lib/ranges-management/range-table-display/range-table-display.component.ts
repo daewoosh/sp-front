@@ -1,17 +1,18 @@
-import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   RangeTableCell,
-  RangeTableCellConfiguration,
-  RangeTableData,
+  RangeTableCellConfiguration, RangeTableCellDto, RangeTableColor,
+  RangeTableData
 } from '@sp/core/models';
+import { TuiHint, TuiHintComponent } from '@taiga-ui/core';
 
 @Component({
   selector: 'sp-range-table-display',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TuiHintComponent, TuiHint],
   templateUrl: './range-table-display.component.html',
-  styleUrl: './range-table-display.component.scss',
+  styleUrls: ['./range-table-display.component.scss'],
 })
 export class RangeTableDisplayComponent {
   @Input() tableData!: RangeTableData;
@@ -19,38 +20,39 @@ export class RangeTableDisplayComponent {
   @Input() selectedColorId: string | null = null;
   @Output() cellClick = new EventEmitter<RangeTableCell>();
   isMouseDown = false;
-  onCellClick(event:MouseEvent,cell: RangeTableCell): void {
-    event.stopPropagation();
-    event.preventDefault();
-    this.cellClick.emit(cell);
-    if (this.selectedColorId) {
-      if (cell.colorEntityId === this.selectedColorId) {
-        cell.colorEntityId = null;
-      } else {
-        cell.colorEntityId = this.selectedColorId;
-      }
-    }
+  lastHoveredCell: RangeTableCell | null = null; // Последняя ячейка, над которой была мышь
+
+  // Оптимизация *ngFor
+  trackByCellKey(index: number, cell: RangeTableCell): string {
+    return cell.key;
   }
 
   // Обработка рисования с зажатой кнопкой мыши
   onMouseDown(cell: RangeTableCell) {
     this.isMouseDown = true;
     this.toggleCellColor(cell);
+    this.lastHoveredCell = cell; // Запоминаем ячейку, на которой начали рисование
   }
 
   onMouseOver(cell: RangeTableCell) {
     if (this.isMouseDown && this.selectedColorId) {
-      this.toggleCellColor(cell);
+      // Если мышь перешла на новую ячейку или вернулась на ту же ячейку
+      if (this.lastHoveredCell !== cell) {
+        this.toggleCellColor(cell);
+        this.lastHoveredCell = cell; // Обновляем последнюю ячейку
+      }
     }
   }
 
   onMouseUp() {
     this.isMouseDown = false;
+    this.lastHoveredCell = null; // Сбрасываем последнюю ячейку
   }
 
   @HostListener('document:mouseup', ['$event'])
   onDocumentMouseUp() {
     this.isMouseDown = false;
+    this.lastHoveredCell = null; // Сбрасываем последнюю ячейку
   }
 
   toggleCellColor(cell: RangeTableCell) {
@@ -63,51 +65,30 @@ export class RangeTableDisplayComponent {
     }
   }
 
-  getCellStyle(cell: RangeTableCell): any {
+  // Получение данных для отображения цветов
+  getColorData(cell: RangeTableCell): RangeTableColor[] {
     if (!cell.colorEntityId) {
-      return {};
+      return [];
     }
 
-    // Проверяем, принадлежит ли colorEntityId к cellColors
     const cellColor = this.config.cellColors.find(
       (color) => color.id === cell.colorEntityId
     );
     if (cellColor) {
-      return {
-        'background-color': cellColor.color,
-        width: '100%',
-        height: '100%',
-      };
+      return [{ color: cellColor.color, text: cellColor.text, percent: 100 }];
     }
 
-    // Проверяем, принадлежит ли colorEntityId к multiColors
     const multiColor = this.config.multiColors.find(
       (mc) => mc.id === cell.colorEntityId
     );
     if (multiColor) {
-      // Создаем градиент на основе процентов и цветов
-      const sorted = multiColor.percent
-        .map((percent, index) => ({
-          percent,
-          color: multiColor.cellColors[index].color,
-        }))
-        .sort((a, b) => b.percent - a.percent); // Сортируем по убыванию
-
-      let gradient = '';
-      let previous = 0;
-      sorted.forEach((item, index) => {
-        gradient += `${item.color} ${previous}% ${item.percent}%`;
-        previous = item.percent;
-        if (index < sorted.length - 1) {
-          gradient += ', ';
-        }
-      });
-
-      return {
-        background: `linear-gradient(to top, ${gradient})`,
-      };
+      return multiColor.cellColors.map((color, index) => ({
+        color: color.color,
+        text: color.text,
+        percent: multiColor.percent[index],
+      }));
     }
 
-    return {};
+    return [];
   }
 }

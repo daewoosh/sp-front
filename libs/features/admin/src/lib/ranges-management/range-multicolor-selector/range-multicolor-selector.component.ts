@@ -14,6 +14,7 @@ import { CommonModule } from '@angular/common';
 import { NouisliderComponent } from 'ng2-nouislider';
 import { TuiDropdown, TuiIcon } from '@taiga-ui/core';
 import { TuiActiveZone, TuiObscured } from '@taiga-ui/cdk';
+import { debounce, debounceTime } from 'rxjs';
 
 @Component({
   selector: 'sp-range-multicolor-selector',
@@ -65,6 +66,17 @@ export class RangeMulticolorSelectorComponent
         max: 100,
       },
     };
+
+    this.form.get('percent')?.valueChanges
+      .pipe(debounceTime(100))
+      .subscribe((value) => {
+      let newPercent: number[];
+      if (!Array.isArray(value)) {
+        // Если это массив, добавляем новое значение
+        newPercent = [value];
+        this.form.get('percent')?.patchValue(newPercent);
+      }
+    });
   }
 
   get cellColors(): FormArray<FormControl<CellColor>> {
@@ -74,7 +86,6 @@ export class RangeMulticolorSelectorComponent
   ngOnInit(): void {
     // Обновление значения при изменении формы
     this.form.valueChanges.subscribe((value) => {
-      debugger;
       if (this.form.valid) {
         this.onChange(value);
         this.onTouched();
@@ -129,18 +140,44 @@ export class RangeMulticolorSelectorComponent
   }
 
   addPercent() {
-    debugger;
     const percent = this.form.get('percent')?.value;
-    percent?.push(75);
-    const newPercent = percent.sort((a:number, b:number) => a - b);
-    console.log(newPercent);
+
+    // Проверяем, является ли percent массивом
+    let newPercent: number[];
+    if (Array.isArray(percent)) {
+      // Если это массив, добавляем новое значение
+      newPercent = [...percent, 75];
+    } else {
+      // Если это не массив, создаем новый массив с текущим значением и новым значением
+      newPercent = percent !== undefined && percent !== null ? [percent, 75] : [75];
+    }
+
+    // Сортируем массив
+    newPercent.sort((a: number, b: number) => a - b);
+
+    // Обновляем форму
+    this.showSlider = false;
+    this.cdr.detectChanges();
+
+    setTimeout(() => {
+      this.form.get('percent')?.patchValue(newPercent);
+      this.showSlider = true;
+      this.cdr.detectChanges();
+    }, 10);
+  }
+
+  removeMultiColor(i: number) {
+    const addedColors = this.cellColors.value;
+    addedColors.splice(i,1 );
+    this.cellColors.setValue(addedColors , {emitEvent: false});
+    const percent = this.form.get('percent')?.value as number[];
+    percent?.splice(i,1);
     this.showSlider= false;
     this.cdr.detectChanges();
     setTimeout(() => {
-      this.form.get('percent')?.patchValue(newPercent);
+      this.form.get('percent')?.patchValue(percent);
       this.showSlider= true;
       this.cdr.detectChanges();
     },10);
-
   }
 }

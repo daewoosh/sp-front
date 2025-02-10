@@ -6,6 +6,11 @@ export interface RangeCategoryDto {
   children: RangeCategoryDto[];
 }
 
+export interface EditTableData{
+  table: RangeTableData;
+  path: string;
+}
+
 export interface RangeTableData {
   cells: RangeTableCell[];
   config: RangeTableCellConfiguration;

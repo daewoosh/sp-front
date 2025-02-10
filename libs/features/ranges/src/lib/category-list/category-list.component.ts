@@ -48,7 +48,6 @@ export class CategoryListComponent implements OnInit {
       } else {
         this.isMobile = true;
       }
-      console.log(this.isMobile);
     });
   }
 

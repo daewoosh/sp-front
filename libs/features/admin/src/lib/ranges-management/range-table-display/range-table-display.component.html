@@ -1,12 +1,48 @@
 <div class="range-table">
   <div
-    *ngFor="let cell of tableData.cells"
+    *ngFor="let cell of tableData.cells; trackBy: trackByCellKey"
     class="cell"
-    [ngStyle]="getCellStyle(cell)"
     (mousedown)="onMouseDown(cell)"
     (mouseover)="onMouseOver(cell)"
     (mouseup)="onMouseUp()"
+    tuiHint
+    
   >
-    {{ cell.key }}
+    <span class="z-10">{{ cell.key }}</span>
+    @if (cell.colorEntityId) {
+      <div class="color-overlay">
+        <div
+          *ngFor="let color of getColorData(cell)"
+          class="color-layer"
+          [style.background-color]="color.color"
+          [style.height.%]="color.percent"
+        ></div>
+      </div>
+      <ng-container *ngIf="!isMouseDown">
+      <tui-hint
+        *tuiHint
+        class="hint flex gap-3 flex-wrap"
+        [@.disabled]="true"
+      >
+        <div *ngFor="let color of getColorData(cell)" class="flex gap-2 items-center">
+          <div class="w-[8px] h-[8px]" [style.background-color]="color.color"></div>
+          <div class="font-bold">{{ color.percent }}%</div>
+        </div>
+      </tui-hint>
+      </ng-container>
+    }
   </div>
 </div>
+
+<!--<div class="range-table">-->
+<!--  <div-->
+<!--    *ngFor="let cell of tableData.cells"-->
+<!--    class="cell"-->
+<!--    [ngStyle]="getCellStyle(cell)"-->
+<!--    (mousedown)="onMouseDown(cell)"-->
+<!--    (mouseover)="onMouseOver(cell)"-->
+<!--    (mouseup)="onMouseUp()"-->
+<!--  >-->
+<!--    {{ cell.key }}-->
+<!--  </div>-->
+<!--</div>-->

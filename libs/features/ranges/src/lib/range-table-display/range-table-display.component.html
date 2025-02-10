@@ -8,7 +8,7 @@
     @if (cell.colorData?.length){
       <div class="color-overlay">
         <div
-          *ngFor="let color of cell.colorData"
+          *ngFor="let color of cell.colorData!.reverse()"
           class="color-layer"
           [style.background-color]="color.color"
           [style.height.%]="color.percent"
@@ -19,7 +19,7 @@
         class="hint flex gap-3 flex-wrap"
         [@.disabled]="true"
       >
-        <div *ngFor="let color of cell.colorData" class="flex gap-2 items-center">
+        <div *ngFor="let color of cell.colorData!.reverse()" class="flex gap-2 items-center">
           <div class="w-[8px] h-[8px] " [style.background-color]="color.color"></div>
           <div class="font-bold">{{ color.percent }}%</div>
         </div>
