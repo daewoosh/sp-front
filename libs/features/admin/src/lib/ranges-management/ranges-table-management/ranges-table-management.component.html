@@ -1,11 +1,11 @@
-<ng-container *ngIf="(isLoading$|async)===false">
-  @if (showTable) {
-    <sp-ranges-table-edit [tableData]="(tableData$|async)!" [editPath]="(editPath$|async)!" />
-  }
-  <div class="flex flex-col gap-4">
-    <button class="btn" (click)="parseHoldem()">Parse</button>
-    <textarea [(ngModel)]="fromHoldem" rows="6"></textarea>
+<ng-container *ngIf="isBrowser">
+  <ng-container *ngIf="(isLoading$|async)===false">
+    <sp-ranges-table-edit *ngIf="showTable" [tableData]="(tableData$|async)!" [editPath]="(editPath$|async)!" />
+    <div class="flex flex-col gap-4">
+      <button class="btn" (click)="parseHoldem()">Parse</button>
+      <textarea [(ngModel)]="fromHoldem" rows="6"></textarea>
 
 
-  </div>
+    </div>
+  </ng-container>
 </ng-container>

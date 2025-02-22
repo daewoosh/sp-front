@@ -1,5 +1,10 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
-import { BehaviorSubject, map, Observable, share } from 'rxjs';
+import {
+  ChangeDetectorRef,
+  Component,
+  Inject,
+  PLATFORM_ID,
+} from '@angular/core';
+import { BehaviorSubject, map, Observable, of, share } from 'rxjs';
 import {
   CellColor,
   CellMulticolorConfiguration,
@@ -10,9 +15,8 @@ import {
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { selectShowLoader } from '@sp/core/store/application';
-import { CommonModule } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RangesTableEditComponent } from './ranges-table-edit/ranges-table-edit.component';
-import { HttpClient } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { v4 as uuid } from 'uuid';
 
@@ -50,41 +54,42 @@ export interface HoldemMatrixItem {
   styleUrl: './ranges-table-management.component.scss',
 })
 export class RangesTableManagementComponent {
-
-
-  private tableDataSubject = new BehaviorSubject<RangeTableData>({} as RangeTableData);
-  public tableData$ = this.tableDataSubject.asObservable();
-
-  public editPath$: Observable<string>;
-  public isLoading$: Observable<boolean>;
-
+  public editPath$: Observable<string> = of('');
+  public isLoading$: Observable<boolean> = of(false);
   public fromHoldem = '';
-
   showTable = true;
+  isBrowser = false;
+  private tableDataSubject = new BehaviorSubject<RangeTableData>(
+    {} as RangeTableData
+  );
+  public tableData$ = this.tableDataSubject.asObservable();
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private store: Store,
-    private http: HttpClient,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    @Inject(PLATFORM_ID) private platformId: string
   ) {
-    this.isLoading$ = this.store.select(selectShowLoader);
+    if (isPlatformBrowser(this.platformId)) {
+      this.isBrowser = true;
+      this.isLoading$ = this.store.select(selectShowLoader);
 
-    this.activatedRoute.data
-      .pipe(
+      this.activatedRoute.data
+        .pipe(
+          map(({ tableData = {} }) => tableData as EditTableData),
+          map((data) => data.table),
+          share()
+        )
+        .subscribe((tableData) => {
+          this.tableDataSubject.next(tableData);
+        });
+
+      this.editPath$ = this.activatedRoute.data.pipe(
         map(({ tableData = {} }) => tableData as EditTableData),
-        map((data) => data.table),
+        map((data) => data.path),
         share()
-      )
-      .subscribe((tableData) => {
-        this.tableDataSubject.next(tableData);
-      });
-
-    this.editPath$ = this.activatedRoute.data.pipe(
-      map(({ tableData = {} }) => tableData as EditTableData),
-      map((data) => data.path),
-      share()
-    );
+      );
+    }
   }
 
   parseHoldem() {
@@ -101,12 +106,14 @@ export class RangesTableManagementComponent {
 
   transform(response: HoldemResponse): RangeTableData {
     // Шаг 1: Создание базовых цветов
-    const cellColors: CellColor[] = response.data.category.buttons.map((button, index) => ({
-      id: uuid(), // Генерация уникального ID
-      color: button.color,
-      text: button.name,
-      order: index,
-    }));
+    const cellColors: CellColor[] = response.data.category.buttons.map(
+      (button, index) => ({
+        id: uuid(), // Генерация уникального ID
+        color: button.color,
+        text: button.name,
+        order: index,
+      })
+    );
 
     // Шаг 2: Создание мультицветов
     const multiColors: CellMulticolorConfiguration[] = [];
@@ -161,7 +168,11 @@ export class RangesTableManagementComponent {
       }
 
       // Если colors содержит несколько цветов, создаем мультицвет
-      const combinationKey = colors
+      // Разворачиваем массив colors
+      const reversedColors = [...colors].reverse();
+
+      // Создаем ключ для комбинации цветов и весов
+      const combinationKey = reversedColors
         .map((c) => `${c.color}:${c.weight}`)
         .join('|');
 
@@ -171,10 +182,10 @@ export class RangesTableManagementComponent {
       }
 
       // Преобразуем веса в проценты
-      const percent = this.calculatePercentages(colors.map((c) => c.weight));
+      const percent = this.calculatePercentages(reversedColors.map((c) => c.weight));
 
       // Находим соответствующие базовые цвета
-      const cellColorsForMulti = colors.map((c) => {
+      const cellColorsForMulti = reversedColors.map((c) => {
         const baseColor = cellColors.find((bc) => bc.color === c.color);
         if (!baseColor) {
           throw new Error(`Базовый цвет ${c.color} не найден`);
@@ -196,8 +207,8 @@ export class RangesTableManagementComponent {
     });
 
     // Шаг 3: Создание ячеек таблицы
-    const cells: RangeTableCell[] = response.data.category.rangedisplay2.matrix.map(
-      (matrixItem) => {
+    const cells: RangeTableCell[] =
+      response.data.category.rangedisplay2.matrix.map((matrixItem) => {
         const colors = matrixItem.colors;
 
         // Если colors пустой, colorEntityId = null
@@ -228,7 +239,9 @@ export class RangesTableManagementComponent {
           const combinationKey = `${color.color}:${color.weight}`;
           const multiColor = colorCombinationMap.get(combinationKey);
           if (!multiColor) {
-            throw new Error(`Мультицвет для комбинации ${combinationKey} не найден`);
+            throw new Error(
+              `Мультицвет для комбинации ${combinationKey} не найден`
+            );
           }
           return {
             key: matrixItem.label,
@@ -237,19 +250,22 @@ export class RangesTableManagementComponent {
         }
 
         // Если colors содержит несколько цветов, используем мультицвет
-        const combinationKey = colors
+        // Разворачиваем массив colors
+        const reversedColors = [...colors].reverse();
+        const combinationKey = reversedColors
           .map((c) => `${c.color}:${c.weight}`)
           .join('|');
         const multiColor = colorCombinationMap.get(combinationKey);
         if (!multiColor) {
-          throw new Error(`Мультицвет для комбинации ${combinationKey} не найден`);
+          throw new Error(
+            `Мультицвет для комбинации ${combinationKey} не найден`
+          );
         }
         return {
           key: matrixItem.label,
           colorEntityId: multiColor.id,
         };
-      }
-    );
+      });
 
     // Шаг 4: Создание итогового объекта RangeTableData
     const rangeTableData: RangeTableData = {
@@ -265,11 +281,10 @@ export class RangesTableManagementComponent {
 
   // Вспомогательная функция для преобразования весов в проценты
   private calculatePercentages(weights: number[]): number[] {
-    const total = weights.reduce((sum, weight) => sum + weight, 0);
     let cumulative = 0;
     return weights.map((weight) => {
       cumulative += weight;
-      return Math.round((cumulative / total) * 100);
+      return cumulative;
     });
   }
 }
