@@ -114,7 +114,6 @@ export class LeadFormComponent {
       this.leadFormName === 'boosterpromo'
     ) {
       if (typeof fbq !== 'undefined') {
-        console.log('tracked');
         fbq('track', 'Lead');
       }
     }

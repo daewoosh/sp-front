@@ -7,6 +7,7 @@ import { RangeCategoryDto, RangeTableDto } from '@sp/core/models';
 import { TuiLet } from '@taiga-ui/cdk';
 import { RangeTableDisplayComponent } from '../range-table-display/range-table-display.component';
 import { RangesApiService } from '@sp/core/providers';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'sp-ranges-page',
@@ -37,7 +38,8 @@ export class RangesComponent {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private rangesApiService: RangesApiService
+    private rangesApiService: RangesApiService,
+
   ) {
     this.categories$ = this.activatedRoute.data.pipe(
       map(({ categories }) => categories as RangeCategoryDto[]),
@@ -117,4 +119,6 @@ export class RangesComponent {
     this.selectedRangeTable$ =
       this.rangesApiService.getTableDisplay(positionId);
   }
+
+
 }
