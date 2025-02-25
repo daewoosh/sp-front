@@ -14,10 +14,10 @@ export const appRoutes: Route[] = [
         path: "bonus",
         loadComponent: () => import('@sp/bonuses-page').then(mod => mod.BonusesPageComponent),
       },
-      {
-        path: "advanced",
-        loadComponent: () => import('@sp/advanced-course-page').then(mod => mod.AdvancedCoursePageComponent),
-      },
+      // {
+      //   path: "advanced",
+      //   loadComponent: () => import('@sp/advanced-course-page').then(mod => mod.AdvancedCoursePageComponent),
+      // },
       {
         path: "beginner",
         loadComponent: () => import('@sp/beginner-course-page').then(mod => mod.BeginnerCoursePageComponent),
