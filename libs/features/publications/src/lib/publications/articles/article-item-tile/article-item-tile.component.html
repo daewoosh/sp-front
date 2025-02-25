@@ -15,15 +15,14 @@
           </div>
         </div>
         <div class="shrink-0 self-end">
-          <a class="read-more inline-block mr-4" *ngIf="isAdmin" [routerLink]="['/admin/articles/edit',article.name]">Редактировать</a>
-          <a class="read-more mt-5 inline-block float-right"
-             [routerLink]="['/articles',article.name]">
+<!--          Разблокировка кода ниже ведет к ошибке гидрации. нельзя иметь а внутри а-->
+<!--          <a class="read-more inline-block mr-4" *ngIf="isAdmin" [routerLink]="['/admin/articles/edit',article.name]">Редактировать</a>-->
+          <span class="read-more mt-5 inline-block float-right">
             читать дальше
-          </a>
+          </span>
         </div>
 
       </div>
     </div>
   </div>
-
 </a>
