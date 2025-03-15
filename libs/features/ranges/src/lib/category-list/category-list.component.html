@@ -5,11 +5,12 @@
   <div class="clr-white text-xs text-center">{{ levelInfo.title }}</div>
 
   @if (selectedCategory && isMobile) {
-    <div class="flex justify-center">
-      <button class="btn w-fit primary mx-auto mt-2 btn-category">{{ selectedCategory?.name }}</button>
+    <div class="flex justify-center" [tuiDropdown]="content" tuiDropdownMobile="Выберите"
+         [(tuiDropdownOpen)]="expandedByCategory" (click)="$event.stopPropagation()">
+      <button class="btn w-fit primary mx-auto mt-2 btn-category" >{{ selectedCategory?.name }}</button>
     </div>
-
   }
+
   @if (!isMobile) {
     <tui-scrollbar [style.max-height.px]="420">
       <div class="flex gap-3 justify-center items-center"
@@ -44,19 +45,19 @@
               fill="white" />
       </svg>
     </div>
-    <ng-template  #content>
-        <div class="flex gap-3 flex-wrap my-6 justify-center items-center" tuiTheme="dark">
-          <button
-            class="btn w-full btn-category"
-            *ngFor="let category of categories"
-            [ngClass]="{'disabled': !selectedParentId}"
-            [class.primary]="isSelected(category)"
-            (click)="selectCategory(category)"
-          >
-            {{ category.name }}
-          </button>
-        </div>
-    </ng-template>
-  }
 
+  }
+  <ng-template  #content>
+    <div class="flex gap-3 flex-wrap my-6 justify-center items-center" tuiTheme="dark">
+      <button
+        class="btn w-full btn-category"
+        *ngFor="let category of categories"
+        [ngClass]="{'disabled': !selectedParentId}"
+        [class.primary]="isSelected(category)"
+        (click)="selectCategory(category)"
+      >
+        {{ category.name }}
+      </button>
+    </div>
+  </ng-template>
 </div>

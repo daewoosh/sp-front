@@ -13,10 +13,9 @@
 
   @media (min-width: 320px) {
     grid-template-areas:
-    "blinds-count range-action"
-    "range-position range-position"
-    "ranges-table ranges-table";
-    grid-template-columns: 1fr 1fr; // Два столбца равной ширины
+      "blinds-count range-action range-position"
+      "ranges-table ranges-table ranges-table";
+    grid-template-columns: 1fr 1fr 1fr; // Три столбца равной ширины
 
   }
 

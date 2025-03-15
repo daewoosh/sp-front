@@ -21,13 +21,13 @@ export class CategoryListComponent implements OnInit {
   }; // Информация о текущем уровне
   @Input() categories: RangeCategoryDto[] = []; // Список категорий для отображения
   @Input() selectedCategoryId: number | null = null; // ID выбранной категории
-  @Input() queryParamKey: string = ''; // Ключ для параметра роута (например, 'blind', 'action', 'position')
+  @Input() queryParamKey = ''; // Ключ для параметра роута (например, 'blind', 'action', 'position')
   @Input() resetQueryParams: { [key: string]: null } = {}; // Параметры, которые нужно сбросить при выборе
 
   @Output() categorySelected = new EventEmitter<number>(); // Событие выбора категории
   isMobile = true;
   expanded = false;
-
+  expandedByCategory = false;
   constructor(
     private router: Router,
     private breakPointObserver: BreakpointObserver
@@ -59,6 +59,7 @@ export class CategoryListComponent implements OnInit {
   // Обрабатывает выбор категории
   selectCategory(category: RangeCategoryDto): void {
     this.expanded = false;
+    this.expandedByCategory = false;
     const categoryId = typeof category === 'number' ? category : category.id;
     if (categoryId !== this.selectedCategoryId) {
       this.categorySelected.emit(categoryId);
@@ -70,9 +71,5 @@ export class CategoryListComponent implements OnInit {
         queryParamsHandling: 'merge',
       });
     }
-  }
-
-  expand() {
-    this.expanded = true;
   }
 }
