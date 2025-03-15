@@ -6,11 +6,19 @@ import { MenuItem } from "./menu-items";
 import { CoursesMenuItemComponent } from "./courses-menu-item/courses-menu-item.component";
 import { AppStateService } from "@sp/core/state";
 import { map, Observable } from "rxjs";
+import { TuiScrollbar } from '@taiga-ui/core';
+import { TuiRepeatTimes } from '@taiga-ui/cdk';
 
 @Component({
   selector: 'sp-courses-sidenav',
   standalone: true,
-  imports: [CommonModule, CoursesProfileComponent, CoursesMenuItemComponent],
+  imports: [
+    CommonModule,
+    CoursesProfileComponent,
+    CoursesMenuItemComponent,
+    TuiScrollbar,
+    TuiRepeatTimes,
+  ],
   templateUrl: './courses-sidenav.component.html',
   styleUrl: './courses-sidenav.component.scss',
 })
@@ -29,33 +37,36 @@ export class CoursesSidenavComponent implements OnInit {
     title: 'Поддержка',
     url: 'https://t.me/SafePoker_Sales',
     isAvailable: true,
-    isExternal : true
+    isExternal: true,
   };
 
   @Input() courses: Course[] = [];
 
   constructor(private appStateService: AppStateService) {
-    this.profile$ = this.appStateService.selectUser
-      .pipe(
-        map(user => {
-          return {
-            ...user,
-            telegramName:user.telegramName?  ('@' + user.telegramName) : null,
-
-          }
-        })
-      );
+    this.profile$ = this.appStateService.selectUser.pipe(
+      map((user) => {
+        return {
+          ...user,
+          telegramName: user.telegramName ? '@' + user.telegramName : null,
+        };
+      })
+    );
   }
 
   ngOnInit() {
-    this.menuItems = this.courses.map(x => {
+    this.menuItems = this.courses.map((x) => {
       return {
         icon: x.icon,
         title: x.title,
         url: `/courses/${x.slug}`,
-        isAvailable: x.isAvailable
-      }
+        isAvailable: x.isAvailable,
+      };
     });
-    this.menuItems.unshift({icon: 'all-products.svg', url: '/courses', title: 'Все продукты', isAvailable: true});
+    this.menuItems.unshift({
+      icon: 'all-products.svg',
+      url: '/courses',
+      title: 'Все продукты',
+      isAvailable: true,
+    });
   }
 }
