@@ -11,7 +11,7 @@ import { ArticleItemTileComponent } from "../article-item-tile/article-item-tile
   templateUrl: './articles-list.component.html',
   styleUrls: ['./articles-list.component.scss'],
   standalone: true,
-  imports: [CommonModule, InfiniteScrollDirective, ArticleItemTileComponent]
+  imports: [CommonModule, InfiniteScrollDirective, ArticleItemTileComponent],
 })
 export class ArticlesListComponent implements OnInit {
 
