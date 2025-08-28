@@ -3,7 +3,7 @@ import {
   inject,
   Inject,
   INJECTOR,
-  PLATFORM_ID,
+  PLATFORM_ID, Renderer2
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
@@ -38,7 +38,7 @@ export class HeaderComponent {
 
   sidebarOpen = false;
   courses$: Observable<Course[]>;
-
+  renderer = inject(Renderer2);
   public menuClosed = true;
   exchangeUrl = EXCHANGE_URL;
   isLoggedIn$: Observable<boolean>;
@@ -93,38 +93,25 @@ export class HeaderComponent {
   openModal() {
     this.dialog.pipe(take(1)).subscribe({
         next: (result) => {
-          console.log('closing modal');
           this.isModalOpen = false;
         },
         complete: () => {
-          console.log('modal closed');
           this.isModalOpen = false;
         },
       }
     );
-
-    // this.modalDialogService
-    //   .fromComponent(LoginModalComponent)
-    //   .subscribe((result?: any) => {
-    //     if (result) {
-    //
-    //       // this.router.navigate(['./account/orders']);
-    //     }
-    //   });
   }
 
 
   protected toggle(open: boolean): void {
-
-
     if (this.isModalOpen) {
       return;
     }
-    console.log({open});
     if (open) {
       this.isLoggedIn$.pipe(take(1)).subscribe((isLoggedIn) => {
         if (isLoggedIn) {
           this.sidebarOpen = true;
+          this.renderer.setStyle(document.body, 'overflow', 'hidden');
         } else {
           this.isModalOpen = true;
           this.openModal();
@@ -132,31 +119,8 @@ export class HeaderComponent {
       });
     } else {
       this.sidebarOpen = false;
+      this.renderer.removeStyle(document.body, 'overflow');
     }
   }
 
-  // protected toggle(open: boolean): void {
-  //   console.log({open});
-  //   // if (open === this.sidebarOpen) {
-  //   //   // Если состояние не меняется, просто выходим
-  //   //   return;
-  //   // }
-  //
-  //   if (open) {
-  //     // this.sidebarOpen = true;
-  //     this.isLoggedIn$.pipe(take(1)).subscribe(isLoggedIn => {
-  //       if (isLoggedIn) {
-  //         this.sidebarOpen = true;
-  //       } else {
-  //         setTimeout(() => {this.openModal();},50)
-  //
-  //       }
-  //     });
-  //   } else {
-  //     this.sidebarOpen = false;
-  //   }
-  // }
-  aa() {
-    alert('clicked');
-  }
 }

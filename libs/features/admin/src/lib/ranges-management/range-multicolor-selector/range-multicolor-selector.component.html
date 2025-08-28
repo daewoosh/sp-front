@@ -1,0 +1,43 @@
+<div class="flex gap-2" [formGroup]="form">
+
+  <div class="flex items-center justify-center gap-3">
+    <div *ngFor="let colorControl of cellColors.value; let i = index" class="color-container" [style.background-color]="colorControl.color">
+      <tui-icon
+        type="button" (click)="removeMultiColor(i)"
+        icon="@tui.circle-x"
+        class="absolute top-[-4px] right-[-4px] cursor-pointer text-base clr-warning"
+      />
+    </div>
+
+
+    <button
+      type="button"
+      [tuiDropdown]="dropdownContent"
+      [tuiDropdownManual]="open"
+      [tuiObscuredEnabled]="open"
+      (click)="onClick()"
+      (tuiActiveZoneChange)="onActiveZone($event)"
+      (tuiObscured)="onObscured($event)"
+    >
+      <tui-icon type="button" icon="@tui.plus" class="cursor-pointer clr-primary"></tui-icon>
+      <ng-template #dropdownContent>
+        <div class="p-2 flex flex-col gap-3 items-start">
+           <button
+             *ngFor="let color of colors"
+             type="button"
+             class="flex items-center justify-center gap-2"
+             (click)="addColor(color)"
+           >
+             <div  class="color-container" [style.background-color]="color.color">
+             </div>
+             {{color.text}}
+         </button>
+        </div>
+      </ng-template>
+    </button>
+
+  </div>
+  <div style="width: 300px" *ngIf="showSlider">
+    <nouislider [config]="sliderConfig" formControlName="percent"></nouislider>
+  </div>
+</div>

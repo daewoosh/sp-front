@@ -21,6 +21,7 @@ export class CoursesManagementComponent {
   courses: Course[] = [
     { id: 1, name: 'Only Poker' },
     { id: 2, name: 'Осознанное начало' },
+    { id: 4, name: 'Покерные ренджи' },
   ];
 
   createdLink = '';

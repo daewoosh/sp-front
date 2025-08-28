@@ -38,6 +38,8 @@ import { ClientService } from './app.resolver';
 import { API_PATH, EXCHANGE_URL as EXCHANGE_URL_TOKEN } from '@sp/config';
 import { CoursesStateService } from '@sp/core/providers/courses-state.service';
 import { initializeApplication } from './applnitializer';
+import { provideStore } from '@ngrx/store';
+import { applicationReducer } from '@sp/core/store/application';
 
 @Injectable()
 class GlobalErrorHandler implements ErrorHandler {
@@ -64,6 +66,7 @@ export const appConfig: ApplicationConfig = {
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
     NG_EVENT_PLUGINS,
+    provideStore({application: applicationReducer}),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
     provideAnimationsAsync(),
     {provide: API_PATH, useValue: API_URL},

@@ -1,0 +1,45 @@
+<div class="grid-container" *ngIf="categories$|async" tuiTheme="dark">
+  <!-- Blinds Count -->
+  <sp-category-list
+    class="blinds-count"
+    [categories]="(topLevelCategories$ | async)!"
+    [selectedCategoryId]="selectedBlindId$ | async"
+    [queryParamKey]="'blind'"
+    [resetQueryParams]="{ action: null, position: null }"
+    (categorySelected)="onBlindSelected($event)"
+    [levelInfo]="{ order:1, title: 'Количество блайндов'}"
+    [selectedParentId]="1"
+  ></sp-category-list>
+
+  <!-- Range Action -->
+  <sp-category-list
+    class="range-action"
+    *tuiLet="selectedBlindId$ | async as blindId"
+    [categories]="(actions$ | async)!"
+    [selectedCategoryId]="selectedActionId$ | async"
+    [queryParamKey]="'action'"
+    [resetQueryParams]="{ position: null }"
+    (categorySelected)="onActionSelected($event)"
+    [levelInfo]="{ order:2, title: 'Выберите действие'}"
+    [selectedParentId]="blindId"
+  ></sp-category-list>
+
+  <!-- Range Position -->
+  <sp-category-list
+    class="range-position"
+    *tuiLet="selectedActionId$ | async as actionId"
+    [categories]="(positions$ | async)!"
+    [selectedCategoryId]="selectedPositionId$ | async"
+    [queryParamKey]="'position'"
+    (categorySelected)="onPositionSelected($event)"
+    [levelInfo]="{ order:3, title: 'Выберите позицию'}"
+    [selectedParentId]="actionId"
+  ></sp-category-list>
+
+  <!-- Ranges Table -->
+  <div class="ranges-table">
+    <sp-range-table-display [defaultRangeTable]="(defaultRangeTable$|async)!" [rangeTable]="selectedRangeTable$|async"></sp-range-table-display>
+  </div>
+
+
+</div>
