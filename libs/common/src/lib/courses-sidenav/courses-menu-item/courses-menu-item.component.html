@@ -5,7 +5,7 @@
    >
   <div class="flex gap-3 items-center py-[10px] px-7" routerLinkActive="item-active"
        [routerLinkActiveOptions]="{exact: menuItem.url === '/courses'}">
-    <img [src]="'/assets/images/courses/'+menuItem.icon">
+    <img [src]="'assets/images/courses/'+menuItem.icon">
     <span class="text-base">{{menuItem.title}}</span>
   </div>
 </a>
@@ -15,7 +15,7 @@
    *ngIf="menuItem.isExternal"
 >
   <div class="flex gap-3 items-center py-[10px] px-7">
-    <img [src]="'/assets/images/courses/'+menuItem.icon">
+    <img [src]="'assets/images/courses/'+menuItem.icon">
     <span class="text-base">{{menuItem.title}}</span>
   </div>
 </a>

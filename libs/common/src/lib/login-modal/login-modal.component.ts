@@ -1,19 +1,35 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { catchError, debounceTime, delay, filter, map, of, startWith, Subject, switchMap } from "rxjs";
-import { WINDOW } from "@sp/sdk/common";
-import { CourseActivationService, LocalStorageService } from "@sp/core/providers";
-import { HttpClient } from "@angular/common/http";
-import { AppStateService } from "@sp/core/state/app-state.service";
-import { ActivatedRoute, Router } from "@angular/router";
+import {
+  catchError,
+  debounceTime,
+  delay,
+  filter,
+  map,
+  of,
+  startWith,
+  Subject,
+  switchMap,
+} from 'rxjs';
+import { WINDOW } from '@sp/sdk/common';
+import {
+  CourseActivationService,
+  LocalStorageService,
+} from '@sp/core/providers';
+import { HttpClient } from '@angular/common/http';
+import { AppStateService } from '@sp/core/state/app-state.service';
+import { ActivatedRoute, Router } from '@angular/router';
 import { v4 as uuid } from 'uuid';
-import { LoginResult } from "@sp/core/models";
-import { AUTH_HASH_NAME, AUTH_TOKEN_NAME } from "@sp/core";
+import { LoginResult } from '@sp/core/models';
+import { AUTH_HASH_NAME, AUTH_TOKEN_NAME } from '@sp/core';
 import { injectContext } from '@taiga-ui/polymorpheus';
-import { TuiDialogContext } from "@taiga-ui/core";
-import { SsrCookieService } from "ngx-cookie-service-ssr";
+import { TuiDialogContext } from '@taiga-ui/core';
+import { SsrCookieService } from 'ngx-cookie-service-ssr';
 import { ClientService } from '@sp/core/guards';
-import { AUTH_URL as AUTH_URL_TOKEN, AUTH_BOT_NAME as AUTH_BOT_NAME_TOKEN } from '@sp/config';
+import {
+  AUTH_BOT_NAME as AUTH_BOT_NAME_TOKEN,
+  AUTH_URL as AUTH_URL_TOKEN,
+} from '@sp/config';
 
 const FORM_CLOSE_TIMEOUT = 100000;
 const AUTH_REQUEST_INTERVAL = 2000;
@@ -71,6 +87,7 @@ export class LoginModalComponent implements OnDestroy, OnInit{
                     sameSite: 'None',
                     secure: true, // Ensure your site is served over HTTPS
                   } );
+                  this.localStorage.set(AUTH_TOKEN_NAME, result.accessToken ?? '');
                   if (token) {
                     // Активация курса выполняется только после успешного логина и при наличии токена
                     return this.courseActivationService.activateCourse(token).pipe(
