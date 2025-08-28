@@ -46,7 +46,7 @@ export class OneTimeLoginComponent implements OnInit{
           this.router.navigate(['/courses']);
         } else {
           this.httpClient
-            .post<LoginResult>(`${API_URL}/auth`, {
+            .post<LoginResult>(`${AUTH_URL}/auth`, {
               authHash: authInfo.authHash,
               authId: authInfo.authId,
             })

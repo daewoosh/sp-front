@@ -28,13 +28,13 @@ import {
   AdminGuard,
   AuthGuard,
   AuthInterceptor,
+  ClientService,
   ErrorInterceptor,
 } from '@sp/core/guards';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { CourseActivationService } from '@sp/core/providers';
 import { CourseAccessGuard } from '@sp/courses-page';
-import { ClientService } from './app.resolver';
 import { API_PATH, EXCHANGE_URL as EXCHANGE_URL_TOKEN } from '@sp/config';
 import { CoursesStateService } from '@sp/core/providers/courses-state.service';
 import { initializeApplication } from './applnitializer';

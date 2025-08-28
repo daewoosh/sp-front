@@ -8,7 +8,7 @@
     "build": "nx build sp-front --skip-nx-cache --configuration=production",
     "build:only": "nx build only-poker --skip-nx-cache --configuration=production",
     "build:booster": "nx build booster --skip-nx-cache --configuration=production",
-    "build:dev": "nx build sp-front --skip-nx-cache --configuration=dev",
+    "build:dev": "nx build sp-front --skip-nx-cache --configuration=dev --base-href=/learn/ --deploy-url=/learn/",
     "serve:ssr": "node dist/apps/sp-front/server/server.mjs"
   },
   "private": true,

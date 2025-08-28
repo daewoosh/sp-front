@@ -55,7 +55,7 @@ export class LoginModalComponent implements OnDestroy, OnInit{
       .pipe(
         switchMap(() =>
           this.httpClient
-            .post<LoginResult>(`${API_URL}/auth`, {
+            .post<LoginResult>(`${AUTH_URL}/auth`, {
               authHash: this.token,
             })
             .pipe(
