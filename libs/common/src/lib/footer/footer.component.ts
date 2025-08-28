@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from "@angular/router";
 
@@ -8,5 +8,8 @@ import { RouterLink } from "@angular/router";
   imports: [CommonModule, RouterLink],
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FooterComponent {}
+export class FooterComponent {
+  public year = new Date().getFullYear();
+}
