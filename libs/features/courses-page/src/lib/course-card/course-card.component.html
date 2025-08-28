@@ -19,10 +19,10 @@
 
   <div class="absolute top-[22px] right-[28px]">
     <ng-container *ngIf="course.purchased && course.accessState !== states.Blocked;else locked">
-      <img src="/assets/icons/available.svg">
+      <img src="assets/icons/available.svg">
     </ng-container>
     <ng-template #locked>
-      <img src="/assets/icons/locked.svg">
+      <img src="assets/icons/locked.svg">
     </ng-template>
   </div>
 </div>
