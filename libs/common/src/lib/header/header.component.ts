@@ -3,7 +3,7 @@ import {
   inject,
   Inject,
   INJECTOR,
-  PLATFORM_ID, Renderer2
+  Renderer2
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
@@ -12,12 +12,13 @@ import { LearningDropDownComponent } from '../learning-drop-down/learning-drop-d
 import { filter, Observable, take } from 'rxjs';
 import { AppStateService } from '@sp/core/state/app-state.service';
 import { TuiDialogService } from '@taiga-ui/core';
-import { LoginModalComponent } from '../login-modal/login-modal.component';
 import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
 import { TuiActiveZone } from '@taiga-ui/cdk';
 import { CoursesSidenavComponent } from '../courses-sidenav';
 import { CoursesStateService } from '@sp/core/providers/courses-state.service';
 import { Course } from '@sp/core/models';
+import { EXCHANGE_URL } from '@sp/config';
+import { LoginModalComponent } from '../login-modal/login-modal.component';
 
 @Component({
   selector: 'sp-header',
@@ -25,7 +26,6 @@ import { Course } from '@sp/core/models';
   imports: [CommonModule,
     LearningDropDownComponent,
     RouterModule,
-    LoginModalComponent,
     TuiSidebar,
     TuiSidebarDirective,
     TuiActiveZone,
@@ -40,7 +40,6 @@ export class HeaderComponent {
   courses$: Observable<Course[]>;
   renderer = inject(Renderer2);
   public menuClosed = true;
-  exchangeUrl = EXCHANGE_URL;
   isLoggedIn$: Observable<boolean>;
   isAdmin$: Observable<boolean>;
   links = [{
@@ -58,19 +57,12 @@ export class HeaderComponent {
   }]
   private readonly dialogs = inject(TuiDialogService);
   private readonly injector = inject(INJECTOR);
-  private readonly dialog = this.dialogs.open<number>(
-    new PolymorpheusComponent(LoginModalComponent, this.injector),
-    {
-      data: 237,
-      dismissible: true,
-      appearance: 'sp-modal'
-    },
-  );
   public isModalOpen = false;
 
   constructor(private router: Router,
               appStateService: AppStateService,
-              private coursesStateService: CoursesStateService) {
+              private coursesStateService: CoursesStateService,
+              @Inject(EXCHANGE_URL) public exchangeUrl: string) {
     this.isLoggedIn$ = appStateService.isLoggedIn$;
     this.isAdmin$ = appStateService.isAdmin$;
     this.courses$ = this.coursesStateService.selectCourses;
@@ -91,8 +83,17 @@ export class HeaderComponent {
   }
 
   openModal() {
-    this.dialog.pipe(take(1)).subscribe({
-        next: (result) => {
+    const dialog$ = this.dialogs.open<number>(
+      new PolymorpheusComponent(LoginModalComponent, this.injector),
+      {
+        data: 237,
+        dismissible: true,
+        appearance: 'sp-modal'
+      },
+    );
+
+    dialog$.pipe(take(1)).subscribe({
+        next: () => {
           this.isModalOpen = false;
         },
         complete: () => {

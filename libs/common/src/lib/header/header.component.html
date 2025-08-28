@@ -53,8 +53,6 @@
       <sp-learning-drop-down></sp-learning-drop-down>
       <a routerLink="/bonus" queryParamsHandling="preserve" [ngClass]="{'active':isActiveRoute('/bonus')}"
          class="nav-link text-base">Бонусы</a>
-      <a routerLink="/articles" queryParamsHandling="preserve" [ngClass]="{'active':isActiveRoute('/articles')}"
-         class="nav-link text-base">Блог</a>
     </nav>
 
     <ng-container *ngIf="isLoggedIn$|async;else loginModal">
@@ -152,8 +150,6 @@
           <a routerLink="/bonus" queryParamsHandling="preserve" routerLinkActive="active"
              class="nav-link  w-fit text-base">Бонусы</a>
 
-          <a routerLink="/articles" queryParamsHandling="preserve" [ngClass]="{'active':isActiveRoute('/articles')}"
-             class="nav-link text-base">Блог</a>
         </nav>
       </div>
     </div>
