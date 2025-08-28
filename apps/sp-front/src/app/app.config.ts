@@ -34,12 +34,12 @@ import {
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { CourseActivationService } from '@sp/core/providers';
-import { CourseAccessGuard } from '@sp/courses-page';
-import { API_PATH, EXCHANGE_URL as EXCHANGE_URL_TOKEN } from '@sp/config';
+import { API_PATH, EXCHANGE_URL as EXCHANGE_URL_TOKEN, APP_URL as APP_URL_TOKEN, AUTH_URL as AUTH_URL_TOKEN, AUTH_BOT_NAME as AUTH_BOT_NAME_TOKEN } from '@sp/config';
 import { CoursesStateService } from '@sp/core/providers/courses-state.service';
 import { initializeApplication } from './applnitializer';
 import { provideStore } from '@ngrx/store';
 import { applicationReducer } from '@sp/core/store/application';
+import { CourseAccessGuard } from '@sp/courses-page';
 
 @Injectable()
 class GlobalErrorHandler implements ErrorHandler {
@@ -71,6 +71,9 @@ export const appConfig: ApplicationConfig = {
     provideAnimationsAsync(),
     {provide: API_PATH, useValue: API_URL},
     {provide: EXCHANGE_URL_TOKEN, useValue: EXCHANGE_URL},
+    {provide: APP_URL_TOKEN, useValue: APP_URL},
+    {provide: AUTH_URL_TOKEN, useValue: AUTH_URL},
+    {provide: AUTH_BOT_NAME_TOKEN, useValue: AUTH_BOT_NAME},
     CourseActivationService,
     AdminGuard,
     AuthGuard,
@@ -83,5 +86,3 @@ export const appConfig: ApplicationConfig = {
     },
   ],
 };
-
-

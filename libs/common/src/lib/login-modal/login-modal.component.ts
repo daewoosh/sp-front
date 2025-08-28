@@ -13,6 +13,7 @@ import { injectContext } from '@taiga-ui/polymorpheus';
 import { TuiDialogContext } from "@taiga-ui/core";
 import { SsrCookieService } from "ngx-cookie-service-ssr";
 import { ClientService } from '@sp/core/guards';
+import { AUTH_URL as AUTH_URL_TOKEN, AUTH_BOT_NAME as AUTH_BOT_NAME_TOKEN } from '@sp/config';
 
 const FORM_CLOSE_TIMEOUT = 100000;
 const AUTH_REQUEST_INTERVAL = 2000;
@@ -40,6 +41,8 @@ export class LoginModalComponent implements OnDestroy, OnInit{
     private courseActivationService: CourseActivationService,
     private cookieService: SsrCookieService,
     private clientService: ClientService,
+    @Inject(AUTH_URL_TOKEN) private authUrl: string,
+    @Inject(AUTH_BOT_NAME_TOKEN) private authBotName: string,
   ) {
   }
 
@@ -57,7 +60,7 @@ export class LoginModalComponent implements OnDestroy, OnInit{
       .pipe(
         switchMap(() =>
           this.httpClient
-            .post<LoginResult>(`${AUTH_URL}/auth`, {
+            .post<LoginResult>(`${this.authUrl}/auth`, {
               authHash: this.token,
             })
             .pipe(
@@ -107,7 +110,7 @@ export class LoginModalComponent implements OnDestroy, OnInit{
   }
 
   login() {
-    const authUrl = `https://t.me/${AUTH_BOT_NAME}?start=${this.token}`;
+    const authUrl = `https://t.me/${this.authBotName}?start=${this.token}`;
     this.localStorage.set(AUTH_HASH_NAME, this.token);
     this.ticker.next(true);
     this.window.open(authUrl);

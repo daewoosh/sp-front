@@ -27,6 +27,7 @@ import { TuiActiveZone } from '@taiga-ui/cdk';
 import { NgDompurifyPipe } from '@taiga-ui/dompurify';
 import { LocalStorageService } from '@sp/core/providers';
 import { USER_VOLUME_TOKEN_NAME } from '@sp/core';
+import { API_PATH } from '@sp/config';
 
 
 @Component({
@@ -72,7 +73,8 @@ export class CourseItemVideoComponent implements OnDestroy {
               private localStorage: LocalStorageService,
               private cdr: ChangeDetectorRef,
               private coursesApiService: CoursesApiService,
-              private coursesStateService: CoursesStateService) {
+              private coursesStateService: CoursesStateService,
+              @Inject(API_PATH) private apiPath: string) {
     if (isPlatformBrowser(platformId)) {
       this.canShowPlayer = true;
     }
@@ -138,7 +140,7 @@ export class CourseItemVideoComponent implements OnDestroy {
   }
 
   getVideoUrl(): string {
-    return `${API_URL}/Video/${this.courseElement.courseSlug}/${this.courseElement.order}/master.m3u8`;
+    return `${this.apiPath}/Video/${this.courseElement.courseSlug}/${this.courseElement.order}/master.m3u8`;
   }
 
   onPlayerReady($event: VgApiService) {
@@ -150,7 +152,7 @@ export class CourseItemVideoComponent implements OnDestroy {
           this.api!.getMediaById(this.videoId).currentTime = this.courseElement.lastPosition ?? 0;
           const savedVolume = this.localStorage.get(USER_VOLUME_TOKEN_NAME);
           if (savedVolume != null) {
-            // @ts-ignore
+            // @ts-expect-error: тип VgApiService не предоставляет прямого доступа к volume, но в рантайме свойство есть
             this.api!.getMediaById(this.videoId).volume = savedVolume;
           }
         }
