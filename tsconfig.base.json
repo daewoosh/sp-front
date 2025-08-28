@@ -32,6 +32,7 @@
       "@sp/core": ["libs/core/src/index.ts"],
       "@sp/core/*": ["libs/core/src/*"],
       "@sp/courses-page": ["libs/features/courses-page/src/index.ts"],
+      "@sp/features/ranges": ["libs/features/ranges/src/index.ts"],
       "@sp/main-page": ["libs/features/main-page/src/index.ts"],
       "@sp/mask": ["libs/mask/src/index.ts"],
       "@sp/only-poker-page": ["libs/features/only-poker-page/src/index.ts"],

@@ -1,0 +1,93 @@
+.category-list {
+  min-width: fit-content;
+  border-radius: 10px;
+  @apply pt-1 pb-2 px-1 sm:pt-[30px] sm:pb-[10px] sm:px-[10px];
+  //padding: 30px 10px 10px 10px;
+  background: #1C1E1D;
+  position: relative;
+
+  .expander {
+    position: absolute;
+    bottom: -20px;
+    cursor: pointer;
+    left: calc(50% - 16px);
+
+    &.disabled {
+      pointer-events: none;
+      opacity: 0.5;
+    }
+  }
+
+  .expanded {
+    position: absolute;
+    bottom: 0;
+    max-height: 500px;
+    transition: max-height 0.25s ease-in;
+
+    &.collapsed {
+      max-height: 0;
+      transition: max-height 0.15s ease-out;
+      overflow: hidden;
+    }
+  }
+
+  & .order {
+    position: absolute;
+    top: 10px;
+    left: -12px;
+
+    @apply sm:top-[-15px] sm:left-0 sm:right-0 sm:w-full;
+    display: flex;
+    justify-content: center;
+
+    & .number {
+      text-align: center;
+      @apply w-[20px] h-[20px] sm:w-[30px] sm:h-[30px];
+      @apply text-sm sm:text-lg leading-[20px] sm:leading-[28px];
+      //width: 30px;
+      //height: 30px;
+      border-radius: 100%;
+      background: #F6F2E1;
+      color: black;
+    }
+  }
+}
+
+.btn-category {
+  font-size: 0.75rem !important;
+  border-radius: 10px !important;
+  width: 84px !important;
+  min-width: 84px !important;
+  padding-inline: 4px !important;
+
+  @media screen and (min-width: 576px){
+    width: 120px !important;
+    min-width: 120px !important;
+    padding-inline: 10px !important;
+  }
+
+  &.disabled {
+    pointer-events: none;
+    border-color: #808080 !important;
+    color: #808080 !important;
+  }
+}
+
+.range-position {
+  @media screen and (min-width: 1298px) {
+    width: 100%; // Занимаем всю доступную ширину
+    max-width: 558px; // Ограничиваем максимальную ширину
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  @media screen and (min-width: 1460px) {
+    grid-template-columns: 1fr 1fr;
+  }
+  @media screen and (min-width: 1540px) {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  @media screen and (min-width: 1650px) {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+}

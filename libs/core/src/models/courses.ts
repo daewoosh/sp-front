@@ -8,8 +8,16 @@ export interface Course {
   purchased: boolean;
   isAvailable: boolean;
   accessState: UserCourseAccessState;
+  productType: ProductType;
+  url?: string;
+
 }
 
+export enum ProductType
+{
+  Course = 1,
+  Range = 2,
+}
 
 export enum CourseElementType {
   Video,

@@ -5,6 +5,7 @@ import {
   CourseProgramResolver,
 } from './course-program-resolver.service';
 import { CourseAccessGuard } from './course-access-guard.service';
+import { RangesCategoriesResolver, DefaultRangeTableResolver } from '@sp/core/providers';
 
 export const coursesRoutes: Route[] = [
   {
@@ -12,6 +13,16 @@ export const coursesRoutes: Route[] = [
     resolve: { CoursesResolver },
     data: { hideFooter: true },
     children: [
+      {
+        path: 'ranges',  // Новый маршрут для ranges
+        loadComponent: () =>
+          import('@sp/features/ranges').then(
+            (mod) => mod.RangesComponent
+          ),
+        data: { hideFooter: true, id: 'ranges' },
+        canActivate: [CourseAccessGuard],
+        resolve: { categories: RangesCategoriesResolver, defaultRangeTable: DefaultRangeTableResolver },
+      },
       {
         path: ':id',
         loadComponent: () =>

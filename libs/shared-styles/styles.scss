@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import "nouislider/dist/nouislider.css";
 
 @font-face {
   font-family: 'Golos';
@@ -66,6 +67,10 @@ html, body {
 
 .clr-danger {
   color: var(--clr-danger);
+}
+
+.clr-warning {
+  color: var(--clr-orange);
 }
 
 .clr-black-light {
@@ -577,7 +582,17 @@ tui-root{
   color: #7e7c7c !important;
 }
 
-
+.color-container{
+  width: 32px;
+  height: 32px;
+  border-radius: 0.5rem;
+  position: relative;
+}
 //.t-thumb{
 //  background: white !important;
 //}
+
+tui-dropdown-mobile{
+  --tui-background-elevation-1: #272826 !important;
+
+}
