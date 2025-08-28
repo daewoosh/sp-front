@@ -12,6 +12,7 @@ import { AUTH_HASH_NAME, AUTH_TOKEN_NAME } from "@sp/core";
 import { injectContext } from '@taiga-ui/polymorpheus';
 import { TuiDialogContext } from "@taiga-ui/core";
 import { SsrCookieService } from "ngx-cookie-service-ssr";
+import { ClientService } from '@sp/core/guards';
 
 const FORM_CLOSE_TIMEOUT = 100000;
 const AUTH_REQUEST_INTERVAL = 2000;
@@ -37,7 +38,8 @@ export class LoginModalComponent implements OnDestroy, OnInit{
     private readonly router: Router,
     private activatedRoute: ActivatedRoute,
     private courseActivationService: CourseActivationService,
-    private cookieService: SsrCookieService
+    private cookieService: SsrCookieService,
+    private clientService: ClientService,
   ) {
   }
 
@@ -88,13 +90,12 @@ export class LoginModalComponent implements OnDestroy, OnInit{
       .subscribe((result?: LoginResult) => {
         if (result) {
 
-          this.appStateService.setUserState({
-            isLoggedIn: result.isSuccessLogin,
-            user: result.user,
+          this.clientService.validateAuthToken().subscribe(() => {
+            this.context.completeWith(result);
           });
 
           this.router.navigate(['/courses']);
-          this.context.completeWith(result);
+          // this.context.completeWith(result);
         } else {
           this.ticker.next(false);
         }
