@@ -42,12 +42,12 @@
     </div>
 
     <nav class="hidden md:flex space-x-10">
-      <a routerLink="/" queryParamsHandling="preserve"
-         class="nav-link  text-base" [ngClass]="{'active':isRootRoute()}">Главная</a>
+<!--      <a routerLink="/" queryParamsHandling="preserve"-->
+<!--         class="nav-link  text-base" [ngClass]="{'active':isRootRoute()}">Главная</a>-->
       <!--      <a [href]="navService.getUrlWithUtm('/news')" [ngClass]="{'active':isActiveRoute('/news')}"-->
       <!--         class="nav-link text-base">Новости</a>-->
 
-      <a [href]="exchangeUrl" target="_blank"
+      <a [href]="exchangeUrl"
          class="nav-link  text-base" [ngClass]="{'active':isActiveRoute('exchanger')}">Обменник</a>
       <!--      <app-courses-drop-down></app-courses-drop-down>-->
       <sp-learning-drop-down></sp-learning-drop-down>
@@ -58,11 +58,11 @@
     <ng-container *ngIf="isLoggedIn$|async;else loginModal">
       <button type="button" class="profile-circle block xl:hidden ml-4 flex-shrink-0"
               (tuiActiveZoneChange)="toggle($event)">
-        <img class="unhovered" src="assets/icons/man.svg"/>
-        <img class="hovered" src="assets/icons/man-hover.svg"/>
+        <img class="unhovered" src="assets/icons/man.svg" />
+        <img class="hovered" src="assets/icons/man-hover.svg" />
         <div *tuiSidebar="sidebarOpen; direction: 'left'">
           <div class="h-screen" *ngIf="courses$|async as courses">
-            <sp-courses-sidenav [courses]="courses"/>
+            <sp-courses-sidenav [courses]="courses" />
           </div>
         </div>
       </button>
@@ -70,8 +70,8 @@
     <ng-template #loginModal>
       <button type="button" class="profile-circle block xl:hidden ml-4 flex-shrink-0"
               (click)="openModal()">
-        <img class="unhovered" src="assets/icons/man.svg"/>
-        <img class="hovered" src="assets/icons/man-hover.svg"/>
+        <img class="unhovered" src="assets/icons/man.svg" />
+        <img class="hovered" src="assets/icons/man-hover.svg" />
       </button>
     </ng-template>
 
@@ -138,12 +138,11 @@
       </div>
       <div class="mt-6">
         <nav class="grid gap-y-8">
-          <a routerLink="/" queryParamsHandling="preserve"
-             class="nav-link  text-base" [ngClass]="{'active':isRootRoute()}">Главная</a>
+<!--          <a routerLink="/" queryParamsHandling="preserve"-->
+<!--             class="nav-link  text-base" [ngClass]="{'active':isRootRoute()}">Главная</a>-->
 
 
-          <a [href]="exchangeUrl" target="_blank"
-             class="nav-link w-fit  text-base">Обменник</a>
+          <a [href]="exchangeUrl" class="nav-link w-fit  text-base">Обменник</a>
 
 
           <sp-learning-drop-down></sp-learning-drop-down>
