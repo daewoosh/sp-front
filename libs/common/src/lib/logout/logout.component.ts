@@ -29,7 +29,9 @@ export class LogoutComponent implements OnInit{
     this.localStorage.remove(AUTH_HASH_NAME);
     this.coursesStateService.clearCourses();
     this.cookieService.delete(AUTH_TOKEN_NAME);
-
+    this.cookieService.delete(AUTH_TOKEN_NAME, '/');
+    this.cookieService.delete(AUTH_TOKEN_NAME, '/learn/');
+    this.cookieService.delete(AUTH_TOKEN_NAME, '/learn');
     window.location.href = this.exchangeUrl;
   }
 }

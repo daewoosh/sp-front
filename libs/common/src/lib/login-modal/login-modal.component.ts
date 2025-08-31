@@ -30,6 +30,7 @@ import {
   AUTH_BOT_NAME as AUTH_BOT_NAME_TOKEN,
   AUTH_URL as AUTH_URL_TOKEN,
 } from '@sp/config';
+import { APP_BASE_HREF } from '@angular/common';
 
 const FORM_CLOSE_TIMEOUT = 100000;
 const AUTH_REQUEST_INTERVAL = 2000;
@@ -40,6 +41,7 @@ const AUTH_REQUEST_INTERVAL = 2000;
   imports: [CommonModule],
   templateUrl: './login-modal.component.html',
   styleUrl: './login-modal.component.scss',
+  providers: [{provide: APP_BASE_HREF, useValue: '/learn'}]
 })
 export class LoginModalComponent implements OnDestroy, OnInit{
   private token = '';
@@ -59,6 +61,7 @@ export class LoginModalComponent implements OnDestroy, OnInit{
     private clientService: ClientService,
     @Inject(AUTH_URL_TOKEN) private authUrl: string,
     @Inject(AUTH_BOT_NAME_TOKEN) private authBotName: string,
+    @Inject(APP_BASE_HREF) private baseHref: string,
   ) {
   }
 
@@ -130,6 +133,22 @@ export class LoginModalComponent implements OnDestroy, OnInit{
     const authUrl = `https://t.me/${this.authBotName}?start=${this.token}`;
     this.localStorage.set(AUTH_HASH_NAME, this.token);
     this.ticker.next(true);
-    this.window.open(authUrl);
+
+    // Формируем полный ReturnUrl: origin + baseHref + 'courses'
+    const base = this.baseHref || '/';
+    const normalizedBase = base.endsWith('/') ? base : base + '/';
+    const returnUrl = `${this.window.location.origin}${normalizedBase}courses`;
+
+    // Делаем подготовительный запрос перед открытием Telegram
+    this.httpClient
+      .post(`${this.authUrl}/auth/PrepareAuth`, {
+        authHash: this.token,
+        returnUrl,
+      })
+      .pipe(
+        // В любом случае открываем Telegram-бота (даже при ошибке)
+        catchError(() => of(null))
+      )
+      .subscribe(() => this.window.open(authUrl));
   }
 }
