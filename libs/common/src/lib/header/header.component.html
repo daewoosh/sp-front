@@ -1,7 +1,7 @@
 <nav class="sticky top-0 bg-[#1C1E1D] z-[301]">
   <nav class="max-w-6xl mx-auto justify-between items-center px-4 py-6 xl:px-0 flex gap-1">
     <div class="flex-shrink-0">
-      <a routerLink="/" queryParamsHandling="preserve" class="cursor-pointer"
+      <a [href]="exchangeUrl" queryParamsHandling="preserve" class="cursor-pointer"
       ><img src="assets/icons/logo.png"
       /></a>
     </div>
@@ -42,29 +42,27 @@
     </div>
 
     <nav class="hidden md:flex space-x-10">
-      <a routerLink="/" queryParamsHandling="preserve"
-         class="nav-link  text-base" [ngClass]="{'active':isRootRoute()}">Главная</a>
+<!--      <a routerLink="/" queryParamsHandling="preserve"-->
+<!--         class="nav-link  text-base" [ngClass]="{'active':isRootRoute()}">Главная</a>-->
       <!--      <a [href]="navService.getUrlWithUtm('/news')" [ngClass]="{'active':isActiveRoute('/news')}"-->
       <!--         class="nav-link text-base">Новости</a>-->
 
-      <a [href]="exchangeUrl" target="_blank"
+      <a [href]="exchangeUrl"
          class="nav-link  text-base" [ngClass]="{'active':isActiveRoute('exchanger')}">Обменник</a>
       <!--      <app-courses-drop-down></app-courses-drop-down>-->
       <sp-learning-drop-down></sp-learning-drop-down>
       <a routerLink="/bonus" queryParamsHandling="preserve" [ngClass]="{'active':isActiveRoute('/bonus')}"
          class="nav-link text-base">Бонусы</a>
-      <a routerLink="/articles" queryParamsHandling="preserve" [ngClass]="{'active':isActiveRoute('/articles')}"
-         class="nav-link text-base">Блог</a>
     </nav>
 
     <ng-container *ngIf="isLoggedIn$|async;else loginModal">
       <button type="button" class="profile-circle block xl:hidden ml-4 flex-shrink-0"
               (tuiActiveZoneChange)="toggle($event)">
-        <img class="unhovered" src="assets/icons/man.svg"/>
-        <img class="hovered" src="assets/icons/man-hover.svg"/>
+        <img class="unhovered" src="assets/icons/man.svg" />
+        <img class="hovered" src="assets/icons/man-hover.svg" />
         <div *tuiSidebar="sidebarOpen; direction: 'left'">
           <div class="h-screen" *ngIf="courses$|async as courses">
-            <sp-courses-sidenav [courses]="courses"/>
+            <sp-courses-sidenav [courses]="courses" />
           </div>
         </div>
       </button>
@@ -72,8 +70,8 @@
     <ng-template #loginModal>
       <button type="button" class="profile-circle block xl:hidden ml-4 flex-shrink-0"
               (click)="openModal()">
-        <img class="unhovered" src="assets/icons/man.svg"/>
-        <img class="hovered" src="assets/icons/man-hover.svg"/>
+        <img class="unhovered" src="assets/icons/man.svg" />
+        <img class="hovered" src="assets/icons/man-hover.svg" />
       </button>
     </ng-template>
 
@@ -140,20 +138,17 @@
       </div>
       <div class="mt-6">
         <nav class="grid gap-y-8">
-          <a routerLink="/" queryParamsHandling="preserve"
-             class="nav-link  text-base" [ngClass]="{'active':isRootRoute()}">Главная</a>
+<!--          <a routerLink="/" queryParamsHandling="preserve"-->
+<!--             class="nav-link  text-base" [ngClass]="{'active':isRootRoute()}">Главная</a>-->
 
 
-          <a [href]="exchangeUrl" target="_blank"
-             class="nav-link w-fit  text-base">Обменник</a>
+          <a [href]="exchangeUrl" class="nav-link w-fit  text-base">Обменник</a>
 
 
           <sp-learning-drop-down></sp-learning-drop-down>
           <a routerLink="/bonus" queryParamsHandling="preserve" routerLinkActive="active"
              class="nav-link  w-fit text-base">Бонусы</a>
 
-          <a routerLink="/articles" queryParamsHandling="preserve" [ngClass]="{'active':isActiveRoute('/articles')}"
-             class="nav-link text-base">Блог</a>
         </nav>
       </div>
     </div>

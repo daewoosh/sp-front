@@ -8,6 +8,8 @@ import { AppStateService } from "@sp/core/state";
 import { AUTH_HASH_NAME, AUTH_TOKEN_NAME } from "@sp/core";
 import { LoginResult } from "@sp/core/models";
 import { SsrCookieService } from "ngx-cookie-service-ssr";
+import { ClientService } from '@sp/core/guards';
+import { AUTH_URL as AUTH_URL_TOKEN } from '@sp/config';
 
 @Component({
   selector: 'sp-one-time-login',
@@ -26,6 +28,8 @@ export class OneTimeLoginComponent implements OnInit{
     private appStateService: AppStateService,
     private cookieService: SsrCookieService,
     @Inject(PLATFORM_ID) private platformId: string,
+    private clientService: ClientService,
+    @Inject(AUTH_URL_TOKEN) private authUrl: string,
   ) {
     this.inputParams$ = this.route.queryParamMap.pipe(
       map((params: ParamMap) => {
@@ -46,7 +50,7 @@ export class OneTimeLoginComponent implements OnInit{
           this.router.navigate(['/courses']);
         } else {
           this.httpClient
-            .post<LoginResult>(`${API_URL}/auth`, {
+            .post<LoginResult>(`${this.authUrl}/auth`, {
               authHash: authInfo.authHash,
               authId: authInfo.authId,
             })
@@ -62,7 +66,7 @@ export class OneTimeLoginComponent implements OnInit{
                   isLoggedIn: result.isSuccessLogin,
                   user: result.user,
                 });
-
+                this.clientService.validateAuthToken();
                 this.router.navigate(['/courses']);
               }
             });

@@ -4,6 +4,7 @@ import { AdminApiService } from '../admin.api.service';
 import { ClipboardModule } from 'ngx-clipboard';
 import { TuiAlertService } from '@taiga-ui/core';
 import { FormsModule } from '@angular/forms';
+import { APP_URL } from '@sp/config';
 
 interface Course {
   id: number;
@@ -31,7 +32,8 @@ export class CoursesManagementComponent {
   constructor(
     private adminApiService: AdminApiService,
     @Inject(TuiAlertService)
-    private readonly alertService: TuiAlertService
+    private readonly alertService: TuiAlertService,
+    @Inject(APP_URL) private appUrl: string
   ) {}
 
   createAccessLink() {
@@ -39,7 +41,7 @@ export class CoursesManagementComponent {
       .createCoursePurchaseRequest(this.selectedCourseId, this.availableCourseItemsCount)
       .subscribe((res) => {
         if (res) {
-          this.createdLink = `${APP_URL}/activateCourse/${res.token}`;
+          this.createdLink = `${this.appUrl}/activateCourse/${res.token}`;
           this.availableCourseItemsCount = null;
         }
       });

@@ -1,4 +1,4 @@
-import { inject, Injectable, INJECTOR } from '@angular/core';
+import { inject, Injectable, INJECTOR, PLATFORM_ID } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   CanActivate,
@@ -12,12 +12,14 @@ import { CoursesStateService } from '@sp/core/providers/courses-state.service';
 import { map, Observable, of, switchMap, take } from 'rxjs';
 import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
 import { CourseNoAccessModalComponent } from './course-no-access-modal/course-no-access-modal.component';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable()
 export class CourseAccessGuard implements CanActivate {
 
   private readonly dialogs = inject(TuiDialogService);
   private readonly injector = inject(INJECTOR);
+  private readonly platformId = inject(PLATFORM_ID);
 
   constructor(
     private router: Router,
@@ -61,24 +63,26 @@ export class CourseAccessGuard implements CanActivate {
             }
 
             // User does not have access to the course
-            // Show the modal dialog without waiting
-            this.dialogs.open<boolean>(
-              new PolymorpheusComponent(
-                CourseNoAccessModalComponent,
-                this.injector
-              ),
-              {
-                data: 237, // Pass any data if needed
-                dismissible: true,
-                appearance: 'sp-modal'
-              }
-            ).subscribe(
-              navigate => {
-                if (navigate) {
-                  this.router.navigate(['/courses']);
+            // Show the modal dialog only in browser (avoid SSR side effects)
+            if (isPlatformBrowser(this.platformId)) {
+              this.dialogs.open<boolean>(
+                new PolymorpheusComponent(
+                  CourseNoAccessModalComponent,
+                  this.injector
+                ),
+                {
+                  data: 237, // Pass any data if needed
+                  dismissible: true,
+                  appearance: 'sp-modal'
                 }
-              }
-            );
+              ).subscribe(
+                navigate => {
+                  if (navigate) {
+                    this.router.navigate(['/courses']);
+                  }
+                }
+              );
+            }
 
             // Decide what to return based on whether the user navigated from within the app
             if (this.router.navigated) {

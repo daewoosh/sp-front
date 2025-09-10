@@ -11,6 +11,7 @@ import { provideHttpClient, withFetch, withInterceptorsFromDi } from '@angular/c
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { NG_EVENT_PLUGINS } from '@taiga-ui/event-plugins';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { API_PATH, EXCHANGE_URL as EXCHANGE_URL_TOKEN } from '@sp/config';
 
 const scrollConfig: InMemoryScrollingOptions = {
   scrollPositionRestoration: 'top',
@@ -30,5 +31,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(appRoutes, inMemoryScrollingFeature),
     NG_EVENT_PLUGINS,
     provideAnimationsAsync(),
+    { provide: API_PATH, useValue: API_URL },
+    { provide: EXCHANGE_URL_TOKEN, useValue: EXCHANGE_URL },
   ],
 };

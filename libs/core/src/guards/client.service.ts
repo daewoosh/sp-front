@@ -27,9 +27,9 @@ export class ClientService {
     );
   }
 
-  private validateAuthToken(): Observable<boolean> {
+  public validateAuthToken(): Observable<boolean> {
     return this.httpClient
-      .get<LoginResult>(`${this.apiUrl}/auth/check`)
+      .get<LoginResult>(`${this.apiUrl}/auth/check`, { withCredentials: true })
       .pipe(
         map((loginResult) => {
           if (!loginResult.isSuccessLogin) {
