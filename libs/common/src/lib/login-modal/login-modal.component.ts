@@ -67,6 +67,20 @@ export class LoginModalComponent implements OnDestroy, OnInit{
 
   public ngOnInit(): void {
     this.token = uuid();
+    // Формируем полный ReturnUrl: origin + baseHref + 'courses'
+    const base = this.baseHref || '/';
+    const normalizedBase = base.endsWith('/') ? base : base + '/';
+    const returnUrl = `${this.window.location.origin}${normalizedBase}courses`;
+    this.httpClient
+      .post(`${this.authUrl}/auth/PrepareAuth`, {
+        authHash: this.token,
+        returnUrl
+      })
+      .pipe(
+        // В любом случае открываем Telegram-бота (даже при ошибке)
+        catchError(() => of(null))
+      )
+      .subscribe();
     const token = this.activatedRoute.snapshot.paramMap.get('token');
     this.ticker
       .pipe(
@@ -133,22 +147,6 @@ export class LoginModalComponent implements OnDestroy, OnInit{
     const authUrl = `https://t.me/${this.authBotName}?start=${this.token}`;
     this.localStorage.set(AUTH_HASH_NAME, this.token);
     this.ticker.next(true);
-
-    // Формируем полный ReturnUrl: origin + baseHref + 'courses'
-    const base = this.baseHref || '/';
-    const normalizedBase = base.endsWith('/') ? base : base + '/';
-    const returnUrl = `${this.window.location.origin}${normalizedBase}courses`;
-
-    // Делаем подготовительный запрос перед открытием Telegram
-    this.httpClient
-      .post(`${this.authUrl}/auth/PrepareAuth`, {
-        authHash: this.token,
-        returnUrl,
-      })
-      .pipe(
-        // В любом случае открываем Telegram-бота (даже при ошибке)
-        catchError(() => of(null))
-      )
-      .subscribe(() => this.window.open(authUrl));
+    this.window.open(authUrl);
   }
 }
