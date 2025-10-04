@@ -45,6 +45,13 @@ export const adminRoutes: Route[] = [
             (mod) => mod.UsersManagementComponent
           ),
       },
+      {
+        path: 'statistics',
+        loadComponent: () =>
+          import('./courses-statistics/courses-statistics.component').then(
+            (mod) => mod.CoursesStatisticsComponent
+          ),
+      },
     ],
   },
 ];

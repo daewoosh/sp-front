@@ -1,6 +1,6 @@
 <div class="course-card">
   <div class="text-[21px] leading-[25px]">{{course.title}}</div>
-  <div class="text-xs clr-grey"  *ngIf="course.isAvailable">{{course.subtitle}}</div>
+  <div class="text-xs clr-grey"  *ngIf="course.isAvailable" [innerHTML]="course.subtitle"></div>
   <div class="text-xs text-[#DF8316]"  *ngIf="!course.isAvailable">скоро появится в личном кабинете</div>
   <div class="mt-4 2xl:h-[260px]">
     <img class="mx-auto" [src]="'assets/images/courses/'+course.image"/>

@@ -1,33 +1,74 @@
-<input [(ngModel)]="query" type="text" />
-<button class="btn primary" (click)="search()">Поиск</button>
-<div class="mt-4 border border-green-500 p-8 text-base" *ngIf="user">
-  <div><span>Telegram Name: </span><span>{{ user.telegramName }}</span></div>
-  <div><span>InternalId: </span><span>{{ user.internalId }}</span></div>
-  <div><span>Дата регистрации: </span><span>{{ user.creationDate| date:'dd.MM.yyyy h:mm' }}</span></div>
-  <h1 class="clr-primary text-2xl">Курсы:</h1>
-  <div *ngFor="let course of user.courses" class="mt-4 border border-green-500 p-8 text-base">
-    <div class="clr-primary text-2xl">{{ course.title }}</div>
-    <div>Дата активации {{ course.activationDate| date:'dd.MM.yyyy h:mm' }}</div>
-    <div *ngIf="!course.availableCourseItemsCount" class="clr-primary">
-      Имеет доступ ко всем урокам
-    </div>
-    <div *ngIf="course.availableCourseItemsCount" class="clr-orange">
-      <div>Пользователю доступно {{ course.availableCourseItemsCount }} уроков</div>
-      <div class="flex gap-3 items-center">
-        <button class="btn primary mt-2" (click)="grantFullAccess(course.id)">Выдать полный доступ</button>
-        ИЛИ
-        <button class="btn primary mt-2" (click)="grantAccess(course.id, itemsCount.value)">Расширить доступ</button>
-        <input #itemsCount type="number">
+<form class="flex gap-2 items-center" [formGroup]="filterForm" (ngSubmit)="applySearch()">
+  <input class="p-2 border rounded flex-1" formControlName="search" type="text" placeholder="Поиск (telegram / id / и т.п.)" />
+  <button class="btn primary" type="submit">Поиск</button>
+</form>
+
+<div class="mt-4" *ngIf="(items$ | async) as users">
+  <div *ngIf="users.length === 0 && (loading$ | async) !== false">Ничего не найдено</div>
+
+  <div class="space-y-4">
+    <div class="border rounded p-4" *ngFor="let user of users">
+      <div class="flex flex-wrap gap-4 text-base">
+        <div><span class="opacity-70">Telegram Name:</span> <span>{{ user.telegramName }}</span></div>
+        <div *ngIf="user.telegramId"><span class="opacity-70">Telegram ID:</span> <span>{{ user.telegramId }}</span></div>
+        <div><span class="opacity-70">InternalId:</span> <span>{{ user.internalId }}</span></div>
+        <div><span class="opacity-70">Дата регистрации:</span> <span>{{ user.creationDate | date:'dd.MM.yyyy HH:mm' }}</span></div>
+      </div>
+
+      <div class="mt-3">
+        <div class="font-semibold mb-2">Курсы: {{ user.purchasedCoursesCount }}</div>
+
+        <ng-container *ngIf="user.purchasedCoursesCount > 0">
+          <tui-accordion>
+            <tui-accordion-item [open]="true">
+              Список курсов
+
+              <div tuiAccordionItemContent>
+                <tui-accordion [closeOthers]="true" class="space-y-2">
+                  <tui-accordion-item *ngFor="let course of user.courses">
+                    <div class="flex flex-wrap items-center gap-2">
+                      <span class="text-lg">{{ course.title }}</span>
+                      <span *ngIf="course.progressState" class="opacity-70">— {{ course.progressState }}</span>
+                      <span *ngIf="course.currentItemTitle" class="opacity-70">— {{ course.currentItemTitle }}</span>
+                      <span *ngIf="course.comment" class="opacity-70">— {{ course.comment }}</span>
+                    </div>
+
+                    <div tuiAccordionItemContent>
+                      <div class="text-sm opacity-80">Дата активации: {{ course.activationDate | date:'dd.MM.yyyy HH:mm' }}</div>
+
+                      <div class="mt-2 grid gap-2 md:grid-cols-2">
+                        <div *ngIf="!course.availableCourseItemsCount" class="clr-primary">Имеет доступ ко всем урокам</div>
+                        <div *ngIf="course.availableCourseItemsCount" class="clr-orange">Доступно {{ course.availableCourseItemsCount }} уроков</div>
+                        <div *ngIf="course.currentItemTitle">Текущий урок: {{ course.currentItemTitle }}</div>
+                        <div *ngIf="course.progressState">Статус: {{ course.progressState }}</div>
+                        <div *ngIf="course.comment">Комментарий: {{ course.comment }}</div>
+                      </div>
+
+                      <div class="mt-3 flex flex-wrap items-center gap-2">
+                        <button *ngIf="course.accessState === 1" class="btn warning" (click)="toggleAccessState(course.id, user.userId)">Заблокировать доступ</button>
+                        <button *ngIf="course.accessState === 2" class="btn primary" (click)="toggleAccessState(course.id, user.userId)">Разблокировать</button>
+
+                        <button class="btn primary" (click)="grantFullAccess(course.id, user.userId)">Выдать полный доступ</button>
+                        <div class="flex items-center gap-2">
+                          <span>или</span>
+                          <input #itemsCount class="p-2 border rounded w-24" type="number" min="1" placeholder="уроков">
+                          <button class="btn primary" (click)="grantAccess(course.id, user.userId, itemsCount.value)">Расширить доступ</button>
+                        </div>
+                      </div>
+                    </div>
+                  </tui-accordion-item>
+                </tui-accordion>
+              </div>
+            </tui-accordion-item>
+          </tui-accordion>
+        </ng-container>
       </div>
     </div>
-
-    <div class="mt-4">
-      <button *ngIf="course.accessState === 1" class="btn warning" (click)="toggleAccessState(course.id)">Заблокировать
-        доступ
-      </button>
-      <button *ngIf="course.accessState === 2" class="btn primary" (click)="toggleAccessState(course.id)">
-        Разблокировать
-      </button>
-    </div>
   </div>
+
+  <div class="mt-4 flex justify-center" *ngIf="(hasMoreItems$ | async)">
+    <button class="btn" [disabled]="(loading$ | async)" (click)="loadMore()">Загрузить ещё</button>
+  </div>
+
+  <div class="mt-2" *ngIf="(loading$ | async)">Загрузка…</div>
 </div>
