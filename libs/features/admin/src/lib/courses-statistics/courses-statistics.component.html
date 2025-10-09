@@ -4,7 +4,7 @@
 
   <div *ngIf="!isLoading && !error" class="grid gap-4 md:grid-cols-2">
     <div class="rounded border p-4 shadow-sm" *ngFor="let c of stats; trackBy: trackByCourse">
-      <div class="font-semibold text-lg mb-2">{{ c.courseTitle }}</div>
+      <div class="font-semibold text-2xl mb-2 clr-primary">{{ c.courseTitle }}</div>
 
       <ul class="space-y-1">
         <li class="flex items-center justify-between">
