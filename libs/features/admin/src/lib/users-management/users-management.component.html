@@ -1,9 +1,17 @@
 <form class="flex gap-2 items-center" [formGroup]="filterForm" (ngSubmit)="applySearch()">
   <input class="p-2 border rounded flex-1" formControlName="search" type="text" placeholder="Поиск (telegram / id / и т.п.)" />
+  <select class="p-2 border rounded" formControlName="courseId">
+    <option value="">Все курсы</option>
+    <option *ngFor="let c of coursesOptions" [value]="c.id">{{ c.label }}</option>
+  </select>
+  <select class="p-2 border rounded" formControlName="progressState">
+    <option value="">Все статусы</option>
+    <option *ngFor="let p of progressOptions" [value]="p.value">{{ p.label }}</option>
+  </select>
   <button class="btn primary" type="submit">Поиск</button>
 </form>
 
-<div class="mt-4" *ngIf="(items$ | async) as users">
+<div class="mt-4" *ngIf="(items$ | async) as users" tuiTheme="dark">
   <div *ngIf="users.length === 0 && (loading$ | async) !== false">Ничего не найдено</div>
 
   <div class="space-y-4">
@@ -20,7 +28,7 @@
 
         <ng-container *ngIf="user.purchasedCoursesCount > 0">
           <tui-accordion>
-            <tui-accordion-item [open]="true">
+            <tui-accordion-item [open]="false">
               Список курсов
 
               <div tuiAccordionItemContent>
@@ -28,9 +36,7 @@
                   <tui-accordion-item *ngFor="let course of user.courses">
                     <div class="flex flex-wrap items-center gap-2">
                       <span class="text-lg">{{ course.title }}</span>
-                      <span *ngIf="course.progressState" class="opacity-70">— {{ course.progressState }}</span>
-                      <span *ngIf="course.currentItemTitle" class="opacity-70">— {{ course.currentItemTitle }}</span>
-                      <span *ngIf="course.comment" class="opacity-70">— {{ course.comment }}</span>
+                      <span *ngIf="course.progressDescription" class="opacity-70">— {{ course.progressDescription }}</span>
                     </div>
 
                     <div tuiAccordionItemContent>
@@ -40,7 +46,7 @@
                         <div *ngIf="!course.availableCourseItemsCount" class="clr-primary">Имеет доступ ко всем урокам</div>
                         <div *ngIf="course.availableCourseItemsCount" class="clr-orange">Доступно {{ course.availableCourseItemsCount }} уроков</div>
                         <div *ngIf="course.currentItemTitle">Текущий урок: {{ course.currentItemTitle }}</div>
-                        <div *ngIf="course.progressState">Статус: {{ course.progressState }}</div>
+                        <div *ngIf="course.progressDescription">Статус: {{ course.progressDescription }}</div>
                         <div *ngIf="course.comment">Комментарий: {{ course.comment }}</div>
                       </div>
 

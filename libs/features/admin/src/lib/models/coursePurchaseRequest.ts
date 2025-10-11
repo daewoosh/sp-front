@@ -24,4 +24,5 @@ export interface UserCourseDto {
   progressState?: ProgressState;
   currentItemTitle?: string; // название текущего (или последнего) элемента курса
   comment?: string;
+  progressDescription? : string;
 }

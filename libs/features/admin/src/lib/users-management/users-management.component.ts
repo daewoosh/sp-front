@@ -9,6 +9,7 @@ import { AppStateService } from '@sp/core/state';
 import { PagingResult } from '@sp/core/models';
 import { Observable } from 'rxjs';
 import { TuiAccordion } from '@taiga-ui/kit';
+import { ProgressState } from '../models';
 
 @Component({
   selector: 'sp-users-management',
@@ -28,27 +29,55 @@ export class UsersManagementComponent extends BaseListComponent<UserCourseInfo> 
     super(router, route, appStateService, fb);
   }
 
+  // Типы опций
+  private readonly courseOptionsType!: { id: number; label: string };
+  private readonly progressOptionType!: { value: ProgressState; label: string };
+
+  // Опции для фильтров
+  coursesOptions: Array<{ id: number; label: string }> = [
+    { id: 1, label: 'Only Покер' },
+    { id: 2, label: 'Осознанное начало' },
+    { id: 3, label: 'Разбор базы' },
+  ];
+
+  progressOptions: Array<{ value: number; label: string }> = [
+    { value: 0, label: ProgressState.NotStarted },
+    { value: 1, label: ProgressState.Active },
+    { value: 2, label: ProgressState.Stuck },
+    { value: 3, label: ProgressState.Completed },
+  ];
+
   // Реализация абстрактного метода получения данных
   protected fetchData(filterQueryString: string, pageNumber: number, pageSize: number): Observable<PagingResult<UserCourseInfo>> {
     return this.adminApiService.getUsersList(filterQueryString, pageNumber, pageSize);
   }
 
-  // Форма фильтра: единственное поле search
+  // Форма фильтра: search + courseId + progressState
   protected override buildFilterForm() {
     return this.fb.group({
-      search: ['']
+      search: [''],
+      courseId: [''],
+      progressState: ['']
     });
   }
 
-  protected override fillFormFromParams(params: any): void {
-    const search = params['search'] ?? params['tgName'];
-    if (search !== undefined) {
-      this.filterForm.patchValue({ search }, { emitEvent: false });
+  protected override fillFormFromParams(params: Record<string, unknown>): void {
+    const search = (params['search'] ?? params['tgName']) as string | undefined;
+    const courseId = params['courseId'] as string | number | undefined;
+    const progressState = params['progressState'] as string | undefined;
+
+    const patch: Record<string, unknown> = {};
+    if (search !== undefined) patch['search'] = search;
+    if (courseId !== undefined) patch['courseId'] = courseId;
+    if (progressState !== undefined) patch['progressState'] = progressState;
+
+    if (Object.keys(patch).length) {
+      this.filterForm.patchValue(patch, { emitEvent: false });
     }
   }
 
-  protected override getDefaultFilters(): any {
-    return { search: '' };
+  protected override getDefaultFilters(): { search: string; courseId: string | number | ''; progressState: string } {
+    return { search: '', courseId: '', progressState: '' };
   }
 
   applySearch() {
