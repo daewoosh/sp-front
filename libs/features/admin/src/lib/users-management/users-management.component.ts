@@ -29,10 +29,6 @@ export class UsersManagementComponent extends BaseListComponent<UserCourseInfo> 
     super(router, route, appStateService, fb);
   }
 
-  // Типы опций
-  private readonly courseOptionsType!: { id: number; label: string };
-  private readonly progressOptionType!: { value: ProgressState; label: string };
-
   // Опции для фильтров
   coursesOptions: Array<{ id: number; label: string }> = [
     { id: 1, label: 'Only Покер' },

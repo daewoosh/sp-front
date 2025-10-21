@@ -32,6 +32,10 @@ export abstract class BaseListComponent<T> implements OnInit, OnDestroy {
   protected itemsSubject = new BehaviorSubject<T[]>([]);
   public items$ = this.itemsSubject.asObservable();
 
+  // Количество найденных элементов всего по текущему фильтру
+  private totalCountSubject = new BehaviorSubject<number>(0);
+  public totalCount$ = this.totalCountSubject.asObservable();
+
   // Флаг возможности загрузить больше данных
   private hasMoreItemsSubject = new BehaviorSubject<boolean>(true);
   public hasMoreItems$ = this.hasMoreItemsSubject.asObservable();
@@ -96,6 +100,7 @@ export abstract class BaseListComponent<T> implements OnInit, OnDestroy {
       .subscribe({
         next: (result) => {
           this.itemsSubject.next(result.result);
+          this.totalCountSubject.next(result.totalCount);
           this.hasMoreItemsSubject.next(result.result.length < result.totalCount);
           this.loading$.next(false);
         },
@@ -172,6 +177,9 @@ export abstract class BaseListComponent<T> implements OnInit, OnDestroy {
           const currentItems = this.itemsSubject.value;
           this.itemsSubject.next([...currentItems, ...result.result]);
 
+          // Обновляем общее количество для корректного отображения
+          this.totalCountSubject.next(result.totalCount);
+
           // Проверяем, есть ли ещё элементы для загрузки
           const totalLoaded = this.itemsSubject.value.length;
           this.hasMoreItemsSubject.next(totalLoaded < result.totalCount);
@@ -188,6 +196,7 @@ export abstract class BaseListComponent<T> implements OnInit, OnDestroy {
   private resetPagination(): void {
     this.currentPage = 0;
     this.itemsSubject.next([]);
+    this.totalCountSubject.next(0);
     this.hasMoreItemsSubject.next(true);
   }
 

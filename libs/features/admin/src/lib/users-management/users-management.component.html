@@ -11,6 +11,8 @@
   <button class="btn primary" type="submit">Поиск</button>
 </form>
 
+<div class="mt-2 text-sm opacity-80">Найдено: {{ totalCount$ | async }}</div>
+
 <div class="mt-4" *ngIf="(items$ | async) as users" tuiTheme="dark">
   <div *ngIf="users.length === 0 && (loading$ | async) !== false">Ничего не найдено</div>
 
