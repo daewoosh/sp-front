@@ -1,0 +1,78 @@
+/* Общие стили для верхнего блока страниц */
+.page-header {
+  background: url("/assets/images/analysis/bg-top.png");
+  overflow: hidden;
+}
+
+.page-header-images {
+  max-width: 380px;
+  margin: auto;
+}
+
+.page-header-button-glow, .page-header-logo-glow {
+  position: relative;
+  z-index: 1;
+
+  &::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    width: 557px; /* Ширина изображения */
+    height: 557px; /* Высота изображения */
+    background: url('/assets/images/analysis/glow-big.png') no-repeat center center;
+    background-size: contain; /* Это сохранит оригинальные пропорции изображения */
+    pointer-events: none; /* Чтобы изображение не перекрывало кнопки */
+  }
+}
+
+.page-header-button-glow {
+  &::before {
+    top: -264px;
+    left: -225px;
+  }
+}
+
+.page-header-logo-glow {
+  &::before {
+    top: -122px;
+    right: -225px;
+  }
+}
+
+@media (max-width: 768px) {
+  .page-header-button-glow, .page-header-logo-glow {
+    &::before {
+      //display: none;
+    }
+  }
+}
+
+/* Служебные классы, созданные с помощью @apply */
+.page-header-container {
+  @apply max-w-6xl mx-auto pt-12 lg:pt-20 px-8 xl:px-0 pb-8 xl:pb-0;
+}
+
+.page-header-content-wrapper {
+  @apply flex flex-col-reverse md:flex-row gap-6 md:gap-8;
+}
+
+.page-header-description {
+  @apply text-xl md:text-[21px] mt-7;
+}
+
+.page-header-actions {
+  @apply flex flex-wrap gap-6 mt-8 md:mt-10 relative;
+}
+
+.page-header-image-container {
+  @apply flex-shrink-0  lg:w-fit lg:flex-shrink-0 lg:ml-[40px] min-w-[300px];
+}
+
+.page-header-image-wrapper {
+  @apply relative pr-8 lg:pr-0;
+}
+
+.page-header-features-grid {
+  @apply mt-16 pb-8 mx-auto grid max-w-[30rem] grid-cols-1 gap-8 lg:max-w-none lg:grid-cols-3;
+}
+

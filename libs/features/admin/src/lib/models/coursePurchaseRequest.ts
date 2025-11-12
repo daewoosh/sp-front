@@ -25,4 +25,5 @@ export interface UserCourseDto {
   currentItemTitle?: string; // название текущего (или последнего) элемента курса
   comment?: string;
   progressDescription? : string;
+  lastActivityDate?: Date;
 }

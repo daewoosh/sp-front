@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 @import "nouislider/dist/nouislider.css";
+@import "./src/page-header.scss";
 
 @font-face {
   font-family: 'Golos';

@@ -32,6 +32,7 @@ export class UsersManagementComponent extends BaseListComponent<UserCourseInfo> 
   // Опции для фильтров
   coursesOptions: Array<{ id: number; label: string }> = [
     { id: 1, label: 'Only Покер' },
+    { id: -1, label: 'Only Покер (беспл.)' },
     { id: 2, label: 'Осознанное начало' },
     { id: 3, label: 'Разбор базы' },
   ];

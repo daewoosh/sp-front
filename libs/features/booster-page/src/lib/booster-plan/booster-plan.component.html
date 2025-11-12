@@ -1,20 +1,23 @@
-<div class="max-w-6xl  mx-auto pt-12 px-8 xl:px-0">
+<div class="max-w-6xl  mx-auto pt-12 px-8 xl:px-0" id="booster-content">
   <div class="font-bold text-[30px]" id="club-about">Что вас ждет в БУСТЕРе?</div>
 
   <div class="plan-block flex flex-col xl:flex-row gap-16 mt-10 mb-8">
-    <div class="xl:max-w-[359px]">
+    <div class="xl:max-w-[359px] flex flex-col justify-center">
       <div class="head">Полный разбор базы рук</div>
-      <sp-text-with-check
-        text="Полный разбор базы - тренер внимательно изучит ваши статы, найдёт лики и подскажет как над ними работать."></sp-text-with-check>
-      <sp-text-with-check
-        text="Это регулярная работа, которая проводится каждый месяц: вы поэтапно устраняете ошибки и лики в игре, что приводит к увеличению винрейтов и ROI."></sp-text-with-check>
+      <div class="flex flex-col gap-6">
+        <sp-list-item-with-dot
+          text="Полный разбор базы - тренер внимательно изучит ваши статы, найдёт лики и подскажет как над ними работать."></sp-list-item-with-dot>
+        <sp-list-item-with-dot
+          text="Это регулярная работа, которая проводится каждый месяц: вы поэтапно устраняете ошибки и лики в игре, что приводит к увеличению винрейтов и ROI."></sp-list-item-with-dot>
+      </div>
     </div>
     <div class="shrink-0 flex justify-center">
       <img src="assets/images/booster/poker_table.png">
     </div>
   </div>
 
-  <div class="mx-auto grid grid-cols-1 gap-12 lg:max-w-none lg:grid-cols-3 ">
+
+  <div class="mx-auto grid grid-cols-1 gap-8 lg:max-w-none lg:grid-cols-3 ">
 
     <div class="plan-block block">
       <div class="head">6 открытых двухчасовых тренировок в месяц</div>
@@ -38,9 +41,9 @@
     <div class="plan-block block">
       <div class="head">Отсутствие требований по необходимому объему турниров в месяц</div>
       <div>
-        В БУСТЕРе нет обязательств — вы не должны наигрывать конкретный объём турниров, никаких бекинговых
-        обязательств или обязательных тренировок со штрафом за непосещение — всё по исключительно добровольно
-        и по желанию. Мы хотим, чтобы вы сами были заинтересованы в обучении и улучшении игры.
+        В БУСТЕРе нет обязательств — вы не должны наигрывать конкретный объём турниров, никаких бекинговых обязательств
+        или обязательных тренировок со штрафом за непосещение — всё исключительно добровольно и по желанию. Мы хотим,
+        чтобы вы сами были заинтересованы в обучении и улучшении игры.
       </div>
     </div>
 
@@ -69,7 +72,8 @@
   </div>
 
   <div class="mt-[50px] flex justify-center">
-    <a class="btn" routerLink='.' fragment="booster-payment" queryParamsHandling="preserve">Узнать стоимость обучения в Бустере</a>
+    <a class="btn" routerLink='.' fragment="booster-payment" queryParamsHandling="preserve">Узнать стоимость обучения в
+      Бустере</a>
   </div>
 
 </div>

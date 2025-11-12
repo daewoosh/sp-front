@@ -16,7 +16,7 @@
   position: relative;
   z-index: 1;
   &:before{
-    content: url("/assets/icons/quote-up.png");
+    content: url("assets/icons/quote-up.png");
     position: absolute;
     top:-50px;
     left: -20px;
@@ -24,7 +24,7 @@
   }
 
   &:after{
-    content: url("/assets/icons/quote-down.png");
+    content: url("assets/icons/quote-down.png");
     position: absolute;
     bottom:-20px;
     right: -20px;
