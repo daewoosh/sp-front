@@ -1,15 +1,27 @@
 <div class="max-w-6xl mx-auto mt-14 md:mt-18 lg:mt-24 mb-[100px]" id="booster-payment">
-  <div class="bg-1 px-8 py-12 lg:pl-24">
-    <div class="max-w-[702px]">
-      <div class="font-medium text-[30px] ">Стоимость обучения в БУСТЕРе</div>
+  <div class="plan-block px-8 py-12 lg:pl-24 text-white relative flex gap-4">
+    <div class="max-w-[702px] shrink-0">
+      <div class="font-medium text-3xl ">Стоимость обучения в БУСТЕРе</div>
       <div class="flex flex-wrap gap-8 mt-5 justify-center md:justify-between">
         <div>
-          <div class="flex flex-wrap gap-6  items-center  mt-6 md:mt-10">
-            <div class="shrink-0">
-              <div class="font-medium flex items-center"><span class="font-medium text-[24px]">БУСТЕР&nbsp;</span> 30
-                дней <span class="price">&nbsp;&nbsp;$400</span></div>
+          <div class="flex flex-wrap gap-6 items-center ">
+            <div class="shrink-0 flex flex-col gap-4">
+              <div class="shrink-0">
+                <div class="font-medium flex items-center">
+                  <span class="font-medium text-2xl inline-block w-[200px]">БУСТЕР&nbsp;<span class="text-[#D732E1]">Стандарт</span> </span>
 
+                  <span class="price">&nbsp;&nbsp;$450</span></div>
+
+              </div>
+              <div class="shrink-0">
+                <div class="font-medium flex items-center">
+                  <span class="font-medium text-2xl  inline-block w-[200px]">БУСТЕР&nbsp;<span class="text-[#FF8316]">Про</span> </span>
+
+                  <span class="price">&nbsp;&nbsp;$650</span></div>
+
+              </div>
             </div>
+
             <div class="line"></div>
 
             <div class="max-w-[224px] text-base">
@@ -21,26 +33,29 @@
         </div>
       </div>
     </div>
+    <div class="relative w-full hidden lg:block">
+      <img class="absolute right-0 -bottom-8" ngSrc="assets/images/booster/booster-payment.png" [width]="415" [height]="295" alt="Booster Payment">
+    </div>
   </div>
 
-  <div class="bg-2 px-8 py-12 lg:pl-24 mt-3 relative mb-16" id="booster-payment-form">
+  <div class="bg-2 px-8 py-9 lg:pl-24 mt-3 lg:mt-14 relative mb-16" id="booster-payment-form">
     <div class="max-w-[579px] z-10">
       <div class="font-medium text-[30px] ">Оставить заявку на вступление в БУСТЕР<br>
         или получить бесплатную консультацию:
       </div>
-      <div class="flex gap-2 items-start mt-6 md:mt-10">
+      <div class="flex gap-2 items-start mt-3">
         <img src="assets/icons/check.png">
         <div class="text-base">
           Ответим на все вопросы по клубу
         </div>
       </div>
-      <div class="flex gap-2 items-start mt-4">
+      <div class="flex gap-2 items-start mt-3">
         <img src="assets/icons/check.png">
         <div class="text-base">
           Проконсультируем по любым способам оплаты
         </div>
       </div>
-      <div class="flex gap-2 items-start mt-4">
+      <div class="flex gap-2 items-start mt-3">
         <img src="assets/icons/check.png">
         <div class="text-base">
           Расскажем о текущих акциях и скидках
@@ -49,7 +64,7 @@
       <sp-lead-form />
     </div>
     <div class="form-image">
-      <img src="assets/images/booster/booster2.png">
+      <img src="assets/images/booster/gleb.png">
     </div>
   </div>
 
