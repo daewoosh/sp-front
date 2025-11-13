@@ -76,3 +76,16 @@
   @apply mt-16 pb-8 mx-auto grid max-w-[30rem] grid-cols-1 gap-8 lg:max-w-none lg:grid-cols-3;
 }
 
+.plan-block {
+  background: linear-gradient(107.14deg, #272826 19.83%, rgba(39, 40, 38, 0) 50.7%, #272826 80.37%);
+  border-radius: 25px;
+  height: 100%;
+  padding: 21px;
+  line-height: 17px;
+
+  & .head {
+    @apply font-bold text-2xl leading-[29px] text-white mb-[20px];
+    border-radius: 25px;
+    padding: 16px 13px 12px 14px;
+  }
+}

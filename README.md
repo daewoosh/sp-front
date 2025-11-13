@@ -1,4 +1,8 @@
 # SpFront
+Если при запуске `npx nx serve sp-front` возникает ошибка, что порт 4200 занят, выполните следующие команды в командной строке Windows, чтобы найти и завершить процесс, занимающий этот порт:
+netstat -ano | findstr :4200
+tasklist /FI "PID eq <PID_из_netstat>"
+taskkill /PID <PID> /F
 
 <a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
 

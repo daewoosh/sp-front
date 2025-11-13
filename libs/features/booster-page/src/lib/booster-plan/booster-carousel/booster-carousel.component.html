@@ -1,4 +1,4 @@
-<div class="aaa flex flex-col xl:flex-row xl:gap-[60px] gap-6">
+<div class="plan-block mt-8 flex flex-col xl:flex-row xl:gap-[60px] gap-6">
   <div class="xl:flex-1 flex flex-col items-center mt-6 ">
     <tui-carousel
       #carousel
@@ -79,18 +79,20 @@
       вашей игры:
     </div>
 
-    <sp-text-with-check
+    <div class="flex flex-col gap-6">
+    <sp-list-item-with-dot
       [text]="'<span class=\'text-white font-bold\'>GTO Wizard</span> — лучшая программа для изучения теории оптимальной игры (GTO) и открытия эффективных эксплойтов поля.'">
-    </sp-text-with-check>
-    <sp-text-with-check
+    </sp-list-item-with-dot>
+    <sp-list-item-with-dot
       [text]="'<span class=\'text-white font-bold\'>Holdem Resources Calculator</span> — префлоп-калькулятор, позволяющий анализировать руки с учётом величины стека соперников, их действий, заданных диапазонов.'">
-    </sp-text-with-check>
-    <sp-text-with-check
+    </sp-list-item-with-dot>
+    <sp-list-item-with-dot
       [text]="'<span class=\'text-white font-bold\'>Simple Preflop</span> — мощный калькулятор расчёта стратегии игры по GTO на префлопе. Вы изучите самые прибыльные отклонения от оптимальной стратегии.'">
-    </sp-text-with-check>
-    <sp-text-with-check
+    </sp-list-item-with-dot>
+    <sp-list-item-with-dot
       [text]="'<span class=\'text-white font-bold\'>Префлоп-чарты</span> с удобным оформлением - ваша готовая стратегия к плюсовым действиям на префлопе.'">
-    </sp-text-with-check>
+    </sp-list-item-with-dot>
+    </div>
 
 
   </div>
