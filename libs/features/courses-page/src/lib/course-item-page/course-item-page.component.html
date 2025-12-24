@@ -1,11 +1,17 @@
-<div class="flex lg:flex-row flex-col gap-12" tuiTheme="dark">
-  <div class="flex-1">
-    <router-outlet></router-outlet>
+<div tuiTheme="dark">
+  <div class="flex w-full justify-between flex-wrap gap-4" *ngIf="selectedCourse$|async as course">
+    <div class="text-white text-4xl">Курс {{course.title}}</div>
+    <button class="btn action w-full sm:w-fit" *ngIf="course.hasPendingFeedback" (click)="openFeedbackModal(course)">Получить бонус</button>
   </div>
-
-  <ng-container *ngIf="courseProgram$ | async as courseProgram">
-    <div class="lg:w-[442px] flex-shrink-0 lg:mt-[4.5rem] max-h-full overflow-auto">
-      <sp-course-program-list [program]="courseProgram"></sp-course-program-list>
+  <div class="flex lg:flex-row flex-col gap-12">
+    <div class="flex-1">
+      <router-outlet></router-outlet>
     </div>
-  </ng-container>
+
+    <ng-container *ngIf="courseProgram$ | async as courseProgram">
+      <div class="lg:w-[442px] flex-shrink-0 lg:mt-[4.5rem] max-h-full overflow-auto">
+        <sp-course-program-list [program]="courseProgram"></sp-course-program-list>
+      </div>
+    </ng-container>
+  </div>
 </div>

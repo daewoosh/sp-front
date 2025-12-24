@@ -104,7 +104,7 @@ body {
   min-height: calc(100dvh - var(--sp-header-height));
 }
 
-[type=text],[type=email],[type=url],[type=password],[type=number],[type=date],[type=datetime-local],[type=month],[type=search],[type=tel],[type=time],[type=week],[multiple],textarea,select {
+[type=text], [type=email], [type=url], [type=password], [type=number], [type=date], [type=datetime-local], [type=month], [type=search], [type=tel], [type=time], [type=week], [multiple], textarea, select {
   -webkit-appearance: none;
   appearance: none;
   background-color: #fff;
@@ -202,6 +202,23 @@ a.btn {
       color: white;
       border-color: #DF8316;
       box-shadow: 0px 0px 7px #DF8316;
+    }
+  }
+
+  &.action{
+    color: white;
+    border-color: #A762FF;
+    background-color: #A762FF;
+
+    &:disabled, &.disabled {
+      opacity: 0.5;
+    }
+
+    &:hover:not([disabled]) {
+      color: white;
+      border-color: #A762FF;
+      box-shadow: 0px 0px 7px #A762FF;
+      text-decoration: none;
     }
   }
 
@@ -565,6 +582,7 @@ select, input, textarea {
 
   }
 }
+
 .text-red-700, .text-red {
   color: red;
 }
@@ -574,26 +592,37 @@ select, input, textarea {
 }
 
 // для цвета скрол бара.
-tui-root{
+tui-root {
   color: white !important;
 }
 
 // для кнопки закрытия модалки.
-[tuiAppearance][data-appearance=icon]{
+[tuiAppearance][data-appearance=icon] {
   color: #7e7c7c !important;
 }
 
-.color-container{
+.color-container {
   width: 32px;
   height: 32px;
   border-radius: 0.5rem;
   position: relative;
 }
+
 //.t-thumb{
 //  background: white !important;
 //}
 
-tui-dropdown-mobile{
+tui-dropdown-mobile {
   --tui-background-elevation-1: #272826 !important;
+
+}
+.lead-form-input {
+  outline: 0.5px solid #808080;
+  background-color: #242625;
+  color: #808080;
+  font-size: 1rem;
+  padding: 12px 40px 12px 14px;
+  border-radius: 10px;
+  width: 100%;
 
 }

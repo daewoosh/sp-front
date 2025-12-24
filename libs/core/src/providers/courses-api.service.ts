@@ -5,16 +5,20 @@ import { API_PATH } from "@sp/config";
 import { HttpClient } from "@angular/common/http";
 import { CourseActivationService } from ".";
 
-@Injectable({providedIn: 'root'})
-export class CoursesApiService extends CourseActivationService{
-
-  constructor(@Inject(API_PATH) private apiPath: string,
-              private http: HttpClient) {
+@Injectable({ providedIn: 'root' })
+export class CoursesApiService extends CourseActivationService {
+  constructor(
+    @Inject(API_PATH) private apiPath: string,
+    private http: HttpClient
+  ) {
     super();
   }
 
-  override activateCourse(token:string): Observable<{wasAdded:boolean}>{
-    return this.http.post<{wasAdded:boolean}>(`${this.apiPath}/courses/activate`, {token});
+  override activateCourse(token: string): Observable<{ wasAdded: boolean }> {
+    return this.http.post<{ wasAdded: boolean }>(
+      `${this.apiPath}/courses/activate`,
+      { token }
+    );
   }
 
   getCourses(): Observable<PagingResult<Course>> {
@@ -22,31 +26,71 @@ export class CoursesApiService extends CourseActivationService{
   }
 
   getCourseProgram(slug: string): Observable<CourseProgramItem[]> {
-    return this.http.get<PagingResult<CourseProgramItem>>(`${this.apiPath}/courses/${slug}/CourseElements/ReadAll`).pipe(
-      map(courses => courses.result)
-    );
+    return this.http
+      .get<PagingResult<CourseProgramItem>>(
+        `${this.apiPath}/courses/${slug}/CourseElements/ReadAll`
+      )
+      .pipe(map((courses) => courses.result));
   }
 
   getCourseElement(slug: string, order: number): Observable<CourseElement> {
-    return this.http.get<CourseElement>(`${this.apiPath}/courses/${slug}/${order}`);
+    return this.http.get<CourseElement>(
+      `${this.apiPath}/courses/${slug}/${order}`
+    );
   }
 
-  updateVideoProgress(courseElementId: number, videoContentId: number, lastPosition: number): Observable<any> {
-    return this.http.post(`${this.apiPath}/courseElements/${courseElementId}/videoContent/${videoContentId}/update`, {lastPosition});
+  updateVideoProgress(
+    courseElementId: number,
+    videoContentId: number,
+    lastPosition: number
+  ): Observable<any> {
+    return this.http.post(
+      `${this.apiPath}/courseElements/${courseElementId}/videoContent/${videoContentId}/update`,
+      { lastPosition }
+    );
   }
 
-  completeVideo(courseElementId: number, videoContentId: number): Observable<any> {
-    return this.http.post(`${this.apiPath}/courseElements/${courseElementId}/videoContent/${videoContentId}/complete`, {completed: true});
+  completeVideo(
+    courseElementId: number,
+    videoContentId: number
+  ): Observable<any> {
+    return this.http.post(
+      `${this.apiPath}/courseElements/${courseElementId}/videoContent/${videoContentId}/complete`,
+      { completed: true }
+    );
   }
 
-  createUserAnswers(courseElementId: number, assignmentId: number, questions: Question[]): Observable<any> {
-    const request = questions.map(q => {
-      return {questionId: q.id, userAnswer: q.userAnswer}
+  createUserAnswers(
+    courseElementId: number,
+    assignmentId: number,
+    questions: Question[]
+  ): Observable<any> {
+    const request = questions.map((q) => {
+      return { questionId: q.id, userAnswer: q.userAnswer };
     });
-    return this.http.post(`${this.apiPath}/courseElements/${courseElementId}/assignments/${assignmentId}/createUserAnswers`, request);
+    return this.http.post(
+      `${this.apiPath}/courseElements/${courseElementId}/assignments/${assignmentId}/createUserAnswers`,
+      request
+    );
   }
 
-  clearUserAnswers(courseElementId: number, assignmentId: number): Observable<Assignment> {
-    return this.http.post<Assignment>(`${this.apiPath}/courseElements/${courseElementId}/assignments/${assignmentId}/clearUserAnswers`,{});
+  clearUserAnswers(
+    courseElementId: number,
+    assignmentId: number
+  ): Observable<Assignment> {
+    return this.http.post<Assignment>(
+      `${this.apiPath}/courseElements/${courseElementId}/assignments/${assignmentId}/clearUserAnswers`,
+      {}
+    );
+  }
+
+  acceptFeedback(
+    courseSlug: string,
+    comment: string
+  ): Observable<{ promocode: string }> {
+    return this.http.post<{ promocode: string }>(
+      `${this.apiPath}/courses/acceptFeedback`,
+      { courseSlug, comment }
+    );
   }
 }

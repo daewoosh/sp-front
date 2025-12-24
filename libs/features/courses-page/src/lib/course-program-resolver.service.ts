@@ -13,17 +13,17 @@ export class CourseProgramResolver implements Resolve<CourseProgramItem[]> {
 
   resolve(route: ActivatedRouteSnapshot): Observable<CourseProgramItem[]> {
     const courseId = route.paramMap.get('id');
-
+    this.coursesStateService.setCurrentCourse(courseId!);
     return this.coursesApiService.getCourseProgram(courseId!).pipe(
-      map(program => {
-          // Находим первый элемент программы, у которого isCompleted = false
-          const firstIncomplete = program.find(item => !item.isCompleted);
-          if (firstIncomplete) {
-            firstIncomplete.isCurrent = true;
-          }
+      map((program) => {
+        // Находим первый элемент программы, у которого isCompleted = false
+        const firstIncomplete = program.find((item) => !item.isCompleted);
+        if (firstIncomplete) {
+          firstIncomplete.isCurrent = true;
+        }
         return program;
       }),
-      tap(program => this.coursesStateService.setCourseProgram(program))
+      tap((program) => this.coursesStateService.setCourseProgram(program))
     );
   }
 }

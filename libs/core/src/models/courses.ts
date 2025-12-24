@@ -10,7 +10,7 @@ export interface Course {
   accessState: UserCourseAccessState;
   productType: ProductType;
   url?: string;
-
+  hasPendingFeedback: boolean;
 }
 
 export enum ProductType
