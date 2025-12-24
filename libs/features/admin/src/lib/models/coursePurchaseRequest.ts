@@ -1,4 +1,5 @@
 import { UserCourseAccessState } from '@sp/core/models';
+import { ProgressState } from './progressState';
 
 export interface CoursePurchaseRequest {
   token: string;
@@ -6,10 +7,12 @@ export interface CoursePurchaseRequest {
 
 export interface UserCourseInfo {
   userId: number;
+  telegramId?: number;
   telegramName?: string;
   creationDate: Date;
   courses: UserCourseDto[];
   internalId: string;
+  purchasedCoursesCount: number;
 }
 
 export interface UserCourseDto {
@@ -18,4 +21,9 @@ export interface UserCourseDto {
   title: string;
   availableCourseItemsCount?: number;
   accessState: UserCourseAccessState;
+  progressState?: ProgressState;
+  currentItemTitle?: string; // название текущего (или последнего) элемента курса
+  comment?: string;
+  progressDescription? : string;
+  lastActivityDate?: Date;
 }

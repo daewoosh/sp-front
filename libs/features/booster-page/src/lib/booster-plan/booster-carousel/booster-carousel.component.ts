@@ -4,16 +4,24 @@ import { TuiCarousel, TuiPagination } from "@taiga-ui/kit";
 import { HoldemImgComponent } from "./holdem-img/holdem-img.component";
 import { TuiItem } from "@taiga-ui/cdk";
 import { TextWithCheckComponent } from "@sp/common";
+import { ListItemWithDotComponent } from '@sp/common/list-item-with-dot';
 
 @Component({
   selector: 'sp-booster-carousel',
   templateUrl: './booster-carousel.component.html',
   styleUrls: ['./booster-carousel.component.scss'],
   standalone: true,
-  imports: [CommonModule, TuiCarousel, HoldemImgComponent, TuiItem, TuiPagination, TextWithCheckComponent]
+  imports: [
+    CommonModule,
+    TuiCarousel,
+    HoldemImgComponent,
+    TuiItem,
+    TuiPagination,
+    TextWithCheckComponent,
+    ListItemWithDotComponent,
+  ],
 })
 export class BoosterCarouselComponent {
-
   index = 0;
   duration = 6000;
 
@@ -32,5 +40,4 @@ export class BoosterCarouselComponent {
     }
     this.duration = 0;
   }
-
 }

@@ -1,0 +1,34 @@
+<div class="text-base">
+  <ng-container *ngIf="isLoading">Загрузка…</ng-container>
+  <ng-container *ngIf="!isLoading && error">{{ error }}</ng-container>
+
+  <div *ngIf="!isLoading && !error" class="grid gap-4 md:grid-cols-2">
+    <div class="rounded border p-4 shadow-sm" *ngFor="let c of stats; trackBy: trackByCourse">
+      <div class="font-semibold text-2xl mb-2 clr-primary">{{ c.courseTitle }}</div>
+
+      <ul class="space-y-1">
+        <li class="flex items-center justify-between">
+          <span>Активировали доступ</span>
+          <span class="font-medium">{{ c.activatedCount }}</span>
+        </li>
+        <li class="flex items-center justify-between">
+          <span>Не начали</span>
+          <span class="font-medium">{{ c.notStartedCount }}</span>
+        </li>
+        <li class="flex items-center justify-between">
+          <span>Активны (&lt; 5 дней на уроке)</span>
+          <span class="font-medium text-emerald-700">{{ c.activeCount }}</span>
+        </li>
+        <li class="flex items-center justify-between">
+          <span>Застряли (&gt; 5 дней на уроке)</span>
+          <span class="font-medium text-amber-700">{{ c.stuckCount }}</span>
+        </li>
+        <li class="flex items-center justify-between">
+          <span>Завершили курс</span>
+          <span class="font-medium text-sky-700">{{ c.completedCount }}</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+

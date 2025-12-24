@@ -1,11 +1,1 @@
-.plan-block {
-  background-color: var(--clr-black-light);
-  border-radius: 8px;
-  padding: 2rem;
-  //display: block;
-  line-height: 17px;
 
-  & .head {
-    @apply font-bold text-2xl leading-[29px] text-white mb-[20px]
-  }
-}
