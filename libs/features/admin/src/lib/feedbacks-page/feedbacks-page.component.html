@@ -1,0 +1,37 @@
+<form class="flex gap-2 items-center" [formGroup]="filterForm" (ngSubmit)="applyFilters()">
+
+  <select class="p-2 border rounded" formControlName="courseId">
+    <option value="">Все курсы</option>
+    <option *ngFor="let c of coursesOptions" [value]="c.id">{{ c.label }}</option>
+  </select>
+  <button class="btn primary" type="submit">Поиск</button>
+</form>
+
+<div class="mt-2 text-sm opacity-80">Найдено: {{ totalCount$ | async }}</div>
+
+<div class="mt-4" *ngIf="(items$ | async) as feedbacks" tuiTheme="dark">
+  <div *ngIf="feedbacks.length === 0 && (loading$ | async) !== false">Ничего не найдено</div>
+
+  <div class="space-y-4">
+
+    <div class="border rounded p-4" *ngFor="let feedback of feedbacks">
+      <div class="flex flex-wrap gap-4 text-base justify-between">
+        <div>Пользователь: <a [routerLink]="['/admin','users']" [queryParams]="{'search':feedback.telegramId}"><span
+          class="clr-primary">{{ feedback.displayName }}</span></a> оставил отзыв на курс
+          <span class="clr-primary">{{ feedback.title }}</span></div>
+        <div>{{ feedback.completedAt | date:'dd.MM.yyyy HH:mm' }}</div>
+      </div>
+
+      <div class="mt-3 text-pretty text-sm text-[#ffffff66]">
+        {{ feedback.comment }}
+      </div>
+
+    </div>
+  </div>
+
+  <div class="mt-4 flex justify-center" *ngIf="(hasMoreItems$ | async)">
+    <button class="btn" [disabled]="(loading$ | async)" (click)="loadMore()">Загрузить ещё</button>
+  </div>
+
+  <div class="mt-2" *ngIf="(loading$ | async)">Загрузка…</div>
+</div>

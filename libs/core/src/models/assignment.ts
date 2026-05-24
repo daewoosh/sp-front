@@ -1,10 +1,11 @@
 import { CourseElement } from ".";
 
-export interface Assignment extends CourseElement{
+export interface Assignment extends CourseElement {
   assignmentId: number;
   questions: Question[];
   answersSaved: boolean;
-  isResetMode:boolean
+  isResetMode: boolean;
+  isCourseFinished: boolean;
 }
 
 export interface Question {

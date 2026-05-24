@@ -213,9 +213,9 @@ export class CourseItemVideoComponent implements OnDestroy {
         switchMap(() => this.coursesApiService.completeVideo(this.courseElement.id, this.courseElement.videoId))
       )
       .subscribe(
-        _ => {
+        res => {
           this.courseElement.isCompleted = true;
-          this.coursesStateService.completeItem(this.courseElement.order);
+          this.coursesStateService.completeItem(this.courseElement.order, res.isCourseFinished);
         }
       );
   }

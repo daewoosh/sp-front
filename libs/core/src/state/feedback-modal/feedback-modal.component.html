@@ -1,0 +1,79 @@
+<div class="text-center clr-orange text-2xl mb-5">
+  <div class="flex justify-center"><img src="assets/icons/available.svg"></div>
+</div>
+
+<div *ngIf="profile$|async as profile">
+  <ng-container *ngIf="course.hasPendingFeedback">
+    <div class="text-base text-white">
+      {{ profile.displayName }}, поздравляем, курс {{ course.title }} пройден!
+    </div>
+    <div class="text-base text-white text-pretty mt-5">
+      Поделитесь отзывом о курсе и <span class="font-bold text-[#A762FF]">получите персональный промокод на скидку 5% на PRO-интенсив БУСТЕР</span>.
+      Перешлите промокод нашему менеджеру в&nbsp;Telegram, чтобы&nbsp;его активировать.
+    </div>
+    <form class="mt-5" [formGroup]="form" (ngSubmit)="onSend()" *ngIf="course.hasPendingFeedback">
+          <textarea id="comment" (keydown)="onKeyDown($event)"
+                    placeholder="Расскажите, что вам понравилось, а что можно
+улучшить..."
+                    class="w-full resize-none p-4"
+                    rows="7"
+                    formControlName="comment"></textarea>
+
+      <div>
+        {{ length$|async }}/{{ maxLength }}
+      </div>
+
+      <div class="flex justify-end mt-6 gap-4">
+        <button class="btn" type="button" (click)="onClose()">
+          Закрыть
+
+        </button>
+        <button
+
+          class="btn action" type="submit"
+          [disabled]="(isSubmitting$|async) || form.invalid">
+          {{ (isSubmitting$|async) ? 'Отправка...' : 'Получить бонус' }}
+        </button>
+
+
+      </div>
+    </form>
+  </ng-container>
+
+
+  <ng-container *ngIf="course.hasFinishedFeedback">
+    <div class="text-base text-white text-center">
+      Благодарим, ваш отзыв отправлен!
+    </div>
+    <div class="mt-6 p-4 ">
+      <div class="font-bold text-[#A762FF]">
+        Ваш персональный промокод:
+      </div>
+      <div class="mt-2 lead-form-input cursor-pointer rounded-md w-full pointer" (click)="copyToClipboard(course.promocode ?? '')">
+        <div class=" w-full   text-center">
+
+          {{ course.promocode }}
+        </div>
+      </div>
+    </div>
+
+    <div class="flex justify-end mt-6 gap-4">
+      <button class="btn" type="button" (click)="onClose()">
+        Закрыть
+
+      </button>
+
+      <a
+        [href]="telegramLink"
+        target="_blank"
+        class="btn primary"
+        type="button"
+      >
+        Отправить промокод менеджеру
+      </a>
+    </div>
+  </ng-container>
+
+</div>
+
+

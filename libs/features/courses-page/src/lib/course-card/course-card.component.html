@@ -9,7 +9,8 @@
     {{course.description}}
   </div>
   <div class="flex justify-end mt-auto">
-    <a class="btn primary font-bold" *ngIf="course.purchased && course.accessState !== states.Blocked" [routerLink]="'./'+course.slug">К обучению</a>
+    <a class="btn primary font-bold" *ngIf="course.purchased && course.accessState !== states.Blocked && !course.hasPendingFeedback" [routerLink]="'./'+course.slug">К обучению</a>
+    <a class="btn action font-bold" *ngIf="course.purchased && course.accessState !== states.Blocked && course.hasPendingFeedback" [routerLink]="'./'+course.slug">Получить бонус</a>
     <a [routerLink]="['/',course.slug]" class="btn warning font-bold" *ngIf="(!course.purchased || !course.isAvailable) && course.accessState !== states.Blocked">
       <span *ngIf="course.isAvailable">Открыть доступ</span>
       <span *ngIf="!course.isAvailable">Узнать больше</span>
