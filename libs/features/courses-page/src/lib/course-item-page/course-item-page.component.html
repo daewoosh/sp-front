@@ -2,6 +2,7 @@
   <div class="flex w-full justify-between flex-wrap gap-4" *ngIf="selectedCourse$|async as course">
     <div class="text-white text-4xl">Курс {{course.title}}</div>
     <button class="btn action w-full sm:w-fit" *ngIf="course.hasPendingFeedback" (click)="openFeedbackModal(course)">Получить бонус</button>
+    <button class="btn action w-full sm:w-fit" *ngIf="course.hasFinishedFeedback" (click)="openFeedbackModal(course)">Получить бонус</button>
   </div>
   <div class="flex lg:flex-row flex-col gap-12">
     <div class="flex-1">

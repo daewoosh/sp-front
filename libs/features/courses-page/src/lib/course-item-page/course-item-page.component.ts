@@ -7,7 +7,7 @@ import { CourseProgramListComponent } from '../course-program-list/course-progra
 import { CoursesStateService } from '@sp/core/providers/courses-state.service';
 import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
 import { TuiDialogService } from '@taiga-ui/core';
-import { FeedbackModalComponent } from './feedback-modal/feedback-modal.component';
+import { FeedbackModalComponent } from '@sp/core/state/feedback-modal/feedback-modal.component';
 
 @Component({
   selector: 'sp-course-item-page',
@@ -30,11 +30,7 @@ export class CourseItemPageComponent implements OnInit {
     private router: Router
   ) {
     this.height$ = this.coursesStateService.selectCourseItemHeight;
-    this.selectedCourse$ = this.coursesStateService.selectSelectedCourse.pipe(
-      tap(selectedCourse => {
-        console.log(selectedCourse);
-      })
-    );
+    this.selectedCourse$ = this.coursesStateService.selectSelectedCourse;
   }
 
   ngOnInit() {

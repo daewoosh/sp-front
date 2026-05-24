@@ -3,7 +3,7 @@
 </div>
 
 <div *ngIf="profile$|async as profile">
-  <ng-container *ngIf="(promocode$|async) === ''">
+  <ng-container *ngIf="course.hasPendingFeedback">
     <div class="text-base text-white">
       {{ profile.displayName }}, поздравляем, курс {{ course.title }} пройден!
     </div>
@@ -11,7 +11,7 @@
       Поделитесь отзывом о курсе и <span class="font-bold text-[#A762FF]">получите персональный промокод на скидку 5% на PRO-интенсив БУСТЕР</span>.
       Перешлите промокод нашему менеджеру в&nbsp;Telegram, чтобы&nbsp;его активировать.
     </div>
-    <form class="mt-5" [formGroup]="form" (ngSubmit)="onSend()" *ngIf="(promocode$|async) === ''">
+    <form class="mt-5" [formGroup]="form" (ngSubmit)="onSend()" *ngIf="course.hasPendingFeedback">
           <textarea id="comment" (keydown)="onKeyDown($event)"
                     placeholder="Расскажите, что вам понравилось, а что можно
 улучшить..."
@@ -41,7 +41,7 @@
   </ng-container>
 
 
-  <ng-container *ngIf="promocode$|async as promocode">
+  <ng-container *ngIf="course.hasFinishedFeedback">
     <div class="text-base text-white text-center">
       Благодарим, ваш отзыв отправлен!
     </div>
@@ -49,10 +49,10 @@
       <div class="font-bold text-[#A762FF]">
         Ваш персональный промокод:
       </div>
-      <div class="mt-2 lead-form-input cursor-pointer rounded-md w-full pointer" (click)="copyToClipboard(promocode)">
+      <div class="mt-2 lead-form-input cursor-pointer rounded-md w-full pointer" (click)="copyToClipboard(course.promocode ?? '')">
         <div class=" w-full   text-center">
 
-          {{ promocode }}
+          {{ course.promocode }}
         </div>
       </div>
     </div>
@@ -64,7 +64,8 @@
       </button>
 
       <a
-        href="https://t.me/SafePoker_Sales" target="_blank"
+        [href]="telegramLink"
+        target="_blank"
         class="btn primary"
         type="button"
       >

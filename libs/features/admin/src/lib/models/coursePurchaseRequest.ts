@@ -1,5 +1,6 @@
 import { UserCourseAccessState } from '@sp/core/models';
 import { ProgressState } from './progressState';
+import { CourseFeedbackDto } from './courseFeedbackDto';
 
 export interface CoursePurchaseRequest {
   token: string;
@@ -24,6 +25,7 @@ export interface UserCourseDto {
   progressState?: ProgressState;
   currentItemTitle?: string; // название текущего (или последнего) элемента курса
   comment?: string;
-  progressDescription? : string;
+  progressDescription?: string;
   lastActivityDate?: Date;
+  feedback: CourseFeedbackDto | null;
 }

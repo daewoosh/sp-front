@@ -3,6 +3,7 @@ import { AdminPageComponent } from './admin-page/admin-page.component';
 import { RangesCategoriesResolver } from '@sp/core/providers';
 import { RangeTableResolver } from './ranges-management/range-table-resolver.service';
 import { AdminApiService } from './admin.api.service';
+import { FeedbacksPageComponent } from './feedbacks-page/feedbacks-page.component';
 
 export const manageRangesRoutes: Route[] = [
   {
@@ -50,6 +51,13 @@ export const adminRoutes: Route[] = [
         loadComponent: () =>
           import('./courses-statistics/courses-statistics.component').then(
             (mod) => mod.CoursesStatisticsComponent
+          ),
+      },
+      {
+        path: 'feedbacks',
+        loadComponent: () =>
+          import('./feedbacks-page/feedbacks-page.component').then(
+            (mod) => mod.FeedbacksPageComponent
           ),
       },
     ],

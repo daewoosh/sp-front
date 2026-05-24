@@ -11,6 +11,8 @@ export interface Course {
   productType: ProductType;
   url?: string;
   hasPendingFeedback: boolean;
+  hasFinishedFeedback: boolean;
+  promocode?: string;
 }
 
 export enum ProductType

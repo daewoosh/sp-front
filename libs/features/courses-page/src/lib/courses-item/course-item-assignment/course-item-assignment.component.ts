@@ -126,7 +126,7 @@ export class CourseItemAssignmentComponent {
           this.alertService
             .open('Ваши ответы сохранены', { appearance: 'success' })
             .subscribe();
-          this.coursesStateService.completeItem(this.courseElement.order);
+          this.coursesStateService.completeItem(this.courseElement.order, res.isCourseFinished);
         }else{
           this.alertService
             .open('Имеются ошибки в ответах. Пожалуйста, перепройдите тест.', { appearance: 'accent' })

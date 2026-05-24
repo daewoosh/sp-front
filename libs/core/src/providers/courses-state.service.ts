@@ -1,6 +1,9 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable, INJECTOR } from '@angular/core';
 import { StateService } from '../state';
 import { Course, CourseProgramItem } from '../models';
+import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
+import { TuiDialogService } from '@taiga-ui/core';
+import { FeedbackModalComponent } from '../state/feedback-modal/feedback-modal.component';
 
 export interface CoursesState {
   courses: Course[];
@@ -19,6 +22,9 @@ const initialState: CoursesState = {
 
 @Injectable({ providedIn: 'root' })
 export class CoursesStateService extends StateService<CoursesState> {
+  private readonly dialogs = inject(TuiDialogService);
+  private readonly injector = inject(INJECTOR);
+
   public selectCourses = this.select(({ courses }: CoursesState) => courses);
 
   public selectCourseProgram = this.select(
@@ -32,7 +38,8 @@ export class CoursesStateService extends StateService<CoursesState> {
   );
 
   public selectSelectedCourse = this.select(
-      ( currentSelectedCourse : CoursesState) => currentSelectedCourse.currentSelectedCourse
+    (currentSelectedCourse: CoursesState) =>
+      currentSelectedCourse.currentSelectedCourse
   );
 
   constructor() {
@@ -74,7 +81,7 @@ export class CoursesStateService extends StateService<CoursesState> {
     this.setState({ courseProgram: currentProgram });
   }
 
-  completeItem(order: number) {
+  completeItem(order: number, courseFinished: boolean): void {
     const currentProgram = [...this.state.courseProgram];
     for (const item of currentProgram) {
       if (item.order === order) {
@@ -87,6 +94,9 @@ export class CoursesStateService extends StateService<CoursesState> {
       }
       this.setState({ courseProgram: currentProgram });
     }
+    if (courseFinished) {
+      this.handleCourseFinish();
+    }
   }
 
   setCourseItemHeight(height: number): void {
@@ -95,5 +105,36 @@ export class CoursesStateService extends StateService<CoursesState> {
 
   clearCourses() {
     this.setState(initialState);
+  }
+
+  private handleCourseFinish(){
+    const selectedCourse = this.state.currentSelectedCourse;
+    if (!selectedCourse) {
+      return;
+    }
+    this.dialogs
+      .open<boolean>(
+        new PolymorpheusComponent(FeedbackModalComponent, this.injector),
+        {
+          data: {
+            course: selectedCourse,
+            // userName: course.userName,
+          }, // Pass any data if needed
+          dismissible: true,
+          appearance: 'sp-modal',
+        }
+      )
+      .subscribe();
+    const updatedCourses = this.state.courses.map((c) => {
+      if (c.slug === selectedCourse.slug) {
+        return {
+          ...c,
+          hasPendingFeedback: true,
+        };
+      }
+      return c;
+    });
+    this.setCourses(updatedCourses);
+    this.setCurrentCourse(selectedCourse.slug);
   }
 }

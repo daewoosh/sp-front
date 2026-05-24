@@ -2,9 +2,10 @@ import { Component, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { injectContext } from '@taiga-ui/polymorpheus';
 import { TuiAlertService, TuiDialogContext } from '@taiga-ui/core';
-import { BehaviorSubject, map, Observable, of, switchMap, take } from 'rxjs';
-import { AppStateService } from '@sp/core/state';
-import { Course, UserProfile } from '@sp/core/models';
+import { BehaviorSubject, map, Observable, switchMap, take } from 'rxjs';
+import { AppStateService } from '../app-state.service';
+import { Course } from '../../models/courses';
+import { UserProfile } from '../../models/user-profile';
 import {
   FormBuilder,
   FormGroup,
@@ -12,8 +13,8 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { CoursesApiService } from '@sp/core/providers';
-import { CoursesStateService } from '@sp/core/providers/courses-state.service';
+import { CoursesApiService } from '../../providers/courses-api.service';
+import { CoursesStateService } from '../../providers/courses-state.service';
 
 @Component({
   selector: 'sp-feedback-modal',
@@ -24,14 +25,15 @@ import { CoursesStateService } from '@sp/core/providers/courses-state.service';
 })
 export class FeedbackModalComponent {
   private readonly context =
-    injectContext<TuiDialogContext<string, { course: Course }>>();
+    injectContext<
+      TuiDialogContext<string, { course: Course; feedbackCompleted: boolean }>
+    >();
 
   profile$: Observable<UserProfile>;
   course = this.context.data.course;
 
   form: FormGroup;
   protected isSubmitting$ = new BehaviorSubject<boolean>(false);
-  promocode$ = new BehaviorSubject<string>('');
   maxLength = 1500;
   length$ = new BehaviorSubject<number>(0);
   constructor(
@@ -72,40 +74,27 @@ export class FeedbackModalComponent {
     }
 
     this.isSubmitting$.next(true);
-    // this.coursesStateService.selectCourses
-    //   .pipe(
-    //     take(1)
-    //   )
-    //   .subscribe((courses) => {
-    //   const updatedCourses = courses.map((c) => {
-    //     if (c.slug === this.course.slug) {
-    //       return {
-    //         ...c,
-    //         hasPendingFeedback: false,
-    //       };
-    //     }
-    //     return c;
-    //   });
-    //   this.coursesStateService.setCourses(updatedCourses);
-    //   this.coursesStateService.setCurrentCourse(this.course.slug);
-    // });
 
     this.coursesApiService
       .acceptFeedback(this.course.slug, this.form.value.comment.trim())
       .pipe(
         switchMap((res) => {
-          this.promocode$.next(res.promocode);
+          this.course.hasFinishedFeedback = true;
+          this.course.hasPendingFeedback = false;
+          this.course.promocode = res.promocode;
           this.isSubmitting$.next(false);
           return this.coursesStateService.selectCourses;
         }),
-        take(1),
+        take(1)
       )
       .subscribe((courses) => {
         const updatedCourses = courses.map((c) => {
           if (c.slug === this.course.slug) {
             return {
               ...c,
+              promocode: this.course.promocode,
               hasPendingFeedback: false,
+              hasFinishedFeedback: true,
             };
           }
           return c;
@@ -135,5 +124,10 @@ export class FeedbackModalComponent {
     this.alertService
       .open('Скопировано', { appearance: 'success', autoClose: 5000 })
       .subscribe();
+  }
+
+  get telegramLink(): string {
+    const text = `Мой промокод: ${this.course.promocode ?? ''}`;
+    return `https://t.me/SafePoker_Sales?text=${encodeURIComponent(text)}`;
   }
 }
