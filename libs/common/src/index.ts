@@ -6,3 +6,4 @@ export * from './lib/landing-header/landing-header.component';
 export * from './lib/main-review/main-review.component';
 export * from './lib/color-selector-control/color-selector-control.component';
 export * from './lib/base-list';
+export * from './lib/login-dialog.service';

@@ -1,5 +1,7 @@
 import { Route } from '@angular/router';
+// eslint-disable-next-line @nx/enforce-module-boundaries
 import { PageLayoutComponent } from "@sp/common";
+// eslint-disable-next-line @nx/enforce-module-boundaries
 import { coursesRoutes } from "@sp/courses-page";
 import { AdminGuard, AuthGuard } from "@sp/core/guards";
 import { adminRoutes, manageRangesRoutes } from '@sp/admin';

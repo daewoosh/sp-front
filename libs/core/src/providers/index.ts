@@ -6,3 +6,4 @@ export * from './leads-api.service';
 export * from './ranges-api.service';
 export * from './range-categories.resolver';
 export * from './default-range-table-resolver.service';
+export * from './auth-token-storage.service';

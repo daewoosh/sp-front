@@ -14,6 +14,7 @@ import {
 import { WINDOW } from '@sp/sdk/common';
 import {
   CourseActivationService,
+  AuthTokenStorageService,
   LocalStorageService,
 } from '@sp/core/providers';
 import { HttpClient } from '@angular/common/http';
@@ -21,10 +22,9 @@ import { AppStateService } from '@sp/core/state/app-state.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { v4 as uuid } from 'uuid';
 import { LoginResult } from '@sp/core/models';
-import { AUTH_HASH_NAME, AUTH_TOKEN_NAME } from '@sp/core';
+import { AUTH_HASH_NAME } from '@sp/core';
 import { injectContext } from '@taiga-ui/polymorpheus';
 import { TuiDialogContext } from '@taiga-ui/core';
-import { SsrCookieService } from 'ngx-cookie-service-ssr';
 import { ClientService } from '@sp/core/guards';
 import {
   AUTH_BOT_NAME as AUTH_BOT_NAME_TOKEN,
@@ -57,7 +57,7 @@ export class LoginModalComponent implements OnDestroy, OnInit{
     private readonly router: Router,
     private activatedRoute: ActivatedRoute,
     private courseActivationService: CourseActivationService,
-    private cookieService: SsrCookieService,
+    private authTokenStorage: AuthTokenStorageService,
     private clientService: ClientService,
     @Inject(AUTH_URL_TOKEN) private authUrl: string,
     @Inject(AUTH_BOT_NAME_TOKEN) private authBotName: string,
@@ -99,12 +99,7 @@ export class LoginModalComponent implements OnDestroy, OnInit{
             .pipe(
               switchMap((result) => {
                 if (result) {
-                  this.cookieService.set(AUTH_TOKEN_NAME, result.accessToken!, {
-                    path: '/',
-                    sameSite: 'None',
-                    secure: true, // Ensure your site is served over HTTPS
-                  } );
-                  this.localStorage.set(AUTH_TOKEN_NAME, result.accessToken ?? '');
+                  this.authTokenStorage.setToken(result.accessToken!);
                   if (token) {
                     // Активация курса выполняется только после успешного логина и при наличии токена
                     return this.courseActivationService.activateCourse(token).pipe(

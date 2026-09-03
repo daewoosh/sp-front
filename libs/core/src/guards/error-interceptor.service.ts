@@ -1,7 +1,7 @@
 import { Inject, Injectable, PLATFORM_ID } from "@angular/core";
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
 import { TuiAlertService } from "@taiga-ui/core";
-import { catchError, EMPTY, Observable, tap, throwError } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 import { isPlatformBrowser } from "@angular/common";
 
 @Injectable()
@@ -29,9 +29,7 @@ export class ErrorInterceptor implements HttpInterceptor {
             ).subscribe();
           }
         }
-        return throwError(() => {
-          new Error(response.error);
-        });
+        return throwError(() => response);
       })
     );
   }

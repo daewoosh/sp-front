@@ -30,16 +30,21 @@ import {
   AuthInterceptor,
   ClientService,
   ErrorInterceptor,
+  RefreshTokenInterceptor,
+  SESSION_EXPIRED_HANDLER,
 } from '@sp/core/guards';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { CourseActivationService } from '@sp/core/providers';
+import { AuthTokenStorageService, CourseActivationService } from '@sp/core/providers';
 import { API_PATH, EXCHANGE_URL as EXCHANGE_URL_TOKEN, APP_URL as APP_URL_TOKEN, AUTH_URL as AUTH_URL_TOKEN, AUTH_BOT_NAME as AUTH_BOT_NAME_TOKEN } from '@sp/config';
 import { CoursesStateService } from '@sp/core/providers/courses-state.service';
 import { initializeApplication } from './applnitializer';
 import { provideStore } from '@ngrx/store';
 import { applicationReducer } from '@sp/core/store/application';
+// eslint-disable-next-line @nx/enforce-module-boundaries
 import { CourseAccessGuard } from '@sp/courses-page';
+// eslint-disable-next-line @nx/enforce-module-boundaries
+import { LoginDialogService } from '@sp/common';
 
 @Injectable()
 class GlobalErrorHandler implements ErrorHandler {
@@ -63,8 +68,14 @@ export const appConfig: ApplicationConfig = {
     provideAnimations(),
     provideClientHydration(),
     provideZoneChangeDetection({eventCoalescing: true}),
+    {provide: HTTP_INTERCEPTORS, useClass: RefreshTokenInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+    {
+      provide: SESSION_EXPIRED_HANDLER,
+      useFactory: (loginDialogService: LoginDialogService) => () => loginDialogService.open(),
+      deps: [LoginDialogService],
+    },
     NG_EVENT_PLUGINS,
     provideStore({application: applicationReducer}),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
@@ -82,7 +93,7 @@ export const appConfig: ApplicationConfig = {
       provide: APP_INITIALIZER,
       useFactory: initializeApplication,
       multi: true,
-      deps: [ClientService, CoursesStateService, HttpClient],
+      deps: [ClientService, CoursesStateService, HttpClient, AuthTokenStorageService],
     },
   ],
 };

@@ -1,12 +1,11 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { AppStateService } from "@sp/core/state";
-import { Router } from "@angular/router";
-import { LocalStorageService } from "@sp/core/providers";
+import { AuthTokenStorageService } from "@sp/core/providers";
 import { CoursesStateService } from "@sp/core/providers/courses-state.service";
-import { SsrCookieService } from "ngx-cookie-service-ssr";
-import { AUTH_HASH_NAME, AUTH_TOKEN_NAME } from "@sp/core";
-import { EXCHANGE_URL } from '@sp/config';
+import { AUTH_URL, EXCHANGE_URL } from '@sp/config';
+import { HttpClient } from '@angular/common/http';
+import { catchError, EMPTY, finalize, timeout } from 'rxjs';
 
 @Component({
   selector: 'sp-logout',
@@ -17,21 +16,29 @@ import { EXCHANGE_URL } from '@sp/config';
 })
 export class LogoutComponent implements OnInit{
   constructor(private appStateService: AppStateService,
-              private router: Router,
-              private localStorage: LocalStorageService,
+              private httpClient: HttpClient,
+              private authTokenStorage: AuthTokenStorageService,
               private coursesStateService: CoursesStateService,
-              private cookieService: SsrCookieService,
+              @Inject(PLATFORM_ID) private platformId: object,
+              @Inject(AUTH_URL) private authUrl: string,
               @Inject(EXCHANGE_URL) public exchangeUrl: string) {}
 
   ngOnInit() {
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
+
+    this.authTokenStorage.clearToken();
     this.appStateService.logout();
-    this.localStorage.remove(AUTH_TOKEN_NAME);
-    this.localStorage.remove(AUTH_HASH_NAME);
     this.coursesStateService.clearCourses();
-    this.cookieService.delete(AUTH_TOKEN_NAME);
-    this.cookieService.delete(AUTH_TOKEN_NAME, '/');
-    this.cookieService.delete(AUTH_TOKEN_NAME, '/learn/');
-    this.cookieService.delete(AUTH_TOKEN_NAME, '/learn');
-    window.location.href = this.exchangeUrl;
+    this.httpClient.post(`${this.authUrl}/auth/logout`, {}, {
+      withCredentials: true,
+    }).pipe(
+      timeout(3000),
+      catchError(() => EMPTY),
+      finalize(() => {
+        window.location.href = this.exchangeUrl;
+      })
+    ).subscribe();
   }
 }

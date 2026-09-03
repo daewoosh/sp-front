@@ -2,7 +2,6 @@ import {
   Component,
   inject,
   Inject,
-  INJECTOR,
   Renderer2
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -11,14 +10,12 @@ import { TuiSidebar, TuiSidebarDirective } from '@taiga-ui/addon-mobile';
 import { LearningDropDownComponent } from '../learning-drop-down/learning-drop-down.component';
 import { filter, Observable, take } from 'rxjs';
 import { AppStateService } from '@sp/core/state/app-state.service';
-import { TuiDialogService } from '@taiga-ui/core';
-import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
 import { TuiActiveZone } from '@taiga-ui/cdk';
 import { CoursesSidenavComponent } from '../courses-sidenav';
 import { CoursesStateService } from '@sp/core/providers/courses-state.service';
 import { Course } from '@sp/core/models';
 import { EXCHANGE_URL } from '@sp/config';
-import { LoginModalComponent } from '../login-modal/login-modal.component';
+import { LoginDialogService } from '../login-dialog.service';
 
 @Component({
   selector: 'sp-header',
@@ -55,13 +52,10 @@ export class HeaderComponent {
     label: 'Зарегистрироваться',
     url: '/register'
   }]
-  private readonly dialogs = inject(TuiDialogService);
-  private readonly injector = inject(INJECTOR);
-  public isModalOpen = false;
-
   constructor(private router: Router,
               appStateService: AppStateService,
               private coursesStateService: CoursesStateService,
+              private loginDialogService: LoginDialogService,
               @Inject(EXCHANGE_URL) public exchangeUrl: string) {
     this.isLoggedIn$ = appStateService.isLoggedIn$;
     this.isAdmin$ = appStateService.isAdmin$;
@@ -83,38 +77,17 @@ export class HeaderComponent {
   }
 
   openModal() {
-    const dialog$ = this.dialogs.open<number>(
-      new PolymorpheusComponent(LoginModalComponent, this.injector),
-      {
-        data: 237,
-        dismissible: true,
-        appearance: 'sp-modal'
-      },
-    );
-
-    dialog$.pipe(take(1)).subscribe({
-        next: () => {
-          this.isModalOpen = false;
-        },
-        complete: () => {
-          this.isModalOpen = false;
-        },
-      }
-    );
+    this.loginDialogService.open();
   }
 
 
   protected toggle(open: boolean): void {
-    if (this.isModalOpen) {
-      return;
-    }
     if (open) {
       this.isLoggedIn$.pipe(take(1)).subscribe((isLoggedIn) => {
         if (isLoggedIn) {
           this.sidebarOpen = true;
           this.renderer.setStyle(document.body, 'overflow', 'hidden');
         } else {
-          this.isModalOpen = true;
           this.openModal();
         }
       });
