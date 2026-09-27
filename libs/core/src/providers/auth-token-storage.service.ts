@@ -2,7 +2,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { SsrCookieService } from 'ngx-cookie-service-ssr';
 
-import { AUTH_HASH_NAME, AUTH_TOKEN_NAME } from '../constants';
+import { AUTH_HASH_NAME, AUTH_TOKEN_NAME, SESSION_MARKER_NAME } from '../constants';
 import { LocalStorageService } from './local-storage.service';
 
 const MAX_TOKEN_LENGTH = 16_384;
@@ -83,6 +83,11 @@ export class AuthTokenStorageService {
 
   getToken(): string {
     return this.cookieService.get(AUTH_TOKEN_NAME);
+  }
+
+  /** У браузера есть сессия обменника (признак `sp_session` от бэкенда), возможно начатая на другом поддомене. */
+  hasSessionMarker(): boolean {
+    return isPlatformBrowser(this.platformId) && this.cookieService.check(SESSION_MARKER_NAME);
   }
 
   decodeClaims(token: string): DecodedAuthTokenClaims {
