@@ -140,7 +140,7 @@ export class CourseItemVideoComponent implements OnDestroy {
   }
 
   getVideoUrl(): string {
-    return `${this.apiPath}/Video/${this.courseElement.courseSlug}/${this.courseElement.order}/master.m3u8`;
+    return `${this.apiPath}/Video/s/${this.courseElement.videoToken}/${this.courseElement.courseSlug}/${this.courseElement.order}/master.m3u8`;
   }
 
   onPlayerReady($event: VgApiService) {

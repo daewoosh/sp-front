@@ -63,4 +63,6 @@ export interface VideoCourseElement extends CourseElement {
   lastPosition: number;
   maxPosition: number;
   videoId: number;
+  // подписанный токен для раздачи HLS: {API}/Video/s/{videoToken}/{courseSlug}/{order}/master.m3u8
+  videoToken: string;
 }
