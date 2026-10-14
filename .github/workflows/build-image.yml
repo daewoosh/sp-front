@@ -1,0 +1,59 @@
+name: build-image
+
+# Тег v* → образ ghcr.io/daewoosh/sp-front:<тег> → версия уходит в safe-poker-deploy
+# (событие bump, машина poker-learn-prod, ключ LEARN_OLD_FRONT_TAG). Сама выкатка в AWS — там.
+#
+# До переезда из Яндекса по тому же тегу параллельно работает deploy.yml (lint/test, rsync на прод в Яндексе) —
+# это ожидаемо, lint/test здесь не дублируются.
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build_and_push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Compute image repo
+        id: meta
+        shell: bash
+        run: |
+          # docker/ghcr requires lowercase
+          IMAGE_REPO="$(echo "${GITHUB_REPOSITORY}" | tr '[:upper:]' '[:lower:]')"
+          echo "image_repo=${IMAGE_REPO}" >> "$GITHUB_OUTPUT"
+
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: |
+            ghcr.io/${{ steps.meta.outputs.image_repo }}:${{ github.ref_name }}
+
+  release:
+    needs: build_and_push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Report version to the deploy repo
+        env:
+          GH_TOKEN: ${{ secrets.DEPLOY_REPO_TOKEN }}
+        run: |
+          gh api repos/daewoosh/safe-poker-deploy/dispatches \
+            -f event_type=bump \
+            -f 'client_payload[host]=poker-learn-prod' \
+            -f "client_payload[versions][LEARN_OLD_FRONT_TAG]=${GITHUB_REF_NAME}"

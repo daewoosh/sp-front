@@ -59,6 +59,19 @@ git fetch origin
 
 Прогресс — во вкладке **Actions**. Пайплайн: `npm ci` → lint + test → build → rsync (`server/` полностью; `browser/` с `--delete`, но каталог `media/` не трогается — как в старых PuTTY-скриптах) → `docker restart nodessr` → smoke-проверка `curl localhost:4000` (при падении печатает логи контейнера).
 
+## Образ для AWS (переезд из Яндекса)
+
+Параллельно с `deploy.yml` по тому же тегу `v*` работает [.github/workflows/build-image.yml](../.github/workflows/build-image.yml):
+
+1. Собирает образ по `Dockerfile` (`node:20`, `npm ci`, `npm run build`) и пушит `ghcr.io/daewoosh/sp-front:<тег>`. В образе `/app/dist/{browser,server}`, запуск `node dist/server/server.mjs`, порт 4000.
+2. Отправляет версию в репозиторий выкатки `daewoosh/safe-poker-deploy` (событие `bump`, машина `poker-learn-prod`, ключ `LEARN_OLD_FRONT_TAG`). Выкатка в AWS происходит там.
+
+Медиа (`browser/media/`) в образ не входят: на машине `/var/www/safe-poker/browser/media` монтируется в `/app/dist/browser/media` только на чтение.
+
+Нужен секрет репозитория `DEPLOY_REPO_TOKEN` — fine-grained токен с правом Contents: Read and write на `safe-poker-deploy`. Без него образ соберётся, а job `release` упадёт.
+
+После переезда `deploy.yml` для тегов (rsync в Яндекс) удаляется.
+
 ## Примечания
 
 - Нода в CI — v20, как в проде (`Dockerfile: FROM node:20`).
