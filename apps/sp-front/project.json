@@ -85,11 +85,11 @@
         "production": {
           "index": "apps/sp-front/src/index.prod.html",
           "define": {
-            "API_URL": "\"https://safe-poker.io/learn/api/v1\"",
-            "AUTH_URL": "\"https://safe-poker.io/api/v1\"",
-            "APP_URL": "\"https://safe-poker.io/learn\"",
+            "API_URL": "\"https://old.safe-poker.io/learn/api/v1\"",
+            "AUTH_URL": "\"https://old.safe-poker.io/api/v1\"",
+            "APP_URL": "\"https://old.safe-poker.io/learn\"",
             "AUTH_BOT_NAME": "\"safepoker_bot\"",
-            "EXCHANGE_URL": "\"https://safe-poker.io\""
+            "EXCHANGE_URL": "\"https://old.safe-poker.io\""
           },
           "budgets": [
             {
