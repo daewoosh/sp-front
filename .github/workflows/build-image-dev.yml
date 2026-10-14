@@ -1,0 +1,53 @@
+name: build-image-dev
+
+# Push в develop → образ dev-конфигурации (npm run build:dev, стенд dev2.safe-poker.io)
+# → ghcr.io/daewoosh/sp-front:dev. Версия в safe-poker-deploy не отправляется,
+# выкатка образа на стенд — вне этого workflow.
+#
+# Нужен Dockerfile с ARG BUILD_COMMAND (ветка aws-migration). Параллельно по тому же
+# push работает deploy.yml (rsync на dev-стенд в Яндексе) — до его отключения это ожидаемо.
+on:
+  push:
+    branches:
+      - develop
+
+concurrency:
+  group: build-image-dev
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build_and_push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Compute image repo
+        id: meta
+        shell: bash
+        run: |
+          # docker/ghcr requires lowercase
+          IMAGE_REPO="$(echo "${GITHUB_REPOSITORY}" | tr '[:upper:]' '[:lower:]')"
+          echo "image_repo=${IMAGE_REPO}" >> "$GITHUB_OUTPUT"
+
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          build-args: |
+            BUILD_COMMAND=build:dev
+          tags: |
+            ghcr.io/${{ steps.meta.outputs.image_repo }}:dev
