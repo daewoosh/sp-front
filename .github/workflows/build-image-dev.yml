@@ -1,0 +1,64 @@
+name: build-image-dev
+
+# Push в develop → образ dev-конфигурации (npm run build:dev, стенд dev2.safe-poker.io)
+# → ghcr.io/daewoosh/sp-front:dev, затем перевыкатка dev-стенда в AWS (job redeploy_dev).
+#
+# Нужен Dockerfile с ARG BUILD_COMMAND (ветка aws-migration). Параллельно по тому же
+# push работает deploy.yml (lint/test/build; rsync там остался только по тегам).
+on:
+  push:
+    branches:
+      - develop
+
+concurrency:
+  group: build-image-dev
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build_and_push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Compute image repo
+        id: meta
+        shell: bash
+        run: |
+          # docker/ghcr requires lowercase
+          IMAGE_REPO="$(echo "${GITHUB_REPOSITORY}" | tr '[:upper:]' '[:lower:]')"
+          echo "image_repo=${IMAGE_REPO}" >> "$GITHUB_OUTPUT"
+
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          build-args: |
+            BUILD_COMMAND=build:dev
+          tags: |
+            ghcr.io/${{ steps.meta.outputs.image_repo }}:dev
+
+  # Перевыкатить dev-стенд в AWS (hosts/poker-learn-prod/versions.env: LEARN_OLD_FRONT_TAG=dev).
+  # Нужен DEPLOY_REPO_TOKEN с правами Contents и Actions: write; без него job падает, сборку не ломает.
+  redeploy_dev:
+    runs-on: ubuntu-latest
+    needs: build_and_push
+    continue-on-error: true
+    steps:
+      - name: Redeploy dev stand from the deploy repo
+        env:
+          GH_TOKEN: ${{ secrets.DEPLOY_REPO_TOKEN }}
+        run: gh workflow run deploy.yml -R daewoosh/safe-poker-deploy -f hosts=poker-learn-prod

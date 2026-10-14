@@ -34,7 +34,7 @@ All env values are compile-time `define` globals in `apps/sp-front/project.json`
 | Config | API_URL (learning backend) | AUTH_URL (exchanger) |
 |---|---|---|
 | local | `https://localhost:43802/api/v1` | `http://localhost:5003/api/v1` |
-| dev | `https://dev.safe-poker.ru/learn/api/v1` | `https://dev.safe-poker.ru/api/v1` |
+| dev | `https://dev2.safe-poker.io/learn/api/v1` | `https://dev2.safe-poker.io/api/v1` |
 | production | `https://safe-poker.io/learn/api/v1` | `https://safe-poker.io/api/v1` |
 
 `only-poker`/`booster` apps use different values (see their `project.json`); `only-poker` declares `AUTH_URL`/`AUTH_BOT_NAME` types but never provides the DI tokens — login modal would crash there.
