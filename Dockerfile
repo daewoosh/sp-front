@@ -4,14 +4,17 @@
 # ── Build stage ───────────────────────────────────────────────────────────────
 FROM node:20 AS builder
 
+# BUILD_COMMAND: "build" — production (теги v*), "build:dev" — dev-стенд (build-image-dev.yml).
+# Обе конфигурации с --base-href=/learn/ --deploy-url=/learn/ (см. package.json).
+ARG BUILD_COMMAND=build
+
 WORKDIR /app
 
 COPY package.json package-lock.json ./
 RUN npm ci
 
 COPY . .
-# production-конфигурация, --base-href=/learn/ --deploy-url=/learn/ (см. package.json)
-RUN npm run build
+RUN npm run ${BUILD_COMMAND}
 
 # ── Runtime stage ─────────────────────────────────────────────────────────────
 FROM node:20-slim
