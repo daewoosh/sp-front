@@ -1,0 +1,17 @@
+.git
+.github
+.claude
+.angular
+.nx
+.vscode
+.idea
+node_modules
+**/node_modules
+dist
+tmp
+out-tsc
+coverage
+Dockerfile
+.dockerignore
+*.md
+*.md.bak
