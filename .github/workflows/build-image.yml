@@ -3,8 +3,7 @@ name: build-image
 # Тег v* → образ ghcr.io/daewoosh/sp-front:<тег> → версия уходит в safe-poker-deploy
 # (событие bump, машина poker-learn-prod, ключ LEARN_OLD_FRONT_TAG). Сама выкатка в AWS — там.
 #
-# До переезда из Яндекса по тому же тегу параллельно работает deploy.yml (lint/test, rsync на прод в Яндексе) —
-# это ожидаемо, lint/test здесь не дублируются.
+# deploy.yml (lint/test/dev-сборка) работает только на пуш в develop; выкатки в Яндекс больше нет.
 on:
   push:
     tags:
