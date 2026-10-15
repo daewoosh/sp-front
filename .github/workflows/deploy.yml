@@ -1,14 +1,13 @@
 name: Build & Deploy sp-front
 
-# push в develop  -> деплой на dev
-# push тега v*    -> деплой на prod
-# Деплоим только фронт обучения (apps/sp-front): dist/apps/sp-front/{server,browser}
-# на хост в /var/www/safe-poker/{server,browser} + docker restart nodessr.
+# Проверка на пуш в develop: lint, test, dev-сборка. Выкатки здесь больше нет:
+#   dev-образ для стенда в AWS собирает build-image-dev.yml (пуш в develop),
+#   прод-образ по тегу v* — build-image.yml, версия уходит в safe-poker-deploy.
+# Старые шаги rsync на машину в Яндексе удалены при переезде в AWS.
 
 on:
   push:
     branches: [develop]
-    tags: ['v*']
 
 concurrency:
   group: deploy-${{ github.ref }}
@@ -17,19 +16,13 @@ concurrency:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    # environment задаёт, из какого набора secrets берём хост/ключ
-    environment: ${{ startsWith(github.ref, 'refs/tags/') && 'prod' || 'dev' }}
-    env:
-      BUILD_SCRIPT: ${{ startsWith(github.ref, 'refs/tags/') && 'build' || 'build:dev' }}
-      DEPLOY_PATH: ${{ vars.DEPLOY_PATH || '/var/www/safe-poker' }}
-      RESTART_CMD: ${{ vars.RESTART_CMD || 'docker restart nodessr' }}
 
     steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20        # тот же major, что в проде (Dockerfile: FROM node:20)
+          node-version: 20        # тот же major, что в образе (Dockerfile: FROM node:20)
           cache: npm
 
       - name: Install dependencies
@@ -40,41 +33,5 @@ jobs:
           npx nx lint sp-front
           npx nx test sp-front
 
-      - name: Build (${{ env.BUILD_SCRIPT }})
-        run: npm run ${{ env.BUILD_SCRIPT }}
-
-      # Шаги деплоя — только по тегам (прод в Яндексе до переезда). Пуш в develop теперь лишь собирает
-      # и проверяет: старого dev-стенда нет, dev-образ для AWS собирает build-image-dev.yml.
-      - name: Setup SSH
-        if: startsWith(github.ref, 'refs/tags/')
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/id_deploy
-          chmod 600 ~/.ssh/id_deploy
-          ssh-keyscan -H "${{ secrets.DEPLOY_HOST }}" >> ~/.ssh/known_hosts
-
-      - name: Deploy via rsync
-        if: startsWith(github.ref, 'refs/tags/')
-        run: |
-          RSYNC_SSH="ssh -i ~/.ssh/id_deploy"
-          # server: полная синхронизация
-          rsync -az --delete -e "$RSYNC_SSH" \
-            dist/apps/sp-front/server/ \
-            "${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:${DEPLOY_PATH}/server/"
-          # browser: --delete, но media не трогаем (контент, живущий только на сервере;
-          # так же вели себя старые PuTTY-скрипты деплоя)
-          rsync -az --delete --exclude 'media/' -e "$RSYNC_SSH" \
-            dist/apps/sp-front/browser/ \
-            "${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:${DEPLOY_PATH}/browser/"
-
-      - name: Restart SSR container
-        if: startsWith(github.ref, 'refs/tags/')
-        run: |
-          ssh -i ~/.ssh/id_deploy "${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}" "${RESTART_CMD}"
-
-      - name: Smoke check
-        if: startsWith(github.ref, 'refs/tags/')
-        run: |
-          sleep 5
-          ssh -i ~/.ssh/id_deploy "${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}" \
-            "curl -sf -o /dev/null -w '%{http_code}' http://localhost:4000/ || (docker logs --tail 50 nodessr; exit 1)"
+      - name: Build (build:dev)
+        run: npm run build:dev
