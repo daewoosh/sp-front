@@ -49,7 +49,7 @@ git fetch origin
 
 ## Шаг 3. Как пользоваться
 
-- **Дев**: просто `git push origin develop` — соберётся `build:dev` (конфигурация `dev`, URL `dev2.safe-poker.io` — стенд в AWS) и уедет на dev-сервер. Параллельно `build-image-dev.yml` собирает из того же `build:dev` образ `ghcr.io/daewoosh/sp-front:dev` (без деплоя).
+- **Дев**: просто `git push origin develop` — соберётся `build:dev` (конфигурация `dev`, URL `dev.safe-poker.ru` — стенд в Яндексе) и уедет на dev-сервер. Параллельно `build-image-dev.yml` собирает из того же `build:dev` образ `ghcr.io/daewoosh/sp-front:dev` (без деплоя).
 - **Прод**:
   ```bash
   git tag v1.0.0

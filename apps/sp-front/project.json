@@ -62,11 +62,11 @@
         "dev": {
           "index": "apps/sp-front/src/index.dev.html",
           "define": {
-            "API_URL": "\"https://dev2.safe-poker.io/learn/api/v1\"",
-            "AUTH_URL": "\"https://dev2.safe-poker.io/api/v1\"",
-            "APP_URL": "\"https://dev2.safe-poker.io/learn\"",
+            "API_URL": "\"https://dev.safe-poker.ru/learn/api/v1\"",
+            "AUTH_URL": "\"https://dev.safe-poker.ru/api/v1\"",
+            "APP_URL": "\"https://dev.safe-poker.ru/learn\"",
             "AUTH_BOT_NAME": "\"devPokerPayTest_bot\"",
-            "EXCHANGE_URL": "\"https://dev2.safe-poker.io\""
+            "EXCHANGE_URL": "\"https://dev.safe-poker.ru\""
           },
           "budgets": [
             {

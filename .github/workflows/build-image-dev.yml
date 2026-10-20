@@ -1,7 +1,7 @@
 name: build-image-dev
 
-# Push в develop → образ dev-конфигурации (npm run build:dev, стенд dev2.safe-poker.io)
-# → ghcr.io/daewoosh/sp-front:dev, затем перевыкатка dev-стенда в AWS (job redeploy_dev).
+# Push в develop → образ dev-конфигурации (npm run build:dev, стенд dev.safe-poker.ru/learn)
+# → ghcr.io/daewoosh/sp-front:dev, затем перевыкатка дев-стенда в Яндексе (job redeploy_dev).
 #
 # Нужен Dockerfile с ARG BUILD_COMMAND (ветка aws-migration). Параллельно по тому же
 # push работает deploy.yml (lint/test/build; rsync там остался только по тегам).
@@ -51,7 +51,7 @@ jobs:
           tags: |
             ghcr.io/${{ steps.meta.outputs.image_repo }}:dev
 
-  # Перевыкатить dev-стенд в AWS (hosts/poker-learn-prod/versions.env: LEARN_OLD_FRONT_TAG=dev).
+  # Перевыкатить дев-стенд в Яндексе (safe-poker-deploy/hosts/dev/versions.env: LEARN_OLD_FRONT_TAG=dev).
   # Нужен DEPLOY_REPO_TOKEN с правами Contents и Actions: write; без него job падает, сборку не ломает.
   redeploy_dev:
     runs-on: ubuntu-latest
@@ -61,4 +61,4 @@ jobs:
       - name: Redeploy dev stand from the deploy repo
         env:
           GH_TOKEN: ${{ secrets.DEPLOY_REPO_TOKEN }}
-        run: gh workflow run deploy.yml -R daewoosh/safe-poker-deploy -f hosts=poker-learn-prod
+        run: gh workflow run deploy.yml -R daewoosh/safe-poker-deploy -f hosts=dev
