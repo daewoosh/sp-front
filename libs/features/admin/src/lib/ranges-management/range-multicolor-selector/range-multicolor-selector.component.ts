@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, forwardRef, Input, OnInit, SimpleChanges } from '@angular/core';
+import { ChangeDetectorRef, Component, forwardRef, Input, OnInit } from '@angular/core';
 import {
   ControlValueAccessor,
   FormArray,
@@ -93,12 +93,6 @@ export class RangeMulticolorSelectorComponent
     });
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['colors'] && !changes['colors'].firstChange) {
-      this.resetSlider();
-    }
-  }
-
   // Методы ControlValueAccessor
   onChange: any = () => {};
 
@@ -106,7 +100,14 @@ export class RangeMulticolorSelectorComponent
 
   writeValue(obj: CellMulticolorConfiguration): void {
     if (obj) {
+      const prevHandles = (this.form.value.percent ?? []).length;
       this.form.setValue(obj, { emitEvent: false });
+      // Слайдер пересоздаём, только если изменилось число ручек (удалили базовый цвет).
+      // Раньше это делалось на любое изменение базовых цветов, и при перетаскивании
+      // в пикере слайдер мигал на каждом шаге — экран дёргался.
+      if (prevHandles && prevHandles !== obj.percent.length) {
+        this.resetSlider();
+      }
     } else {
       this.form.reset();
     }
