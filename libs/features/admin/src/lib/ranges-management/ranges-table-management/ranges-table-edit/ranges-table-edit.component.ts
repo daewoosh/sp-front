@@ -148,11 +148,19 @@ export class RangesTableEditComponent implements OnInit {
       const config: RangeTableCellConfiguration = this.form.value;
       this.adminApiService
         .saveTable(this.positionId, { ...this.tableData, config })
-        .subscribe((_) => {
-          this.alertService
-            .open('Сохранено', { appearance: 'info', autoClose: 5000 })
-            .subscribe();
-          this.saving.set(false);
+        .subscribe({
+          next: () => {
+            this.alertService
+              .open('Сохранено', { appearance: 'info', autoClose: 5000 })
+              .subscribe();
+            this.saving.set(false);
+          },
+          error: () => {
+            this.alertService
+              .open('Не удалось сохранить', { appearance: 'negative', autoClose: 5000 })
+              .subscribe();
+            this.saving.set(false);
+          },
         });
       // Здесь можно обработать данные, например, отправить на сервер
     } else {

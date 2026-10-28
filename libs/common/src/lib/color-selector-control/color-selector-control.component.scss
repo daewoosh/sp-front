@@ -1,4 +1,10 @@
 :host{
   display: flex;
   align-items: center;
+  gap: 0.5rem;
+}
+
+.hex-input {
+  width: 6.5rem;
+  font-family: monospace;
 }

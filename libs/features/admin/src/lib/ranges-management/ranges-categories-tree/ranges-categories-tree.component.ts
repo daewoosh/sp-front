@@ -1,15 +1,18 @@
 import {
   Component,
+  DestroyRef,
   inject,
   Input,
   OnInit,
   TrackByFunction,
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
 import { RangeCategoryDto } from '@sp/core/models';
 import { TuiTree } from '@taiga-ui/kit';
 import { EMPTY_ARRAY, TuiHandler } from '@taiga-ui/cdk';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { filter, map, startWith } from 'rxjs';
 
 @Component({
   selector: 'sp-ranges-categories-tree',
@@ -17,22 +20,33 @@ import { ActivatedRoute, Router } from '@angular/router';
   imports: [CommonModule, TuiTree],
   templateUrl: './ranges-categories-tree.component.html',
   styleUrl: './ranges-categories-tree.component.scss',
+  // Гидрация tui-tree с раскрытыми узлами падает (NG0502), после чего дерево перестаёт реагировать.
+  host: { ngSkipHydration: 'true' },
 })
 export class RangesCategoriesTreeComponent implements OnInit {
   @Input() categories: RangeCategoryDto[] = [];
   protected readonly map = new Map<RangeCategoryDto, boolean>();
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
+  private destroyRef = inject(DestroyRef);
   selectedActionId = -1;
   ngOnInit() {
     this.addCategoriesToMap(this.categories);
-    this.activatedRoute.firstChild?.params.subscribe((params) => {
-      const {positionId} = params;
-      if (positionId) {
-        this.selectedActionId = +positionId;
-        this.expandTreeForSelectedAction(this.selectedActionId);
-      }
-    });
+    // Если зашли на /manageRanges без экшена, дочернего маршрута на момент инициализации ещё нет,
+    // поэтому positionId читаем после каждой навигации, а не подпиской на firstChild.params.
+    this.router.events
+      .pipe(
+        filter((event) => event instanceof NavigationEnd),
+        startWith(null),
+        map(() => this.activatedRoute.firstChild?.snapshot.paramMap.get('positionId')),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe((positionId) => {
+        this.selectedActionId = positionId ? +positionId : -1;
+        if (positionId) {
+          this.expandTreeForSelectedAction(this.selectedActionId);
+        }
+      });
   }
 
   private expandTreeForSelectedAction(selectedId: number): void {

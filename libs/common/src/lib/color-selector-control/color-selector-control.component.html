@@ -7,6 +7,19 @@
   [tuiDropdownOpen]="false"
 >
   <ng-template #picker>
-    <tui-color-selector [(color)]="value"/>
+    <tui-color-selector [color]="value" (colorChange)="onPickerChange($event)"/>
   </ng-template>
 </button>
+<input
+  #hexInput
+  type="text"
+  class="hex-input h-[32px]"
+  placeholder="#RRGGBB"
+  spellcheck="false"
+  title="Код цвета: #RRGGBB, #RGB или rgb(r, g, b)"
+  [value]="editing ? hexInput.value : hex"
+  (focus)="editing = true"
+  (input)="onHexInput(hexInput.value)"
+  (blur)="editing = false; hexInput.value = hex"
+  (keydown.enter)="$event.preventDefault(); hexInput.blur()"
+/>
